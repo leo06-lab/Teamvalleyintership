@@ -1,3 +1,17 @@
+* { /* Zgjedh të gjithë elementët */
+  margin: 0; /* Heq hapësirat default jashtë elementëve */
+  padding: 0; /* Heq hapësirat default brenda elementëve */
+  box-sizing: border-box; /* Bën që padding dhe border të llogariten brenda madhësisë */
+}
+
+body { /* Stilon trupin kryesor të faqes */
+  font-family: Arial, sans-serif; /* Vendos fontin kryesor */
+  background-color: #f5f7fb; /* Vendos sfond gri të lehtë */
+}
+
+.App { /* Stilon div-in kryesor të aplikacionit */
+  width: 100%; /* Merr gjithë gjerësinë e ekranit */
+}
 .App {
   text-align: center;
 }

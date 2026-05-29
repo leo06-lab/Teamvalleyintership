@@ -1,0 +1,195 @@
+.home-page { /* Stilon gjithë faqen Home */
+  width: 100%; /* E bën faqen të marrë gjithë gjerësinë */
+  min-height: 100vh; /* E bën faqen minimalisht sa lartësia e ekranit */
+  background-color: #f5f7fb; /* Vendos ngjyrën e sfondit */
+  color: #1f2937; /* Vendos ngjyrën kryesore të tekstit */
+}
+
+.hero-section { /* Stilon seksionin kryesor */
+  display: flex; /* Vendos elementët në rresht */
+  align-items: center; /* I qendron vertikalisht */
+  justify-content: space-between; /* Hapësirë midis tekstit dhe kartës */
+  gap: 40px; /* Hapësirë midis elementëve */
+  padding: 80px 8%; /* Hapësirë brenda seksionit */
+  background: linear-gradient(135deg, #e8f0ff, #ffffff); /* Vendos sfond gradient */
+}
+
+.hero-content { /* Stilon pjesën e tekstit */
+  max-width: 600px; /* Kufizon gjerësinë e tekstit */
+}
+
+.hero-badge { /* Stilon etiketën sipër titullit */
+  display: inline-block; /* E lejon të ketë padding */
+  padding: 8px 16px; /* Hapësirë brenda badge */
+  border-radius: 20px; /* Rrumbullakos cepat */
+  background-color: #dbeafe; /* Vendos ngjyrën e sfondit */
+  color: #2563eb; /* Vendos ngjyrën e tekstit */
+  font-weight: 600; /* E bën tekstin më të trashë */
+  margin-bottom: 20px; /* Hapësirë poshtë badge */
+}
+
+.hero-content h1 { /* Stilon titullin kryesor */
+  font-size: 48px; /* Madhësia e titullit */
+  line-height: 1.2; /* Hapësira midis rreshtave */
+  margin-bottom: 20px; /* Hapësirë poshtë titullit */
+}
+
+.hero-content p { /* Stilon paragrafin e hero section */
+  font-size: 18px; /* Madhësia e tekstit */
+  color: #4b5563; /* Ngjyra e paragrafit */
+  margin-bottom: 30px; /* Hapësirë poshtë paragrafit */
+}
+
+.hero-buttons { /* Stilon mbajtësin e butonave */
+  display: flex; /* I vendos butonat në një rresht */
+  gap: 15px; /* Hapësirë midis butonave */
+}
+
+.primary-btn { /* Stilon butonin kryesor */
+  padding: 12px 24px; /* Hapësirë brenda butonit */
+  border: none; /* Heq border-in */
+  border-radius: 8px; /* Rrumbullakos cepat */
+  background-color: #2563eb; /* Ngjyra blu e butonit */
+  color: white; /* Ngjyra e tekstit */
+  font-size: 16px; /* Madhësia e tekstit */
+  cursor: pointer; /* Shfaq dorën kur kalon mouse */
+}
+
+.secondary-btn { /* Stilon butonin dytësor */
+  padding: 12px 24px; /* Hapësirë brenda butonit */
+  border: 1px solid #2563eb; /* Border blu */
+  border-radius: 8px; /* Rrumbullakos cepat */
+  background-color: white; /* Sfond i bardhë */
+  color: #2563eb; /* Tekst blu */
+  font-size: 16px; /* Madhësia e tekstit */
+  cursor: pointer; /* Shfaq dorën kur kalon mouse */
+}
+
+.hero-card { /* Stilon kartën në hero section */
+  width: 320px; /* Gjerësia e kartës */
+  padding: 30px; /* Hapësirë brenda kartës */
+  border-radius: 20px; /* Rrumbullakos cepat */
+  background-color: white; /* Sfond i bardhë */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); /* Hije për efekt modern */
+}
+
+.hero-card h3 { /* Stilon titullin e kartës */
+  margin-bottom: 15px; /* Hapësirë poshtë titullit */
+  color: #111827; /* Ngjyrë e errët për titullin */
+}
+
+.hero-card p { /* Stilon paragrafët e kartës */
+  margin-bottom: 10px; /* Hapësirë poshtë çdo paragrafi */
+  color: #4b5563; /* Ngjyra e tekstit */
+}
+
+.search-section { /* Stilon seksionin e kërkimit */
+  display: flex; /* Vendos input-et dhe butonin në rresht */
+  gap: 15px; /* Hapësirë midis tyre */
+  padding: 30px 8%; /* Hapësirë brenda seksionit */
+  background-color: white; /* Sfond i bardhë */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); /* Hije e lehtë */
+}
+
+.search-section input { /* Stilon input-et */
+  flex: 1; /* I bën input-et të zënë hapësirën e lirë */
+  padding: 14px; /* Hapësirë brenda input-it */
+  border: 1px solid #d1d5db; /* Border gri */
+  border-radius: 8px; /* Rrumbullakos cepat */
+  font-size: 15px; /* Madhësia e tekstit */
+}
+
+.search-section button { /* Stilon butonin search */
+  padding: 14px 30px; /* Hapësirë brenda butonit */
+  border: none; /* Heq border-in */
+  border-radius: 8px; /* Rrumbullakos cepat */
+  background-color: #2563eb; /* Ngjyra blu */
+  color: white; /* Teksti i bardhë */
+  font-size: 15px; /* Madhësia e tekstit */
+  cursor: pointer; /* Shfaq dorën kur kalon mouse */
+}
+
+.categories-section { /* Stilon seksionin e kategorive */
+  padding: 60px 8%; /* Hapësirë brenda seksionit */
+  text-align: center; /* Qendron tekstin */
+}
+
+.categories-section h2 { /* Stilon titullin e kategorive */
+  margin-bottom: 30px; /* Hapësirë poshtë titullit */
+  font-size: 32px; /* Madhësia e titullit */
+}
+
+.category-grid { /* Stilon grid-in e kategorive */
+  display: grid; /* Aktivizon grid layout */
+  grid-template-columns: repeat(4, 1fr); /* Krijon 4 kolona të barabarta */
+  gap: 20px; /* Hapësirë midis kartave */
+}
+
+.category-card { /* Stilon kartat e kategorive */
+  padding: 25px; /* Hapësirë brenda kartës */
+  border-radius: 14px; /* Rrumbullakos cepat */
+  background-color: white; /* Sfond i bardhë */
+  font-weight: 600; /* Tekst më i trashë */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); /* Hije e lehtë */
+}
+
+.how-section { /* Stilon seksionin how it works */
+  padding: 60px 8%; /* Hapësirë brenda seksionit */
+  background-color: #ffffff; /* Sfond i bardhë */
+  text-align: center; /* Qendron tekstin */
+}
+
+.how-section h2 { /* Stilon titullin e how section */
+  margin-bottom: 30px; /* Hapësirë poshtë titullit */
+  font-size: 32px; /* Madhësia e titullit */
+}
+
+.steps-grid { /* Stilon grid-in e hapave */
+  display: grid; /* Aktivizon grid layout */
+  grid-template-columns: repeat(3, 1fr); /* Krijon 3 kolona */
+  gap: 20px; /* Hapësirë midis kartave */
+}
+
+.step-card { /* Stilon kartën e çdo hapi */
+  padding: 30px; /* Hapësirë brenda kartës */
+  border-radius: 14px; /* Rrumbullakos cepat */
+  background-color: #f9fafb; /* Sfond gri i lehtë */
+  text-align: left; /* E vendos tekstin majtas */
+}
+
+.step-card h3 { /* Stilon titullin e hapit */
+  margin-bottom: 12px; /* Hapësirë poshtë titullit */
+  color: #2563eb; /* Ngjyrë blu për titull */
+}
+
+.step-card p { /* Stilon përshkrimin e hapit */
+  color: #4b5563; /* Ngjyrë gri për tekstin */
+  line-height: 1.6; /* Hapësirë midis rreshtave */
+}
+
+@media (max-width: 768px) { /* Rregulla për ekranet mobile */
+  .hero-section { /* Ndryshon hero section në mobile */
+    flex-direction: column; /* I vendos elementët njëri poshtë tjetrit */
+    text-align: center; /* Qendron tekstin */
+  }
+
+  .hero-buttons { /* Ndryshon butonat në mobile */
+    justify-content: center; /* Qendron butonat */
+  }
+
+  .search-section { /* Ndryshon search section në mobile */
+    flex-direction: column; /* I vendos input-et njëri poshtë tjetrit */
+  }
+
+  .category-grid { /* Ndryshon grid-in e kategorive në mobile */
+    grid-template-columns: 1fr; /* E bën me një kolonë */
+  }
+
+  .steps-grid { /* Ndryshon grid-in e hapave në mobile */
+    grid-template-columns: 1fr; /* E bën me një kolonë */
+  }
+
+  .hero-content h1 { /* Ndryshon titullin në mobile */
+    font-size: 36px; /* Ul madhësinë e titullit */
+  }
+}

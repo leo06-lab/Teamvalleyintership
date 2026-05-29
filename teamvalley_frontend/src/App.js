@@ -1,25 +1,13 @@
-import logo from './logo.svg';
-import './styles/App.css';
+import React from "react"; // Importon React për përdorimin e JSX
+import Home from "./pages/Home"; // Importon faqen Home nga folderi pages
+import "./styles/App.css"; // Importon CSS-in kryesor të aplikacionit
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+function App() { // Krijon komponentin kryesor App
+  return ( // Kthen pamjen kryesore
+    <div className="App"> {/* Mbështjell gjithë aplikacionin */}
+      <Home /> {/* Shfaq komponentin Home në browser */}
     </div>
-  );
-}
+  ); // Mbyll return
+} // Mbyll komponentin App
 
-export default App;
+export default App; // Eksporton App që përdoret te index.js
