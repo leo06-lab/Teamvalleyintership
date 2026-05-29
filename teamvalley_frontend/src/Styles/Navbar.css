@@ -1,0 +1,117 @@
+.navbar { /* Stilon navbar-in kryesor */
+  width: 100%; /* Navbar merr gjithë gjerësinë e ekranit */
+  height: 75px; /* Vendos lartësinë e navbar-it */
+  display: flex; /* Vendos elementët në një rresht */
+  align-items: center; /* Qendron elementët vertikalisht */
+  justify-content: space-between; /* Vendos hapësirë midis logos, linkeve dhe butonave */
+  padding: 0 8%; /* Vendos hapësirë majtas dhe djathtas */
+  background-color: #ffffff; /* Vendos sfond të bardhë */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06); /* Shton hije të lehtë poshtë navbar-it */
+  position: sticky; /* E bën navbar-in të qëndrojë lart kur bëjmë scroll */
+  top: 0; /* E vendos navbar-in në krye të faqes */
+  z-index: 1000; /* E mban navbar-in mbi elementët e tjerë */
+}
+
+.navbar-logo { /* Stilon pjesën e logos */
+  display: flex; /* Vendos ikonën dhe tekstin në një rresht */
+  align-items: center; /* Qendron ikonën dhe tekstin vertikalisht */
+  gap: 10px; /* Vendos hapësirë midis ikonës dhe tekstit */
+}
+
+.logo-icon { /* Stilon ikonën e logos */
+  width: 38px; /* Vendos gjerësinë e ikonës */
+  height: 38px; /* Vendos lartësinë e ikonës */
+  display: flex; /* Aktivizon flex për qendrim */
+  align-items: center; /* Qendron shkronjën vertikalisht */
+  justify-content: center; /* Qendron shkronjën horizontalisht */
+  border-radius: 10px; /* Rrumbullakos cepat e ikonës */
+  background-color: #2563eb; /* Vendos sfond blu */
+  color: white; /* Vendos ngjyrën e shkronjës të bardhë */
+  font-weight: bold; /* E bën shkronjën më të trashë */
+  font-size: 20px; /* Vendos madhësinë e shkronjës */
+}
+
+.navbar-logo h2 { /* Stilon emrin TeamValley */
+  font-size: 24px; /* Vendos madhësinë e emrit */
+  color: #111827; /* Vendos ngjyrë të errët */
+  margin: 0; /* Heq margin default */
+}
+
+.navbar-links { /* Stilon listën e linkeve */
+  list-style: none; /* Heq pikat e listës */
+  display: flex; /* Vendos linket në një rresht */
+  align-items: center; /* Qendron linket vertikalisht */
+  gap: 30px; /* Vendos hapësirë midis linkeve */
+  margin: 0; /* Heq margin default */
+  padding: 0; /* Heq padding default */
+}
+
+.navbar-links li a { /* Stilon çdo link të navbar-it */
+  text-decoration: none; /* Heq vijën poshtë linkut */
+  color: #374151; /* Vendos ngjyrë gri të errët */
+  font-size: 16px; /* Vendos madhësinë e tekstit */
+  font-weight: 500; /* E bën tekstin mesatarisht të trashë */
+  transition: 0.3s; /* Shton efekt të butë kur ndryshon ngjyra */
+}
+
+.navbar-links li a:hover { /* Stilon linkun kur kalon mouse sipër */
+  color: #2563eb; /* Ndryshon ngjyrën në blu */
+}
+
+.navbar-buttons { /* Stilon mbajtësin e butonave */
+  display: flex; /* Vendos butonat në një rresht */
+  align-items: center; /* Qendron butonat vertikalisht */
+  gap: 12px; /* Vendos hapësirë midis butonave */
+}
+
+.login-btn { /* Stilon butonin Login */
+  text-decoration: none; /* Heq vijën poshtë linkut */
+  color: #2563eb; /* Vendos tekstin blu */
+  font-weight: 600; /* E bën tekstin më të trashë */
+  padding: 10px 18px; /* Vendos hapësirë brenda butonit */
+  border-radius: 8px; /* Rrumbullakos cepat */
+  transition: 0.3s; /* Shton efekt të butë */
+}
+
+.login-btn:hover { /* Stilon Login kur kalon mouse sipër */
+  background-color: #eff6ff; /* Vendos sfond blu shumë të lehtë */
+}
+
+.register-btn { /* Stilon butonin Register */
+  text-decoration: none; /* Heq vijën poshtë linkut */
+  background-color: #2563eb; /* Vendos sfond blu */
+  color: white; /* Vendos tekst të bardhë */
+  font-weight: 600; /* E bën tekstin më të trashë */
+  padding: 10px 20px; /* Vendos hapësirë brenda butonit */
+  border-radius: 8px; /* Rrumbullakos cepat */
+  transition: 0.3s; /* Shton efekt të butë */
+}
+
+.register-btn:hover { /* Stilon Register kur kalon mouse sipër */
+  background-color: #1d4ed8; /* E bën blunë pak më të errët */
+}
+
+@media (max-width: 768px) { /* Rregulla për ekran mobile */
+  .navbar { /* Ndryshon navbar-in në mobile */
+    height: auto; /* Lejon lartësi automatike */
+    flex-direction: column; /* I vendos elementët njëri poshtë tjetrit */
+    padding: 20px; /* Vendos hapësirë brenda navbar-it */
+    gap: 18px; /* Vendos hapësirë midis blloqeve */
+  }
+
+  .navbar-links { /* Ndryshon linket në mobile */
+    flex-direction: column; /* I vendos linket njëri poshtë tjetrit */
+    gap: 12px; /* Vendos hapësirë më të vogël midis linkeve */
+  }
+
+  .navbar-buttons { /* Ndryshon butonat në mobile */
+    flex-direction: column; /* I vendos butonat njëri poshtë tjetrit */
+    width: 100%; /* Butonat marrin gjithë gjerësinë */
+  }
+
+  .login-btn, /* Zgjedh butonin Login */
+  .register-btn { /* Zgjedh butonin Register */
+    width: 100%; /* Butonat marrin gjithë gjerësinë */
+    text-align: center; /* Qendron tekstin në mes */
+  }
+}
