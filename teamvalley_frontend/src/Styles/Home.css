@@ -1,195 +1,539 @@
-.home-page { /* Stilon gjithë faqen Home */
-  width: 100%; /* E bën faqen të marrë gjithë gjerësinë */
-  min-height: 100vh; /* E bën faqen minimalisht sa lartësia e ekranit */
-  background-color: #f5f7fb; /* Vendos ngjyrën e sfondit */
-  color: #1f2937; /* Vendos ngjyrën kryesore të tekstit */
+.home-page {
+  width: 100%;
+  background: #ffffff;
+  color: #12213f;
+  overflow-x: hidden;
 }
 
-.hero-section { /* Stilon seksionin kryesor */
-  display: flex; /* Vendos elementët në rresht */
-  align-items: center; /* I qendron vertikalisht */
-  justify-content: space-between; /* Hapësirë midis tekstit dhe kartës */
-  gap: 40px; /* Hapësirë midis elementëve */
-  padding: 80px 8%; /* Hapësirë brenda seksionit */
-  background: linear-gradient(135deg, #e8f0ff, #ffffff); /* Vendos sfond gradient */
+/* HERO */
+
+.hero {
+  min-height: 455px;
+  padding: 42px 7% 70px;
+  display: grid;
+  grid-template-columns: 48% 52%;
+  align-items: center;
+  background: #eef5ff;
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-content { /* Stilon pjesën e tekstit */
-  max-width: 600px; /* Kufizon gjerësinë e tekstit */
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -120px;
+  top: -170px;
+  width: 430px;
+  height: 430px;
+  background: #dbe8ff;
+  border-radius: 50%;
 }
 
-.hero-badge { /* Stilon etiketën sipër titullit */
-  display: inline-block; /* E lejon të ketë padding */
-  padding: 8px 16px; /* Hapësirë brenda badge */
-  border-radius: 20px; /* Rrumbullakos cepat */
-  background-color: #dbeafe; /* Vendos ngjyrën e sfondit */
-  color: #2563eb; /* Vendos ngjyrën e tekstit */
-  font-weight: 600; /* E bën tekstin më të trashë */
-  margin-bottom: 20px; /* Hapësirë poshtë badge */
+.hero-left {
+  position: relative;
+  z-index: 3;
+  max-width: 560px;
 }
 
-.hero-content h1 { /* Stilon titullin kryesor */
-  font-size: 48px; /* Madhësia e titullit */
-  line-height: 1.2; /* Hapësira midis rreshtave */
-  margin-bottom: 20px; /* Hapësirë poshtë titullit */
+.hero-left h1 {
+  font-size: 44px;
+  line-height: 1.18;
+  font-weight: 900;
+  color: #12213f;
+  margin-bottom: 18px;
 }
 
-.hero-content p { /* Stilon paragrafin e hero section */
-  font-size: 18px; /* Madhësia e tekstit */
-  color: #4b5563; /* Ngjyra e paragrafit */
-  margin-bottom: 30px; /* Hapësirë poshtë paragrafit */
+.hero-left h1 span {
+  color: #3f6df6;
 }
 
-.hero-buttons { /* Stilon mbajtësin e butonave */
-  display: flex; /* I vendos butonat në një rresht */
-  gap: 15px; /* Hapësirë midis butonave */
+.hero-left p {
+  max-width: 490px;
+  color: #5c6984;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 28px;
 }
 
-.primary-btn { /* Stilon butonin kryesor */
-  padding: 12px 24px; /* Hapësirë brenda butonit */
-  border: none; /* Heq border-in */
-  border-radius: 8px; /* Rrumbullakos cepat */
-  background-color: #2563eb; /* Ngjyra blu e butonit */
-  color: white; /* Ngjyra e tekstit */
-  font-size: 16px; /* Madhësia e tekstit */
-  cursor: pointer; /* Shfaq dorën kur kalon mouse */
+.hero-search {
+  width: 100%;
+  max-width: 620px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 115px;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 18px 35px rgba(63, 109, 246, 0.12);
+  overflow: hidden;
+  margin-bottom: 18px;
 }
 
-.secondary-btn { /* Stilon butonin dytësor */
-  padding: 12px 24px; /* Hapësirë brenda butonit */
-  border: 1px solid #2563eb; /* Border blu */
-  border-radius: 8px; /* Rrumbullakos cepat */
-  background-color: white; /* Sfond i bardhë */
-  color: #2563eb; /* Tekst blu */
-  font-size: 16px; /* Madhësia e tekstit */
-  cursor: pointer; /* Shfaq dorën kur kalon mouse */
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border-right: 1px solid #edf1f8;
 }
 
-.hero-card { /* Stilon kartën në hero section */
-  width: 320px; /* Gjerësia e kartës */
-  padding: 30px; /* Hapësirë brenda kartës */
-  border-radius: 20px; /* Rrumbullakos cepat */
-  background-color: white; /* Sfond i bardhë */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); /* Hije për efekt modern */
+.search-field span {
+  color: #7f8ca8;
+  font-size: 13px;
 }
 
-.hero-card h3 { /* Stilon titullin e kartës */
-  margin-bottom: 15px; /* Hapësirë poshtë titullit */
-  color: #111827; /* Ngjyrë e errët për titullin */
+.search-field input {
+  width: 100%;
+  height: 48px;
+  border: none;
+  outline: none;
+  color: #12213f;
+  font-size: 12px;
 }
 
-.hero-card p { /* Stilon paragrafët e kartës */
-  margin-bottom: 10px; /* Hapësirë poshtë çdo paragrafi */
-  color: #4b5563; /* Ngjyra e tekstit */
+.hero-search button {
+  height: 48px;
+  border: none;
+  background: #3f6df6;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.search-section { /* Stilon seksionin e kërkimit */
-  display: flex; /* Vendos input-et dhe butonin në rresht */
-  gap: 15px; /* Hapësirë midis tyre */
-  padding: 30px 8%; /* Hapësirë brenda seksionit */
-  background-color: white; /* Sfond i bardhë */
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); /* Hije e lehtë */
+.popular-searches {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  font-size: 12px;
 }
 
-.search-section input { /* Stilon input-et */
-  flex: 1; /* I bën input-et të zënë hapësirën e lirë */
-  padding: 14px; /* Hapësirë brenda input-it */
-  border: 1px solid #d1d5db; /* Border gri */
-  border-radius: 8px; /* Rrumbullakos cepat */
-  font-size: 15px; /* Madhësia e tekstit */
+.popular-searches strong {
+  color: #12213f;
 }
 
-.search-section button { /* Stilon butonin search */
-  padding: 14px 30px; /* Hapësirë brenda butonit */
-  border: none; /* Heq border-in */
-  border-radius: 8px; /* Rrumbullakos cepat */
-  background-color: #2563eb; /* Ngjyra blu */
-  color: white; /* Teksti i bardhë */
-  font-size: 15px; /* Madhësia e tekstit */
-  cursor: pointer; /* Shfaq dorën kur kalon mouse */
+.popular-searches a {
+  color: #5c6984;
+  text-decoration: underline;
 }
 
-.categories-section { /* Stilon seksionin e kategorive */
-  padding: 60px 8%; /* Hapësirë brenda seksionit */
-  text-align: center; /* Qendron tekstin */
+/* HERO RIGHT */
+
+.hero-right {
+  height: 350px;
+  position: relative;
+  z-index: 2;
 }
 
-.categories-section h2 { /* Stilon titullin e kategorive */
-  margin-bottom: 30px; /* Hapësirë poshtë titullit */
-  font-size: 32px; /* Madhësia e titullit */
+.image-card {
+  position: absolute;
+  border-radius: 26px 26px 26px 0;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 22px 45px rgba(63, 109, 246, 0.16);
+  border-left: 5px solid #3f6df6;
 }
 
-.category-grid { /* Stilon grid-in e kategorive */
-  display: grid; /* Aktivizon grid layout */
-  grid-template-columns: repeat(4, 1fr); /* Krijon 4 kolona të barabarta */
-  gap: 20px; /* Hapësirë midis kartave */
+.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.category-card { /* Stilon kartat e kategorive */
-  padding: 25px; /* Hapësirë brenda kartës */
-  border-radius: 14px; /* Rrumbullakos cepat */
-  background-color: white; /* Sfond i bardhë */
-  font-weight: 600; /* Tekst më i trashë */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); /* Hije e lehtë */
+.image-card-main {
+  width: 310px;
+  height: 210px;
+  top: 5px;
+  left: 80px;
 }
 
-.how-section { /* Stilon seksionin how it works */
-  padding: 60px 8%; /* Hapësirë brenda seksionit */
-  background-color: #ffffff; /* Sfond i bardhë */
-  text-align: center; /* Qendron tekstin */
+.image-card-small {
+  width: 300px;
+  height: 180px;
+  right: 20px;
+  bottom: 15px;
 }
 
-.how-section h2 { /* Stilon titullin e how section */
-  margin-bottom: 30px; /* Hapësirë poshtë titullit */
-  font-size: 32px; /* Madhësia e titullit */
+.shape {
+  position: absolute;
+  background: #e1ecff;
+  border-radius: 50%;
 }
 
-.steps-grid { /* Stilon grid-in e hapave */
-  display: grid; /* Aktivizon grid layout */
-  grid-template-columns: repeat(3, 1fr); /* Krijon 3 kolona */
-  gap: 20px; /* Hapësirë midis kartave */
+.shape-one {
+  width: 260px;
+  height: 260px;
+  right: -30px;
+  top: 10px;
 }
 
-.step-card { /* Stilon kartën e çdo hapi */
-  padding: 30px; /* Hapësirë brenda kartës */
-  border-radius: 14px; /* Rrumbullakos cepat */
-  background-color: #f9fafb; /* Sfond gri i lehtë */
-  text-align: left; /* E vendos tekstin majtas */
+.shape-two {
+  width: 170px;
+  height: 170px;
+  left: 40px;
+  bottom: 0;
 }
 
-.step-card h3 { /* Stilon titullin e hapit */
-  margin-bottom: 12px; /* Hapësirë poshtë titullit */
-  color: #2563eb; /* Ngjyrë blu për titull */
+.dots {
+  position: absolute;
+  width: 90px;
+  height: 70px;
+  background-image: radial-gradient(#b8c6e6 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+  opacity: 0.8;
 }
 
-.step-card p { /* Stilon përshkrimin e hapit */
-  color: #4b5563; /* Ngjyrë gri për tekstin */
-  line-height: 1.6; /* Hapësirë midis rreshtave */
+.dots-one {
+  right: 0;
+  top: 70px;
 }
 
-@media (max-width: 768px) { /* Rregulla për ekranet mobile */
-  .hero-section { /* Ndryshon hero section në mobile */
-    flex-direction: column; /* I vendos elementët njëri poshtë tjetrit */
-    text-align: center; /* Qendron tekstin */
+.dots-two {
+  left: 70px;
+  bottom: 35px;
+}
+
+/* SECTIONS */
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.section-heading h2 {
+  font-size: 34px;
+  color: #12213f;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.section-heading p {
+  color: #7c879e;
+  font-size: 14px;
+}
+
+/* CATEGORIES */
+
+.categories-section {
+  padding: 62px 7% 35px;
+  background: #ffffff;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.category-card {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid #edf1f8;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(18, 33, 63, 0.04);
+}
+
+.category-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #eef5ff;
+  color: #3f6df6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-card h3 {
+  font-size: 13px;
+  color: #12213f;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.category-card p {
+  font-size: 11px;
+  color: #7c879e;
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 28px;
+}
+
+.slider-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ccd6ec;
+}
+
+.slider-dots .active {
+  background: #3f6df6;
+}
+
+/* HIRING */
+
+.hiring-banner {
+  max-width: 900px;
+  margin: 20px auto 65px;
+  padding: 24px 34px;
+  background: #ffffff;
+  border: 1px solid #edf1f8;
+  box-shadow: 0 18px 40px rgba(18, 33, 63, 0.06);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+}
+
+.hiring-left span {
+  color: #7c879e;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.hiring-left h2 {
+  color: #12213f;
+  font-size: 32px;
+  letter-spacing: 3px;
+}
+
+.hiring-banner p {
+  color: #5c6984;
+  font-size: 15px;
+}
+
+.hiring-banner a {
+  text-decoration: none;
+  background: #3f6df6;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* JOBS */
+
+.jobs-section {
+  padding: 0 7% 70px;
+  background: #ffffff;
+}
+
+.job-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+
+.job-tabs button {
+  border: 1px solid #dfe6f5;
+  background: #ffffff;
+  color: #3f6df6;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.job-card {
+  background: #ffffff;
+  border: 1px solid #edf1f8;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 14px 35px rgba(18, 33, 63, 0.05);
+}
+
+.job-logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.job-logo.red { background: #ff4d5a; }
+.job-logo.blue { background: #3f6df6; }
+.job-logo.yellow { background: #f2b705; }
+.job-logo.purple { background: #7367f0; }
+.job-logo.green { background: #22c55e; }
+.job-logo.cyan { background: #06b6d4; }
+.job-logo.orange { background: #f97316; }
+.job-logo.teal { background: #14b8a6; }
+
+.job-card h3 {
+  color: #12213f;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.job-card h4 {
+  color: #12213f;
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.job-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: #7c879e;
+  font-size: 11px;
+  margin-bottom: 12px;
+}
+
+.job-card p {
+  color: #6d7890;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.job-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.job-tags span {
+  background: #f3f6fc;
+  color: #5c6984;
+  padding: 5px 9px;
+  border-radius: 5px;
+  font-size: 11px;
+}
+
+.job-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.job-bottom strong {
+  color: #3f6df6;
+  font-size: 18px;
+}
+
+.job-bottom small {
+  color: #7c879e;
+  font-size: 12px;
+}
+
+.job-bottom a {
+  text-decoration: none;
+  color: #3f6df6;
+  background: #eef5ff;
+  padding: 8px 13px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1150px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  .hero-buttons { /* Ndryshon butonat në mobile */
-    justify-content: center; /* Qendron butonat */
+  .hero-left {
+    margin: 0 auto;
   }
 
-  .search-section { /* Ndryshon search section në mobile */
-    flex-direction: column; /* I vendos input-et njëri poshtë tjetrit */
+  .hero-left p,
+  .hero-search {
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .category-grid { /* Ndryshon grid-in e kategorive në mobile */
-    grid-template-columns: 1fr; /* E bën me një kolonë */
+  .popular-searches {
+    justify-content: center;
   }
 
-  .steps-grid { /* Ndryshon grid-in e hapave në mobile */
-    grid-template-columns: 1fr; /* E bën me një kolonë */
+  .hero-right {
+    max-width: 680px;
+    margin: 30px auto 0;
   }
 
-  .hero-content h1 { /* Ndryshon titullin në mobile */
-    font-size: 36px; /* Ul madhësinë e titullit */
+  .jobs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding: 34px 18px 55px;
+  }
+
+  .hero-left h1 {
+    font-size: 36px;
+  }
+
+  .hero-search {
+    grid-template-columns: 1fr;
+  }
+
+  .search-field {
+    border-right: none;
+    border-bottom: 1px solid #edf1f8;
+  }
+
+  .hero-search button {
+    width: 100%;
+  }
+
+  .hero-right {
+    height: 310px;
+  }
+
+  .image-card-main {
+    width: 240px;
+    height: 160px;
+    left: 10px;
+  }
+
+  .image-card-small {
+    width: 235px;
+    height: 145px;
+    right: 10px;
+  }
+
+  .category-grid,
+  .jobs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hiring-banner {
+    margin: 20px 18px 55px;
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 }

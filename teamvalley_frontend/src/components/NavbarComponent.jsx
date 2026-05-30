@@ -1,29 +1,49 @@
-import React from "react"; // Importon React për të krijuar komponentin
-import "../styles/Navbar.css"; // Importon stilimin CSS për navbar-in
+import React from "react"; // Importon React
+import { NavLink } from "react-router-dom"; // Importon NavLink për navigim pa refresh
+import "../styles/Navbar.css"; // Importon CSS-in e navbar-it
 
-function NavbarComponent() { // Krijon komponentin NavbarComponent
-  return ( // Kthen pamjen që do shfaqet në browser
-    <nav className="navbar"> {/* Krijon navbar-in kryesor */}
+function NavbarComponent() { // Krijon komponentin Navbar
+  return ( // Kthen pamjen e navbar-it
+    <nav className="navbar"> {/* Navbar kryesor */}
 
-      <div className="navbar-logo"> {/* Mbajtës për logon/emrin e faqes */}
-        <span className="logo-icon">T</span> {/* Ikona e vogël e logos */}
-        <h2>TeamValley</h2> {/* Emri i platformës */}
-      </div>
+      <NavLink to="/" className="navbar-logo"> {/* Logo që të çon te Home */}
+        <span className="logo-icon">◆</span> {/* Ikona e logos */}
+        <span className="logo-name">JobValley</span> {/* Emri i faqes */}
+      </NavLink>
 
-      <ul className="navbar-links"> {/* Lista e linkeve të navigimit */}
-        <li><a href="/">Home</a></li> {/* Link për faqen Home */}
-        <li><a href="/jobs">Jobs</a></li> {/* Link për faqen Jobs */}
-        <li><a href="/about">About</a></li> {/* Link për faqen About */}
-        <li><a href="/contact">Contact</a></li> {/* Link për faqen Contact */}
+      <ul className="navbar-links"> {/* Lista e linkeve kryesore */}
+        <li>
+          <NavLink to="/" className={({ isActive }) => isActive ? "active-link" : ""}>
+            Home
+          </NavLink>
+        </li> {/* Link për Home */}
+
+        <li>
+          <NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : ""}>
+            About
+          </NavLink>
+        </li> {/* Link për About */}
+
+        <li>
+          <NavLink to="/jobs" className={({ isActive }) => isActive ? "active-link" : ""}>
+            Find a Job
+          </NavLink>
+        </li> {/* Link për vendet e punës */}
+
+        <li>
+          <NavLink to="/contact" className={({ isActive }) => isActive ? "active-link" : ""}>
+            Contact
+          </NavLink>
+        </li> {/* Link për Contact */}
       </ul>
 
-      <div className="navbar-buttons"> {/* Mbajtës për butonat në navbar */}
-        <a href="/login" className="login-btn">Login</a> {/* Butoni për login */}
-        <a href="/register" className="register-btn">Register</a> {/* Butoni për register */}
+      <div className="navbar-actions"> {/* Butonat në të djathtë */}
+        <NavLink to="/register" className="register-link">Register</NavLink> {/* Link Register */}
+        <NavLink to="/login" className="signin-btn">Sign in</NavLink> {/* Link Sign in */}
       </div>
 
     </nav>
   ); // Mbyll return
-} // Mbyll komponentin NavbarComponent
+} // Mbyll komponentin
 
-export default NavbarComponent; // Eksporton navbar-in që ta përdorim në App.js
+export default NavbarComponent; // Eksporton NavbarComponent
