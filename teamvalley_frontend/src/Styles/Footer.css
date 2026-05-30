@@ -1,0 +1,197 @@
+.footer { /* Footer kryesor */
+  width: 100%; /* Merr gjithë gjerësinë */
+  background: #eef5ff; /* Light blue si template */
+  color: #12213f; /* Tekst navy */
+  padding: 60px 7% 0; /* Hapësirë lart dhe anash */
+  border-top: 1px solid #dfe8f8; /* Vijë e lehtë sipër */
+}
+
+.footer-top { /* Pjesa kryesore e footer-it */
+  display: grid; /* Aktivizon grid */
+  grid-template-columns: 1.5fr 1fr 1fr 1.4fr; /* 4 kolona */
+  gap: 36px; /* Hapësirë mes kolonave */
+  padding-bottom: 42px; /* Hapësirë poshtë */
+}
+
+.footer-logo { /* Logo në footer */
+  display: flex; /* Ikona dhe tekst në rresht */
+  align-items: center; /* Qendrim vertikal */
+  gap: 9px; /* Hapësirë mes ikonës dhe emrit */
+  text-decoration: none; /* Heq underline */
+  margin-bottom: 18px; /* Hapësirë poshtë */
+}
+
+.footer-logo-icon { /* Ikona e logos */
+  color: #3f6df6; /* Blu */
+  font-size: 20px; /* Madhësi */
+}
+
+.footer-logo-name { /* Emri JobValley */
+  color: #12213f; /* Navy */
+  font-size: 24px; /* Madhësi */
+  font-weight: 900; /* Bold */
+}
+
+.footer-brand p { /* Përshkrimi i brand-it */
+  color: #5c6984; /* Gri */
+  font-size: 14px; /* Madhësi */
+  line-height: 1.7; /* Hapësirë rreshtash */
+  max-width: 310px; /* Kufizon gjerësinë */
+  margin-bottom: 20px; /* Hapësirë poshtë */
+}
+
+.footer-socials { /* Ikonat sociale */
+  display: flex; /* Në rresht */
+  align-items: center; /* Qendrim */
+  gap: 10px; /* Hapësirë */
+}
+
+.footer-socials a { /* Çdo ikonë */
+  width: 34px; /* Gjerësi */
+  height: 34px; /* Lartësi */
+  display: flex; /* Flex */
+  align-items: center; /* Qendrim vertikal */
+  justify-content: center; /* Qendrim horizontal */
+  border-radius: 8px; /* Cepa */
+  background: #ffffff; /* Sfond i bardhë */
+  color: #3f6df6; /* Blu */
+  text-decoration: none; /* Heq underline */
+  font-size: 13px; /* Madhësi */
+  font-weight: 900; /* Bold */
+  box-shadow: 0 8px 22px rgba(18, 33, 63, 0.05); /* Hije e lehtë */
+}
+
+.footer-column h3,
+.footer-newsletter h3 { /* Titujt e kolonave */
+  color: #12213f; /* Navy */
+  font-size: 16px; /* Madhësi */
+  font-weight: 900; /* Bold */
+  margin-bottom: 18px; /* Hapësirë poshtë */
+}
+
+.footer-column { /* Kolonat e linkeve */
+  display: flex; /* Flex */
+  flex-direction: column; /* Linket poshtë njëri-tjetrit */
+}
+
+.footer-column a { /* Linket e footer-it */
+  color: #5c6984; /* Gri */
+  text-decoration: none; /* Heq underline */
+  font-size: 14px; /* Madhësi */
+  font-weight: 600; /* Pak bold */
+  margin-bottom: 12px; /* Hapësirë poshtë */
+  transition: 0.25s ease; /* Efekt i butë */
+}
+
+.footer-column a:hover { /* Hover link */
+  color: #3f6df6; /* Blu */
+  padding-left: 4px; /* Lëviz pak djathtas */
+}
+
+.footer-newsletter p { /* Përshkrimi newsletter */
+  color: #5c6984; /* Gri */
+  font-size: 14px; /* Madhësi */
+  line-height: 1.7; /* Hapësirë rreshtash */
+  margin-bottom: 16px; /* Hapësirë */
+}
+
+.newsletter-box { /* Kutia e newsletter */
+  display: flex; /* Input dhe buton në rresht */
+  background: #ffffff; /* Bardhë */
+  border-radius: 8px; /* Cepa */
+  overflow: hidden; /* Cepa të pastër */
+  box-shadow: 0 10px 28px rgba(18, 33, 63, 0.06); /* Hije */
+}
+
+.newsletter-box input { /* Input email */
+  width: 100%; /* Merr hapësirën */
+  border: none; /* Pa border */
+  outline: none; /* Pa outline */
+  padding: 14px 16px; /* Hapësirë brenda */
+  color: #12213f; /* Tekst dark */
+  font-size: 13px; /* Madhësi */
+}
+
+.newsletter-box button { /* Butoni */
+  border: none; /* Pa border */
+  background: #3f6df6; /* Blu */
+  color: #ffffff; /* Bardhë */
+  padding: 0 18px; /* Hapësirë anash */
+  font-size: 13px; /* Madhësi */
+  font-weight: 800; /* Bold */
+  cursor: pointer; /* Cursor */
+}
+
+.newsletter-box button:hover { /* Hover */
+  background: #315eea; /* Blu më e errët */
+}
+
+.footer-bottom { /* Pjesa fundore */
+  border-top: 1px solid #dfe8f8; /* Vijë ndarëse */
+  padding: 20px 0; /* Hapësirë */
+  display: flex; /* Në rresht */
+  align-items: center; /* Qendrim vertikal */
+  justify-content: space-between; /* Hapësirë mes tekstit dhe linkeve */
+  gap: 16px; /* Gap */
+}
+
+.footer-bottom p { /* Copyright */
+  color: #5c6984; /* Gri */
+  font-size: 13px; /* Madhësi */
+}
+
+.footer-bottom div { /* Linket poshtë */
+  display: flex; /* Në rresht */
+  align-items: center; /* Qendrim */
+  gap: 18px; /* Hapësirë */
+}
+
+.footer-bottom a { /* Link poshtë */
+  color: #5c6984; /* Gri */
+  text-decoration: none; /* Pa underline */
+  font-size: 13px; /* Madhësi */
+  font-weight: 600; /* Pak bold */
+}
+
+.footer-bottom a:hover { /* Hover */
+  color: #3f6df6; /* Blu */
+}
+
+/* TABLET */
+
+@media (max-width: 1000px) { /* Për tablet */
+  .footer-top { /* Grid footer */
+    grid-template-columns: repeat(2, 1fr); /* 2 kolona */
+    gap: 30px; /* Hapësirë */
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 620px) { /* Për mobile */
+  .footer { /* Footer mobile */
+    padding: 45px 18px 0; /* Padding më i vogël */
+  }
+
+  .footer-top { /* Grid mobile */
+    grid-template-columns: 1fr; /* Një kolonë */
+    gap: 28px; /* Hapësirë */
+  }
+
+  .newsletter-box { /* Newsletter mobile */
+    flex-direction: column; /* Input dhe buton poshtë njëri-tjetrit */
+  }
+
+  .newsletter-box button { /* Butoni mobile */
+    padding: 14px; /* Hapësirë */
+  }
+
+  .footer-bottom { /* Fundi mobile */
+    flex-direction: column; /* Njëri poshtë tjetrit */
+    text-align: center; /* Tekst në qendër */
+  }
+
+  .footer-bottom div { /* Linket poshtë */
+    justify-content: center; /* Qendër */
+  }
+}

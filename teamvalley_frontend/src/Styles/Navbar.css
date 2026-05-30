@@ -2,68 +2,94 @@
   width: 100%; /* Merr gjithë gjerësinë */
   height: 72px; /* Lartësia e navbar-it */
   padding: 0 7%; /* Hapësirë majtas dhe djathtas */
-  display: flex; /* Vendos elementët në një rresht */
-  align-items: center; /* Qendron elementët vertikalisht */
-  justify-content: space-between; /* Logo majtas, linke mes, butona djathtas */
+  display: flex; /* Vendos elementët në rresht */
+  align-items: center; /* Qendron vertikalisht */
+  justify-content: space-between; /* Logo majtas, links mes, butona djathtas */
   background: #eef5ff; /* Sfond light blue si template */
-  position: sticky; /* Navbar qëndron sipër kur bëjmë scroll */
-  top: 0; /* E vendos në krye */
-  z-index: 1000; /* E mban mbi elementët e tjerë */
+  position: sticky; /* Navbar qëndron sipër */
+  top: 0; /* Ngjitet në krye */
+  z-index: 1000; /* Rri mbi elementët e tjerë */
 }
 
 .navbar-logo { /* Zona e logos */
   display: flex; /* Vendos ikonën dhe tekstin në rresht */
   align-items: center; /* Qendron vertikalisht */
-  gap: 9px; /* Hapësirë mes ikonës dhe emrit */
-  text-decoration: none; /* Heq vijën poshtë linkut */
+  gap: 10px; /* Hapësirë mes ikonës dhe emrit */
+  text-decoration: none; /* Heq underline */
   flex-shrink: 0; /* Nuk lejon logon të ngushtohet */
 }
 
-.logo-icon { /* Ikona e logos */
-  color: #3f6df6; /* Ngjyra blu e ikonës */
-  font-size: 18px; /* Madhësia e ikonës */
+.logo-symbol { /* Mbajtësi i ikonës */
+  width: 30px; /* Gjerësi e ikonës */
+  height: 26px; /* Lartësi e ikonës */
+  position: relative; /* Lejon pozicionimin e pjesëve brenda */
+  display: inline-block; /* Qëndron në rresht me tekstin */
+  flex-shrink: 0; /* Nuk ngushtohet */
 }
 
-.logo-name { /* Emri JobValley */
-  color: #12213f; /* Ngjyrë navy */
-  font-size: 22px; /* Madhësia e tekstit */
-  font-weight: 900; /* E bën tekstin shumë bold */
+.logo-check-small { /* Krahu i vogël i logos */
+  position: absolute; /* Pozicionim brenda ikonës */
+  width: 11px; /* Gjerësi */
+  height: 17px; /* Lartësi */
+  left: 2px; /* Pozicion majtas */
+  top: 8px; /* Pozicion lart */
+  background: linear-gradient(135deg, #315eea, #06b6d4); /* Gradient blu-cyan */
+  transform: rotate(-42deg); /* E kthen si check */
+  border-radius: 4px; /* Cepa të butë */
+}
+
+.logo-check-big { /* Krahu i madh i logos */
+  position: absolute; /* Pozicionim brenda ikonës */
+  width: 14px; /* Gjerësi */
+  height: 30px; /* Lartësi */
+  left: 14px; /* Pozicion majtas */
+  top: -2px; /* Pozicion lart */
+  background: linear-gradient(135deg, #06b6d4, #3f6df6); /* Gradient cyan-blu */
+  transform: rotate(42deg); /* E kthen si check */
+  border-radius: 5px; /* Cepa të butë */
+}
+
+.logo-name { /* Teksti JobValley */
+  color: #12213f; /* Navy si template light */
+  font-size: 22px; /* Madhësi teksti */
+  font-weight: 900; /* Bold */
+  letter-spacing: -0.6px; /* Afërson shkronjat */
 }
 
 .navbar-links { /* Lista e linkeve */
-  display: flex; /* Linket në një rresht */
+  display: flex; /* Linket në rresht */
   align-items: center; /* Qendrim vertikal */
-  gap: 34px; /* Hapësirë mes linkeve */
-  list-style: none; /* Heq pikat e listës */
+  gap: 36px; /* Hapësirë mes linkeve */
+  list-style: none; /* Heq pikat */
   margin: 0; /* Heq margin default */
   padding: 0; /* Heq padding default */
 }
 
-.navbar-links a { /* Çdo link i navbar-it */
-  text-decoration: none; /* Heq vijën poshtë */
+.navbar-links a { /* Linket e navbar-it */
+  text-decoration: none; /* Heq underline */
   color: #233252; /* Ngjyrë dark */
-  font-size: 13px; /* Madhësia e linkeve */
-  font-weight: 700; /* Tekst bold */
+  font-size: 13px; /* Madhësi linku */
+  font-weight: 700; /* Bold */
   position: relative; /* Duhet për vijën aktive */
-  white-space: nowrap; /* Nuk lejon thyerje të fjalëve */
-  transition: 0.25s ease; /* Efekt i butë në hover */
+  white-space: nowrap; /* Nuk thyhet teksti */
+  transition: 0.25s ease; /* Efekt i butë */
 }
 
-.navbar-links a:hover { /* Kur kalon mouse sipër linkut */
-  color: #315eea; /* Linku bëhet blu */
+.navbar-links a:hover { /* Hover te linket */
+  color: #315eea; /* Bëhet blu */
 }
 
-.navbar-links a.active-link { /* Linku aktiv Home */
-  color: #315eea; /* Blu për linkun aktiv */
+.navbar-links a.active-link { /* Linku aktiv */
+  color: #315eea; /* Blu */
 }
 
 .navbar-links a.active-link::after { /* Vija poshtë linkut aktiv */
   content: ""; /* Krijon vijën */
-  width: 100%; /* Vija sa gjerësia e linkut */
+  width: 100%; /* Sa gjerësia e linkut */
   height: 2px; /* Trashësia e vijës */
-  background: #315eea; /* Ngjyra blu */
-  position: absolute; /* Pozicionim poshtë linkut */
-  left: 0; /* Fillon nga majtas */
+  background: #315eea; /* Blu */
+  position: absolute; /* Pozicionim */
+  left: 0; /* Fillon majtas */
   bottom: -8px; /* Vendoset poshtë tekstit */
   border-radius: 10px; /* Cepa të rrumbullakosur */
 }
@@ -71,65 +97,83 @@
 .navbar-actions { /* Zona Register dhe Sign in */
   display: flex; /* Butonat në rresht */
   align-items: center; /* Qendrim vertikal */
-  gap: 14px; /* Hapësirë mes butonave */
-  flex-shrink: 0; /* Nuk lejon ngushtim */
+  gap: 14px; /* Hapësirë mes tyre */
+  flex-shrink: 0; /* Nuk ngushtohet */
 }
 
 .register-link { /* Link Register */
   text-decoration: none; /* Heq underline */
   color: #233252; /* Ngjyrë dark */
-  font-size: 13px; /* Madhësi teksti */
-  font-weight: 700; /* Tekst bold */
+  font-size: 13px; /* Madhësi */
+  font-weight: 700; /* Bold */
+  white-space: nowrap; /* Nuk thyhet */
+}
+
+.register-link:hover { /* Hover Register */
+  color: #315eea; /* Blu */
 }
 
 .signin-btn { /* Butoni Sign in */
   text-decoration: none; /* Heq underline */
-  background: #3f6df6; /* Sfond blu */
+  background: #3f6df6; /* Blu si template */
   color: #ffffff; /* Tekst i bardhë */
   padding: 12px 22px; /* Hapësirë brenda */
   border-radius: 6px; /* Cepa të rrumbullakosur */
-  font-size: 13px; /* Madhësi teksti */
-  font-weight: 800; /* Tekst bold */
+  font-size: 13px; /* Madhësi */
+  font-weight: 800; /* Bold */
+  white-space: nowrap; /* Nuk thyhet */
   transition: 0.25s ease; /* Efekt i butë */
 }
 
-.signin-btn:hover { /* Hover për Sign in */
+.signin-btn:hover { /* Hover Sign in */
   background: #315eea; /* Blu më e errët */
 }
 
-/* Tablet */
+/* TABLET */
 
 @media (max-width: 1050px) { /* Për tablet dhe laptop të vogël */
   .navbar { /* Navbar responsive */
     height: auto; /* Lartësi automatike */
     padding: 18px 5%; /* Padding më i vogël */
-    flex-direction: column; /* Elementët vendosen njëri poshtë tjetrit */
+    flex-direction: column; /* Elementët njëri poshtë tjetrit */
     gap: 16px; /* Hapësirë mes rreshtave */
   }
 
   .navbar-links { /* Linket në tablet */
-    flex-wrap: wrap; /* Linket zbresin poshtë nëse nuk ka vend */
+    flex-wrap: wrap; /* Lejon kalim poshtë */
     justify-content: center; /* Qendron linket */
-    gap: 18px 28px; /* Hapësirë vertikale dhe horizontale */
+    gap: 18px 28px; /* Hapësirë responsive */
   }
 
   .navbar-links a.active-link::after { /* Vija aktive në tablet */
-    display: none; /* Hiqet për të mos prishur layout-in */
+    display: none; /* Hiqet që mos prishë layout */
   }
 }
 
-/* Mobile */
+/* MOBILE */
 
 @media (max-width: 520px) { /* Për mobile */
-  .navbar-links { /* Linket në mobile */
+  .navbar { /* Navbar mobile */
+    padding: 16px 18px; /* Padding mobile */
+  }
+
+  .navbar-logo { /* Logo mobile */
+    justify-content: center; /* Qendron logon */
+  }
+
+  .logo-name { /* Teksti i logos mobile */
+    font-size: 21px; /* Pak më i vogël */
+  }
+
+  .navbar-links { /* Linket mobile */
     width: 100%; /* Merr gjithë gjerësinë */
     display: grid; /* Aktivizon grid */
     grid-template-columns: repeat(2, 1fr); /* Dy kolona */
     text-align: center; /* Teksti në qendër */
-    gap: 12px; /* Hapësirë mes linkeve */
+    gap: 12px; /* Hapësirë */
   }
 
-  .navbar-actions { /* Register dhe Sign in në mobile */
+  .navbar-actions { /* Register dhe Sign in mobile */
     width: 100%; /* Merr gjithë gjerësinë */
     justify-content: center; /* Qendron butonat */
   }
