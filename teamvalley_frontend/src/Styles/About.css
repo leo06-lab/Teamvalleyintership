@@ -1,250 +1,279 @@
-.about-page { /* Faqja About */
-  width: 100%; /* Merr gjithë gjerësinë */
-  background: #ffffff; /* Sfond i bardhë */
-  color: #12213f; /* Tekst dark */
-  overflow-x: hidden; /* Nuk lejon scroll horizontal */
+.about-page {
+  width: 100%;
+  background: #ffffff;
+  color: #12213f;
+  overflow-x: hidden;
 }
 
 /* HERO ABOUT */
 
-.about-hero { /* Seksioni kryesor */
-  padding: 70px 7%; /* Hapësirë brenda */
-  display: grid; /* Layout grid */
-  grid-template-columns: 48% 52%; /* Tekst majtas, imazh djathtas */
-  align-items: center; /* Qendrim vertikal */
-  gap: 40px; /* Hapësirë mes kolonave */
-  background: #eef5ff; /* Sfond light blue si template */
+.about-hero {
+  padding: 70px 7%;
+  display: grid;
+  grid-template-columns: 48% 52%;
+  align-items: center;
+  gap: 40px;
+  background: #eef5ff;
 }
 
-.about-label { /* Label i vogël */
-  color: #3f6df6; /* Blu */
-  font-size: 14px; /* Madhësi teksti */
-  font-weight: 900; /* Bold */
-  display: inline-block; /* Lejon margin */
-  margin-bottom: 16px; /* Hapësirë poshtë */
+.about-label {
+  color: #3f6df6;
+  font-size: 14px;
+  font-weight: 900;
+  display: inline-block;
+  margin-bottom: 16px;
 }
 
-.about-hero-left h1 { /* Titulli kryesor */
-  font-size: 44px; /* Madhësi titulli */
-  line-height: 1.18; /* Hapësirë rreshtash */
-  color: #12213f; /* Navy */
-  font-weight: 900; /* Bold */
-  margin-bottom: 20px; /* Hapësirë poshtë */
+.about-hero-left h1 {
+  font-size: 44px;
+  line-height: 1.18;
+  color: #12213f;
+  font-weight: 900;
+  margin-bottom: 20px;
 }
 
-.about-hero-left p { /* Përshkrimi */
-  max-width: 520px; /* Kufizon gjerësinë */
-  color: #5c6984; /* Gri */
-  font-size: 16px; /* Madhësi teksti */
-  line-height: 1.8; /* Hapësirë rreshtash */
+.about-hero-left p {
+  max-width: 520px;
+  color: #5c6984;
+  font-size: 16px;
+  line-height: 1.8;
 }
 
-.about-hero-right { /* Ana e imazhit */
-  display: flex; /* Flex */
-  justify-content: center; /* Qendron horizontalisht */
+.about-hero-right {
+  display: flex;
+  justify-content: center;
 }
 
-.about-image-card { /* Karta e fotos */
-  width: 100%; /* Merr gjerësinë */
-  max-width: 520px; /* Kufizon madhësinë */
-  height: 310px; /* Lartësi fikse */
-  border-radius: 28px 28px 28px 0; /* Cepa si template */
-  overflow: hidden; /* Pret pjesët jashtë */
-  background: #ffffff; /* Sfond */
-  border-left: 5px solid #3f6df6; /* Vijë blu majtas */
-  box-shadow: 0 22px 45px rgba(63, 109, 246, 0.16); /* Hije */
+.about-image-card {
+  width: 100%;
+  max-width: 520px;
+  height: 310px;
+  border-radius: 28px 28px 28px 0;
+  overflow: hidden;
+  background: #ffffff;
+  border-left: 5px solid #3f6df6;
+  box-shadow: 0 22px 45px rgba(63, 109, 246, 0.16);
 }
 
-.about-image-card img { /* Fotoja */
-  width: 100%; /* Merr gjithë gjerësinë */
-  height: 100%; /* Merr gjithë lartësinë */
-  object-fit: cover; /* Mbush kartën pa deformim */
-  object-position: center; /* Qendron foton */
+.about-image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* MISSION */
 
-.mission-section { /* Seksioni mission/vision */
-  padding: 70px 7% 40px; /* Hapësirë */
-  display: grid; /* Grid */
-  grid-template-columns: repeat(2, 1fr); /* Dy kolona */
-  gap: 24px; /* Hapësirë mes kartave */
+.mission-section {
+  padding: 70px 7% 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
 }
 
-.mission-card { /* Karta mission/vision */
-  background: #ffffff; /* Sfond i bardhë */
-  border: 1px solid #edf1f8; /* Border i lehtë */
-  border-radius: 14px; /* Cepa */
-  padding: 32px; /* Hapësirë brenda */
-  box-shadow: 0 14px 35px rgba(18, 33, 63, 0.05); /* Hije e butë */
+.mission-card {
+  background: #ffffff;
+  border: 1px solid #edf1f8;
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow: 0 14px 35px rgba(18, 33, 63, 0.05);
 }
 
-.mission-icon { /* Ikona */
-  width: 46px; /* Gjerësi */
-  height: 46px; /* Lartësi */
-  border-radius: 12px; /* Cepa */
-  background: #eef5ff; /* Sfond light */
-  color: #3f6df6; /* Blu */
-  display: flex; /* Flex */
-  align-items: center; /* Qendrim vertikal */
-  justify-content: center; /* Qendrim horizontal */
-  font-size: 22px; /* Madhësi */
-  margin-bottom: 18px; /* Hapësirë poshtë */
+.mission-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #eef5ff;
+  color: #3f6df6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 18px;
 }
 
-.mission-card h3 { /* Titulli */
-  color: #12213f; /* Navy */
-  font-size: 20px; /* Madhësi */
-  font-weight: 900; /* Bold */
-  margin-bottom: 12px; /* Hapësirë */
+.mission-card h3 {
+  color: #12213f;
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 12px;
 }
 
-.mission-card p { /* Teksti */
-  color: #5c6984; /* Gri */
-  font-size: 14px; /* Madhësi */
-  line-height: 1.7; /* Hapësirë rreshtash */
+.mission-card p {
+  color: #5c6984;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 /* WHY SECTION */
 
-.why-section { /* Seksioni pse */
-  padding: 45px 7%; /* Hapësirë */
-  background: #ffffff; /* Sfond */
+.why-section {
+  padding: 45px 7%;
+  background: #ffffff;
 }
 
-.section-heading { /* Titulli i seksionit */
-  text-align: center; /* Teksti në qendër */
-  margin-bottom: 34px; /* Hapësirë poshtë */
+.section-heading {
+  text-align: center;
+  margin-bottom: 34px;
 }
 
-.section-heading h2 { /* Titulli */
-  color: #12213f; /* Navy */
-  font-size: 34px; /* Madhësi */
-  font-weight: 900; /* Bold */
-  margin-bottom: 8px; /* Hapësirë */
+.section-heading h2 {
+  color: #12213f;
+  font-size: 34px;
+  font-weight: 900;
+  margin-bottom: 8px;
 }
 
-.section-heading p { /* Përshkrimi */
-  color: #7c879e; /* Gri */
-  font-size: 14px; /* Madhësi */
+.section-heading p {
+  color: #7c879e;
+  font-size: 14px;
 }
 
-.why-grid { /* Grid i kartave */
-  display: grid; /* Aktivizon grid */
-  grid-template-columns: repeat(4, 1fr); /* 4 kolona */
-  gap: 20px; /* Hapësirë */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
-.why-card { /* Karta */
-  background: #ffffff; /* Bardhë */
-  border: 1px solid #edf1f8; /* Border */
-  border-radius: 12px; /* Cepa */
-  padding: 26px 20px; /* Padding */
-  text-align: center; /* Teksti në mes */
-  box-shadow: 0 10px 28px rgba(18, 33, 63, 0.04); /* Hije */
+.why-card {
+  background: #ffffff;
+  border: 1px solid #edf1f8;
+  border-radius: 12px;
+  padding: 26px 20px;
+  text-align: center;
+  box-shadow: 0 10px 28px rgba(18, 33, 63, 0.04);
 }
 
-.why-card span { /* Ikona */
-  width: 42px; /* Gjerësi */
-  height: 42px; /* Lartësi */
-  border-radius: 12px; /* Cepa */
-  background: #eef5ff; /* Sfond */
-  color: #3f6df6; /* Blu */
-  display: inline-flex; /* Flex inline */
-  align-items: center; /* Qendrim vertikal */
-  justify-content: center; /* Qendrim horizontal */
-  margin-bottom: 16px; /* Hapësirë */
-  font-size: 20px; /* Madhësi */
+.why-card span {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #eef5ff;
+  color: #3f6df6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-size: 20px;
 }
 
-.why-card h3 { /* Titulli */
-  color: #12213f; /* Navy */
-  font-size: 16px; /* Madhësi */
-  font-weight: 900; /* Bold */
-  margin-bottom: 10px; /* Hapësirë */
+.why-card h3 {
+  color: #12213f;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 10px;
 }
 
-.why-card p { /* Teksti */
-  color: #6d7890; /* Gri */
-  font-size: 13px; /* Madhësi */
-  line-height: 1.6; /* Hapësirë */
+.why-card p {
+  color: #6d7890;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 /* STATS */
 
-.stats-section { /* Seksioni stats */
-  margin: 35px 7% 70px; /* Hapësirë jashtë */
-  padding: 34px; /* Hapësirë brenda */
-  background: #12213f; /* Navy */
-  border-radius: 14px; /* Cepa */
-  display: grid; /* Grid */
-  grid-template-columns: repeat(4, 1fr); /* 4 kolona */
-  gap: 20px; /* Hapësirë */
-  text-align: center; /* Teksti në qendër */
+.stats-section {
+  margin: 35px 7% 70px;
+  padding: 34px;
+  background: #12213f;
+  border-radius: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  text-align: center;
 }
 
-.stat-box h2 { /* Numrat */
-  color: #3f6df6; /* Blu */
-  font-size: 30px; /* Madhësi */
-  font-weight: 900; /* Bold */
-  margin-bottom: 6px; /* Hapësirë */
+.stat-box h2 {
+  color: #3f6df6;
+  font-size: 30px;
+  font-weight: 900;
+  margin-bottom: 6px;
 }
 
-.stat-box p { /* Teksti */
-  color: #d6dee8; /* Gri e hapur */
-  font-size: 13px; /* Madhësi */
+.stat-box p {
+  color: #d6dee8;
+  font-size: 13px;
 }
 
 /* RESPONSIVE */
 
-@media (max-width: 1000px) { /* Tablet */
-  .about-hero { /* Hero */
-    grid-template-columns: 1fr; /* Një kolonë */
-    text-align: center; /* Teksti qendër */
+@media (max-width: 1000px) {
+  .about-hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 60px 5%;
   }
 
-  .about-hero-left p { /* Përshkrimi */
-    margin: 0 auto; /* Qendron */
+  .about-hero-left p {
+    margin: 0 auto;
   }
 
-  .mission-section { /* Mission */
-    grid-template-columns: 1fr; /* Një kolonë */
+  .mission-section {
+    grid-template-columns: 1fr;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
-  .why-grid { /* Why grid */
-    grid-template-columns: repeat(2, 1fr); /* Dy kolona */
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .stats-section { /* Stats */
-    grid-template-columns: repeat(2, 1fr); /* Dy kolona */
+  .stats-section {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 600px) { /* Mobile */
-  .about-hero { /* Hero mobile */
-    padding: 45px 18px; /* Padding */
+@media (max-width: 600px) {
+  .about-hero {
+    padding: 45px 18px;
   }
 
-  .about-hero-left h1 { /* Titulli */
-    font-size: 34px; /* Madhësi më e vogël */
+  .about-hero-left h1 {
+    font-size: 34px;
   }
 
-  .about-image-card { /* Foto */
-    height: 240px; /* Lartësi mobile */
+  .about-hero-left p {
+    font-size: 14px;
+  }
+
+  .about-image-card {
+    height: 240px;
   }
 
   .mission-section,
-  .why-section { /* Seksionet */
-    padding-left: 18px; /* Majtas */
-    padding-right: 18px; /* Djathtas */
+  .why-section {
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
-  .why-grid { /* Why grid */
-    grid-template-columns: 1fr; /* Një kolonë */
+  .why-grid {
+    grid-template-columns: 1fr;
   }
 
-  .stats-section { /* Stats */
-    margin: 30px 18px 55px; /* Margin */
-    grid-template-columns: 1fr; /* Një kolonë */
+  .stats-section {
+    margin: 30px 18px 55px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-hero-left h1 {
+    font-size: 29px;
+  }
+
+  .about-image-card {
+    height: 210px;
+  }
+
+  .mission-card {
+    padding: 24px;
+  }
+
+  .section-heading h2 {
+    font-size: 26px;
+  }
+
+  .stat-box h2 {
+    font-size: 26px;
   }
 }
