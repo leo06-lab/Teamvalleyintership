@@ -4,6 +4,7 @@ import NavbarComponent from "./components/NavbarComponent"; // Importon Navbar
 import Home from "./pages/Home"; // Importon Home page
 import Footer from "./components/Footer"; // Importon Footer
 import About from "./pages/About"; // Importon About page
+import Contact from "./pages/Contact";
 import "./styles/App.css"; // Importon CSS-in kryesor
 
 function App() { // Krijon komponentin App
@@ -14,7 +15,8 @@ function App() { // Krijon komponentin App
       <Routes> {/* Krijon rrugët e faqeve */}
         <Route path="/" element={<Home />} /> {/* Kur jemi te / shfaq Home */}
         <Route path="/about" element={<About />} /> {/* Kur jemi te /about shfaq About */}
-      </Routes>\
+        <Route path="/contact" element={<Contact />} /> {/* Kur jemi te /contact shfaq Contact */}
+      </Routes>
        <Footer /> {/* Footer në çdo faqe */}
     </div>
   ); // Mbyll return

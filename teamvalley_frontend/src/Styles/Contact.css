@@ -1,0 +1,65 @@
+.contact-page {
+  width: 100%; /* Merr gjithë gjerësinë */
+  background: #ffffff; /* Sfond i bardhë */
+  color: #12213f; /* Tekst dark */
+  overflow-x: hidden; /* Nuk lejon scroll horizontal */
+}
+
+.contact-hero {
+  padding: 70px 7%; /* Hapësirë brenda */
+  display: grid; /* Layout grid */
+  grid-template-columns: 48% 52%; /* Tekst majtas, imazh djathtas */
+  align-items: center; /* Qendrim vertikal */
+  gap: 40px; /* Hapësirë mes kolonave */
+  background: #eef5ff; /* Sfond light blue si template */
+}
+
+.contact-label {
+  color: #3f6df6; /* Blu */
+  font-size: 14px; /* Madhësi teksti */
+  font-weight: 900; /* Bold */
+  display: inline-block; /* Lejon margin */
+  margin-bottom: 16px; /* Hapësirë poshtë */
+}
+
+.contact-hero-left h1 {
+  font-size: 44px; /* Madhësi titulli */
+  line-height: 1.18; /* Hapësirë rreshtash */
+  color: #12213f; /* Navy */
+  font-weight: 900; /* Bold */
+  margin-bottom: 20px; /* Hapësirë poshtë */
+}
+
+.contact-hero-left p {
+  max-width: 450px; /* Kufizon gjerësinë */
+  color: #5c6984; /* Gri */
+  font-size: 16px; /* Madhësi teksti */
+  line-height: 1.8;
+}
+
+.contact-hero-right {
+  display: flex; /* Flex */
+  justify-content: center; /* Qendron horizontalisht */
+}
+
+.contact-image-card {
+  width: 70%; /* Merr gjerësinë */
+  max-width: 400px; /* Kufizon madhësinë */
+  height: 270px; /* Lartësi fikse */
+  border-radius: 28px 28px 28px 0; /* Cepa si template */
+  overflow: hidden; /* Pret pjesët jashtë */
+  background: #ffffff; /* Sfond */
+  border-left: 5px solid #3f6df6; /* Vijë blu majtas */
+  box-shadow: 0 22px 45px rgba(63, 109, 246, 0.16); /* Hije */
+}
+
+.contact-image-card img {
+  width: 100%; /* Merr gjithë gjerësinë */
+  height: 100%; /* Merr gjithë lartësinë */
+  object-fit: cover; /* Mbush kartën pa deformim */
+  object-position: center; /* Qendron foton */
+}
+
+.get-in-touch {
+    margin-left: 83px;
+}
