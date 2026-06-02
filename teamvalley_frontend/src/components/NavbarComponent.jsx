@@ -1,55 +1,56 @@
-import React from "react"; // Importon React
-import { NavLink } from "react-router-dom"; // Importon NavLink për navigim pa reload
-import "../styles/Navbar.css"; // Importon CSS-in e navbar-it
+import React from "react";
+import { NavLink } from "react-router-dom";
+import "../styles/Navbar.css";
 
-function NavbarComponent() { // Krijon komponentin Navbar
-  return ( // Kthen navbar-in në browser
-    <nav className="navbar"> {/* Navbar kryesor */}
-
-      <NavLink to="/" className="navbar-logo"> {/* Logo që të çon te Home */}
-        <span className="logo-symbol"> {/* Mbajtësi i ikonës së logos */}
-          <span className="logo-check-small"></span> {/* Pjesa e vogël e shenjës */}
-          <span className="logo-check-big"></span> {/* Pjesa e madhe e shenjës */}
+function NavbarComponent() {
+  return (
+    <nav className="jv-navbar">
+      <NavLink to="/" className="jv-navbar-logo">
+        <span className="jv-logo-symbol">
+          <span className="jv-logo-check-small"></span>
+          <span className="jv-logo-check-big"></span>
         </span>
 
-        <span className="logo-name">JobValley</span> {/* Emri i platformës */}
+        <span className="jv-logo-name">JobValley</span>
       </NavLink>
 
-      <ul className="navbar-links"> {/* Lista e linkeve kryesore */}
-
-        <li> {/* Link Home */}
-          <NavLink to="/" className={({ isActive }) => isActive ? "active-link" : ""}>
+      <ul className="jv-navbar-links">
+        <li>
+          <NavLink to="/" className={({ isActive }) => isActive ? "jv-active-link" : ""}>
             Home
           </NavLink>
         </li>
 
-        <li> {/* Link About */}
-          <NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : ""}>
+        <li>
+          <NavLink to="/about" className={({ isActive }) => isActive ? "jv-active-link" : ""}>
             About
           </NavLink>
         </li>
 
-        <li> {/* Link Find a Job */}
-          <NavLink to="/jobs" className={({ isActive }) => isActive ? "active-link" : ""}>
+        <li>
+          <NavLink to="/jobs" className={({ isActive }) => isActive ? "jv-active-link" : ""}>
             Find a Job
           </NavLink>
         </li>
 
-        <li> {/* Link Contact */}
-          <NavLink to="/contact" className={({ isActive }) => isActive ? "active-link" : ""}>
+        <li>
+          <NavLink to="/contact" className={({ isActive }) => isActive ? "jv-active-link" : ""}>
             Contact
           </NavLink>
         </li>
-
       </ul>
 
-      <div className="navbar-actions"> {/* Butonat djathtas */}
-        <NavLink to="/register" className="register-link">Register</NavLink> {/* Register */}
-        <NavLink to="/login" className="signin-btn">Sign in</NavLink> {/* Sign in */}
+      <div className="jv-navbar-actions">
+        <NavLink to="/register" className="jv-register-link">
+          Register
+        </NavLink>
+
+        <NavLink to="/login" className="jv-signin-btn">
+          Sign in
+        </NavLink>
       </div>
-
     </nav>
-  ); // Mbyll return
-} // Mbyll komponentin
+  );
+}
 
-export default NavbarComponent; // Eksporton NavbarComponent
+export default NavbarComponent;

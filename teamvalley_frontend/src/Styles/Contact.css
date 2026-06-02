@@ -1,65 +1,293 @@
-.contact-page {
-  width: 100%; /* Merr gjithë gjerësinë */
-  background: #ffffff; /* Sfond i bardhë */
-  color: #12213f; /* Tekst dark */
-  overflow-x: hidden; /* Nuk lejon scroll horizontal */
+.jv-contact-page {
+  width: 100%;
+  background: #ffffff;
+  color: #12213f;
+  overflow-x: hidden;
 }
 
-.contact-hero {
-  padding: 70px 7%; /* Hapësirë brenda */
-  display: grid; /* Layout grid */
-  grid-template-columns: 48% 52%; /* Tekst majtas, imazh djathtas */
-  align-items: center; /* Qendrim vertikal */
-  gap: 40px; /* Hapësirë mes kolonave */
-  background: #eef5ff; /* Sfond light blue si template */
+.jv-contact-hero {
+  width: 100%;
+  min-height: calc(100vh - 82px);
+  padding: 70px clamp(28px, 7vw, 110px);
+  display: grid;
+  grid-template-columns: 45% 55%;
+  gap: 46px;
+  align-items: center;
+  background: #eef5ff;
+  position: relative;
+  overflow: hidden;
 }
 
-.contact-label {
-  color: #3f6df6; /* Blu */
-  font-size: 14px; /* Madhësi teksti */
-  font-weight: 900; /* Bold */
-  display: inline-block; /* Lejon margin */
-  margin-bottom: 16px; /* Hapësirë poshtë */
+.jv-contact-hero::after {
+  content: "";
+  position: absolute;
+  right: -140px;
+  top: -180px;
+  width: 430px;
+  height: 430px;
+  background: #dbe8ff;
+  border-radius: 50%;
 }
 
-.contact-hero-left h1 {
-  font-size: 44px; /* Madhësi titulli */
-  line-height: 1.18; /* Hapësirë rreshtash */
-  color: #12213f; /* Navy */
-  font-weight: 900; /* Bold */
-  margin-bottom: 20px; /* Hapësirë poshtë */
+.jv-contact-left,
+.jv-contact-right {
+  position: relative;
+  z-index: 2;
 }
 
-.contact-hero-left p {
-  max-width: 450px; /* Kufizon gjerësinë */
-  color: #5c6984; /* Gri */
-  font-size: 16px; /* Madhësi teksti */
+.jv-contact-label {
+  display: inline-block;
+  color: #3f6df6;
+  font-size: 14px;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.jv-contact-left h1 {
+  color: #12213f;
+  font-size: 44px;
+  line-height: 1.18;
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+
+.jv-contact-left > p {
+  color: #5c6984;
+  font-size: 15px;
   line-height: 1.8;
+  max-width: 470px;
+  margin-bottom: 38px;
 }
 
-.contact-hero-right {
-  display: flex; /* Flex */
-  justify-content: center; /* Qendron horizontalisht */
+.jv-contact-info {
+  background: #ffffff;
+  border: 1px solid #edf1f8;
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 500px;
+  box-shadow: 0 18px 45px rgba(18, 33, 63, 0.07);
 }
 
-.contact-image-card {
-  width: 70%; /* Merr gjerësinë */
-  max-width: 400px; /* Kufizon madhësinë */
-  height: 270px; /* Lartësi fikse */
-  border-radius: 28px 28px 28px 0; /* Cepa si template */
-  overflow: hidden; /* Pret pjesët jashtë */
-  background: #ffffff; /* Sfond */
-  border-left: 5px solid #3f6df6; /* Vijë blu majtas */
-  box-shadow: 0 22px 45px rgba(63, 109, 246, 0.16); /* Hije */
+.jv-contact-info h2 {
+  color: #12213f;
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 22px;
 }
 
-.contact-image-card img {
-  width: 100%; /* Merr gjithë gjerësinë */
-  height: 100%; /* Merr gjithë lartësinë */
-  object-fit: cover; /* Mbush kartën pa deformim */
-  object-position: center; /* Qendron foton */
+.jv-contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #edf1f8;
 }
 
-.get-in-touch {
-    margin-left: 83px;
+.jv-contact-info-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.jv-contact-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #eef5ff;
+  color: #3f6df6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.jv-contact-info-item h3 {
+  color: #12213f;
+  font-size: 15px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.jv-contact-info-item p {
+  color: #5c6984;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.jv-contact-form {
+  width: 100%;
+  max-width: 560px;
+  margin-left: auto;
+  background: #ffffff;
+  border: 1px solid #edf1f8;
+  border-radius: 18px;
+  padding: 36px;
+  box-shadow: 0 24px 55px rgba(18, 33, 63, 0.08);
+}
+
+.jv-contact-form h2 {
+  color: #12213f;
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 24px;
+}
+
+.jv-contact-success {
+  width: 100%;
+  background: #ecfdf5;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.jv-contact-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.jv-contact-group label {
+  color: #12213f;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.jv-contact-group input,
+.jv-contact-group textarea {
+  width: 100%;
+  border: 1px solid #dfe6f5;
+  background: #ffffff;
+  color: #12213f;
+  border-radius: 8px;
+  outline: none;
+  padding: 0 14px;
+  font-size: 13px;
+  transition: 0.25s ease;
+}
+
+.jv-contact-group input {
+  height: 48px;
+}
+
+.jv-contact-group textarea {
+  min-height: 130px;
+  padding-top: 14px;
+  resize: vertical;
+}
+
+.jv-contact-group input:focus,
+.jv-contact-group textarea:focus {
+  border-color: #3f6df6;
+  box-shadow: 0 0 0 4px rgba(63, 109, 246, 0.08);
+}
+
+.jv-contact-submit {
+  width: 100%;
+  height: 50px;
+  border: none;
+  background: #3f6df6;
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.jv-contact-submit:hover {
+  background: #315eea;
+  transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1050px) {
+  .jv-contact-hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 60px 5%;
+  }
+
+  .jv-contact-left > p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .jv-contact-info {
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .jv-contact-form {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .jv-contact-hero {
+    padding: 45px 18px;
+  }
+
+  .jv-contact-left h1 {
+    font-size: 34px;
+  }
+
+  .jv-contact-left > p {
+    font-size: 14px;
+  }
+
+  .jv-contact-info {
+    padding: 22px;
+  }
+
+  .jv-contact-info h2 {
+    font-size: 22px;
+  }
+
+  .jv-contact-form {
+    padding: 26px 22px;
+  }
+
+  .jv-contact-form h2 {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 420px) {
+  .jv-contact-left h1 {
+    font-size: 29px;
+  }
+
+  .jv-contact-info-item {
+    align-items: flex-start;
+  }
+
+  .jv-contact-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .jv-contact-form {
+    padding: 24px 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .jv-contact-hero {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .jv-contact-left h1 {
+    font-size: 27px;
+  }
+
+  .jv-contact-info {
+    padding: 18px;
+  }
 }

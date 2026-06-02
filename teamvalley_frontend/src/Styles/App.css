@@ -1,8 +1,25 @@
+/* GLOBAL RESET */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/* ROOT COLORS */
+
+:root {
+  --primary-blue: #3f6df6;
+  --primary-blue-dark: #315eea;
+  --dark-text: #12213f;
+  --gray-text: #5c6984;
+  --light-gray-text: #7c879e;
+  --light-blue-bg: #eef5ff;
+  --border-color: #edf1f8;
+  --white: #ffffff;
+}
+
+/* HTML + BODY */
 
 html {
   scroll-behavior: smooth;
@@ -11,24 +28,90 @@ html {
 
 body {
   width: 100%;
+  min-height: 100vh;
   overflow-x: hidden;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #ffffff;
   color: #12213f;
 }
 
+/* APP WRAPPER */
+
 .App {
   width: 100%;
   min-height: 100vh;
+  background-color: #ffffff;
+  overflow-x: hidden;
 }
+
+/* MAIN */
+
+main {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* IMAGES */
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
+/* BUTTONS + INPUTS */
+
 button,
 input,
+textarea,
+select,
 a {
   font-family: inherit;
+}
+
+/* LINKS */
+
+a {
+  text-decoration: none;
+}
+
+/* BUTTONS */
+
+button {
+  border: none;
+  outline: none;
+}
+
+/* FORM ELEMENTS */
+
+input,
+textarea,
+select {
+  outline: none;
+}
+
+/* SELECTION */
+
+::selection {
+  background: #3f6df6;
+  color: #ffffff;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef5ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b9c9f5;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f6df6;
 }

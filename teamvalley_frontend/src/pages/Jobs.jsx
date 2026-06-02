@@ -1,9 +1,9 @@
 import React, { useState } from "react"; // Importon React dhe useState
-import { Link } from "react-router-dom"; // Importon Link për navigim
 import "../styles/Jobs.css"; // Importon CSS-in e Jobs page
 import { jobsData } from "../data/jobsData"; // Importon të dhënat e punëve
+import JobCard from "../components/JobCard"; // Importon JobCard
 
-function Jobs() {
+function Jobs() { // Krijon faqen Jobs
   const [searchText, setSearchText] = useState(""); // Mban tekstin e kërkimit
   const [locationText, setLocationText] = useState(""); // Mban lokacionin
   const [activeCategory, setActiveCategory] = useState("All"); // Mban kategorinë aktive
@@ -12,26 +12,27 @@ function Jobs() {
   const categories = ["All", ...new Set(jobsData.map((job) => job.category))]; // Merr kategoritë dinamike
   const jobTypes = ["All", ...new Set(jobsData.map((job) => job.type))]; // Merr tipet dinamike
 
-  const filteredJobs = jobsData.filter((job) => {
+  const filteredJobs = jobsData.filter((job) => { // Filtron jobs
     const matchesSearch =
       job.title.toLowerCase().includes(searchText.toLowerCase()) ||
       job.company.toLowerCase().includes(searchText.toLowerCase()) ||
       job.category.toLowerCase().includes(searchText.toLowerCase()) ||
-      job.tags.join(" ").toLowerCase().includes(searchText.toLowerCase());
+      job.tags.join(" ").toLowerCase().includes(searchText.toLowerCase()); // Kontrollon search
 
     const matchesLocation =
       locationText === "" ||
-      job.location.toLowerCase().includes(locationText.toLowerCase());
+      job.location.toLowerCase().includes(locationText.toLowerCase()); // Kontrollon lokacionin
 
     const matchesCategory =
-      activeCategory === "All" || job.category === activeCategory;
+      activeCategory === "All" || job.category === activeCategory; // Kontrollon kategorinë
 
-    const matchesType = activeType === "All" || job.type === activeType;
+    const matchesType =
+      activeType === "All" || job.type === activeType; // Kontrollon tipin e punës
 
-    return matchesSearch && matchesLocation && matchesCategory && matchesType;
+    return matchesSearch && matchesLocation && matchesCategory && matchesType; // Kthen vetëm jobs që përputhen
   });
 
-  const resetFilters = () => {
+  const resetFilters = () => { // Pastron filtrat
     setSearchText("");
     setLocationText("");
     setActiveCategory("All");
@@ -40,19 +41,21 @@ function Jobs() {
 
   return (
     <main className="jobs-page">
+
       <section className="jobs-hero">
         <div className="jobs-hero-content">
           <span>Find a Job</span>
           <h1>Find the right job for your career</h1>
           <p>
-            Search jobs by keyword, location, category and work type. JobValley
-            helps candidates discover better opportunities faster.
+            Search jobs by keyword, location, category and work type.
+            JobValley helps candidates discover better opportunities faster.
           </p>
         </div>
       </section>
 
       <section className="jobs-search-section">
         <div className="jobs-search-box">
+
           <div className="jobs-input-group">
             <span>⌕</span>
             <input
@@ -74,11 +77,14 @@ function Jobs() {
           </div>
 
           <button type="button">Search Jobs</button>
+
         </div>
       </section>
 
       <section className="jobs-content">
+
         <aside className="jobs-sidebar">
+
           <div className="filter-card">
             <h3>Categories</h3>
 
@@ -116,9 +122,11 @@ function Jobs() {
           <button type="button" className="reset-filter-btn" onClick={resetFilters}>
             Reset Filters
           </button>
+
         </aside>
 
         <div className="jobs-main">
+
           <div className="jobs-topbar">
             <div>
               <h2>Available Jobs</h2>
@@ -140,44 +148,7 @@ function Jobs() {
           <div className="jobs-list-page">
             {filteredJobs.length > 0 ? (
               filteredJobs.map((job) => (
-                <article className="job-list-card" key={job.id}>
-                  <div className={`job-company-logo ${job.color}`}>
-                    {job.company.charAt(0)}
-                  </div>
-
-                  <div className="job-list-info">
-                    <div className="job-title-row">
-                      <div>
-                        <h3>{job.title}</h3>
-                        <p>
-                          {job.company} • {job.location}
-                        </p>
-                      </div>
-
-                      <strong>{job.salary}</strong>
-                    </div>
-
-                    <div className="job-details-row">
-                      <span>{job.type}</span>
-                      <span>{job.category}</span>
-                      <span>{job.posted}</span>
-                    </div>
-
-                    <div className="job-tags-row">
-                      {job.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="job-actions">
-                    <button type="button" className="save-job-btn">
-                      ♡
-                    </button>
-
-                    <Link to={`/jobs/${job.id}`}>View Details</Link>
-                  </div>
-                </article>
+                <JobCard key={job.id} job={job} />
               ))
             ) : (
               <div className="jobs-empty">
@@ -189,8 +160,11 @@ function Jobs() {
               </div>
             )}
           </div>
+
         </div>
+
       </section>
+
     </main>
   );
 }

@@ -1,22 +1,40 @@
-import React from "react"; // Importon React
-import { Routes, Route } from "react-router-dom"; // Importon Routes
-import NavbarComponent from "./components/NavbarComponent"; // Importon Navbar
-import Footer from "./components/Footer"; // Importon Footer
-import About from "./pages/About"; // Importon About page
-import "./styles/App.css"; // Importon CSS-in kryesor
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-function App() { // Krijon App
-  return ( // Kthen pamjen
-    <div className="App"> {/* Wrapper kryesor */}
-      <NavbarComponent /> {/* Navbar */}
+import NavbarComponent from "./components/NavbarComponent";
+import Footer from "./components/Footer";
 
-      <Routes> {/* Krijon rrugët e faqeve */}
-        <Route path="/" element={<Home />} /> {/* Kur jemi te / shfaq Home */}
-        <Route path="/about" element={<About />} /> {/* Kur jemi te /about shfaq About */}
-      </Routes>\
-       <Footer /> {/* Footer në çdo faqe */}
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Jobs from "./pages/Jobs";
+import JobDetails from "./pages/JobDetails";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
+
+import "./styles/App.css";
+
+function App() {
+  return (
+    <div className="App">
+      <NavbarComponent />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/jobs/:id" element={<JobDetails />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/contact" element={<Contact />} />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+      <Footer />
     </div>
-  ); // Mbyll return
-} // Mbyll App
+  );
+}
 
-export default App; // Eksporton App
+export default App;

@@ -1,25 +1,26 @@
-.navbar {
+.jv-navbar {
   width: 100%;
-  height: 72px;
-  padding: 0 7%;
+  height: 82px;
+  padding: 0 clamp(28px, 7vw, 110px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: #eef5ff;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 9999;
+  border-bottom: 1px solid rgba(223, 232, 248, 0.85);
 }
 
-.navbar-logo {
+.jv-navbar-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
   text-decoration: none;
   flex-shrink: 0;
 }
 
-.logo-symbol {
+.jv-logo-symbol {
   width: 30px;
   height: 26px;
   position: relative;
@@ -27,7 +28,7 @@
   flex-shrink: 0;
 }
 
-.logo-check-small {
+.jv-logo-check-small {
   position: absolute;
   width: 11px;
   height: 17px;
@@ -38,7 +39,7 @@
   border-radius: 4px;
 }
 
-.logo-check-big {
+.jv-logo-check-big {
   position: absolute;
   width: 14px;
   height: 30px;
@@ -49,190 +50,188 @@
   border-radius: 5px;
 }
 
-.logo-name {
+.jv-logo-name {
   color: #12213f;
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 900;
   letter-spacing: -0.6px;
 }
 
-.navbar-links {
+.jv-navbar-links {
   display: flex;
   align-items: center;
-  gap: 36px;
+  justify-content: center;
+  gap: 38px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.navbar-links a {
+.jv-navbar-links a {
   text-decoration: none;
   color: #233252;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   position: relative;
   white-space: nowrap;
   transition: 0.25s ease;
 }
 
-.navbar-links a:hover {
+.jv-navbar-links a:hover {
   color: #315eea;
 }
 
-.navbar-links a.active-link {
+.jv-navbar-links a.jv-active-link {
   color: #315eea;
 }
 
-.navbar-links a.active-link::after {
+.jv-navbar-links a.jv-active-link::after {
   content: "";
   width: 100%;
   height: 2px;
   background: #315eea;
   position: absolute;
   left: 0;
-  bottom: -8px;
+  bottom: -10px;
   border-radius: 10px;
 }
 
-.navbar-actions {
+.jv-navbar-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 15px;
   flex-shrink: 0;
 }
 
-.register-link {
+.jv-register-link {
   text-decoration: none;
   color: #233252;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
+  transition: 0.25s ease;
 }
 
-.register-link:hover {
+.jv-register-link:hover {
   color: #315eea;
 }
 
-.signin-btn {
+.jv-signin-btn {
   text-decoration: none;
   background: #3f6df6;
   color: #ffffff;
-  padding: 12px 22px;
-  border-radius: 6px;
-  font-size: 13px;
+  padding: 13px 24px;
+  border-radius: 7px;
+  font-size: 14px;
   font-weight: 800;
   white-space: nowrap;
   transition: 0.25s ease;
 }
 
-.signin-btn:hover {
+.jv-signin-btn:hover {
   background: #315eea;
+  transform: translateY(-2px);
 }
 
 /* RESPONSIVE */
 
 @media (max-width: 1200px) {
-  .navbar {
+  .jv-navbar {
     padding: 0 5%;
   }
 
-  .navbar-links {
-    gap: 24px;
+  .jv-navbar-links {
+    gap: 26px;
   }
 }
 
 @media (max-width: 992px) {
-  .navbar {
+  .jv-navbar {
     height: auto;
-    padding: 18px 5%;
+    padding: 20px 5%;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
   }
 
-  .navbar-logo {
+  .jv-navbar-logo {
     justify-content: center;
   }
 
-  .navbar-links {
+  .jv-navbar-links {
     width: 100%;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 16px 26px;
+    gap: 16px 28px;
   }
 
-  .navbar-actions {
+  .jv-navbar-actions {
     justify-content: center;
   }
 
-  .navbar-links a.active-link::after {
+  .jv-navbar-links a.jv-active-link::after {
     display: none;
   }
 }
 
 @media (max-width: 640px) {
-  .navbar {
-    padding: 16px 20px;
-    gap: 15px;
+  .jv-navbar {
+    padding: 18px 20px;
+    gap: 16px;
   }
 
-  .navbar-links {
+  .jv-navbar-links {
     gap: 14px 20px;
   }
 
-  .navbar-links a {
+  .jv-navbar-links a {
     font-size: 13px;
   }
 
-  .signin-btn {
-    padding: 11px 20px;
+  .jv-signin-btn {
+    padding: 12px 20px;
   }
 }
 
 @media (max-width: 520px) {
-  .navbar-links {
+  .jv-navbar-links {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     text-align: center;
-    gap: 13px;
+    gap: 14px;
   }
 
-  .navbar-actions {
+  .jv-navbar-actions {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
 
-  .register-link,
-  .signin-btn {
+  .jv-register-link,
+  .jv-signin-btn {
     width: 100%;
     text-align: center;
-  }
-
-  .signin-btn {
-    padding: 12px 14px;
   }
 }
 
 @media (max-width: 360px) {
-  .navbar {
-    padding: 15px 14px;
+  .jv-navbar {
+    padding: 16px 14px;
   }
 
-  .navbar-links {
+  .jv-navbar-links {
     grid-template-columns: 1fr;
   }
 
-  .navbar-actions {
+  .jv-navbar-actions {
     grid-template-columns: 1fr;
   }
 
-  .logo-name {
+  .jv-logo-name {
     font-size: 20px;
   }
 
-  .logo-symbol {
+  .jv-logo-symbol {
     transform: scale(0.9);
   }
 }

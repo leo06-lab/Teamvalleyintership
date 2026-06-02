@@ -1,63 +1,43 @@
-const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
-const cors = require("cors");
-const session = require("express-session");
-const path = require("path");
+const express = require("express"); // Importon Express
+const mongoose = require("mongoose"); // Importon Mongoose
+const cors = require("cors"); // Importon CORS
+const dotenv = require("dotenv"); // Importon dotenv
 
-// Routes
-const authRoutes = require("./routes/authRoutes");
-const candidateRoutes = require("./routes/candidateRoutes");
-const companyRoutes = require("./routes/companyRoutes");
-const jobRoutes = require("./routes/jobRoutes");
-const applicationRoutes = require("./routes/applicationRoutes");
-const adminRoutes = require("./routes/adminRoutes");
+dotenv.config(); // Aktivizon .env
 
-// CORS
+const app = express(); // Krijon aplikacionin Express
+
+// Middleware
+app.use(express.json()); // Lejon JSON nga frontend
+
 app.use(
   cors({
-    credentials: true,
-    origin: "http://localhost:3000",
-    exposedHeaders: ["set-cookie"],
+    origin: "http://localhost:3000", // Frontend URL
+    credentials: true, // Lejon cookies/token nëse na duhen më vonë
   })
 );
 
-// JSON middleware
-app.use(express.json({ limit: "1000mb", extended: true }));
-
-// Session
-app.use(
-  session({
-    secret: "This will be secret",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+// Lidhja me MongoDB
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB connected successfully");
   })
-);
-
-// Static folders for uploaded files
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+  .catch((error) => {
+    console.log("MongoDB connection error:", error.message);
+  });
 
 // Test route
 app.get("/", (req, res) => {
-  res.send("TeamValley backend is running!");
+  res.send("JobValley Backend is running");
 });
 
-// API routes
-app.use("/api/auth", authRoutes);
-app.use("/api/candidates", candidateRoutes);
-app.use("/api/companies", companyRoutes);
-app.use("/api/jobs", jobRoutes);
-app.use("/api/applications", applicationRoutes);
-app.use("/api/admin", adminRoutes);
+// Routes
+app.use("/api/auth", require("./routes/authRoutes")); // Auth routes
 
-// DB connection
-mongoose
-  .connect("mongodb+srv://Leo_dbUser:Leandro1@cluster0.64g2ip8.mongodb.net/ecommerceDB?retryWrites=true&w=majority&appName=Cluster0")
-  .then(() => console.log("DB connected"))
-  .catch((err) => console.log("Something is wrong", err));
+// Port
+const PORT = process.env.PORT || 5000;
 
-// Server
-app.listen(5000, () => {
-  console.log("Server created!");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
