@@ -34,9 +34,6 @@ app.use("/api/applications", require("./routes/applicationRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 
-// Nese i ke keto routes, leri. Nese nuk i ke file-t, beji comment.
-// app.use("/api/candidate", require("./routes/candidateRoutes"));
-// app.use("/api/admin", require("./routes/adminRoutes"));
 
 app.use((req, res) => {
   res.status(404).json({
