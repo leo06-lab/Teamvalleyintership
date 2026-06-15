@@ -1,14 +1,25 @@
-import React, { useState } from "react"; // Importon React dhe useState
-import { useNavigate } from "react-router-dom"; // Importon navigate
-import "../styles/Auth.css"; // Importon CSS-in
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/Auth.css";
 
-function Register() { // Krijon faqen Register
-  const navigate = useNavigate(); // Krijon navigimin
+function Register() {
+  const navigate = useNavigate();
 
-  const [role, setRole] = useState("candidate"); // Mban rolin aktiv
+  const API_URL = "http://localhost:5000/api/auth";
 
-  const [formData, setFormData] = useState({ // Mban të dhënat e formës
-    fullName: "",
+  const [activeRole, setActiveRole] = useState("company");
+  const [loading, setLoading] = useState(false);
+
+  const [candidateData, setCandidateData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [companyData, setCompanyData] = useState({
     companyName: "",
     nipt: "",
     email: "",
@@ -17,202 +28,336 @@ function Register() { // Krijon faqen Register
     confirmPassword: "",
   });
 
-  const handleChange = (e) => { // Ndryshon inputet
-    setFormData({
-      ...formData,
+  const handleCandidateChange = (e) => {
+    setCandidateData({
+      ...candidateData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => { // Kur klikohet register
-    e.preventDefault(); // Ndalon refresh-in
+  const handleCompanyChange = (e) => {
+    setCompanyData({
+      ...companyData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    if (formData.password !== formData.confirmPassword) { // Kontrollon password
-      alert("Passwords do not match");
+  const handleCandidateRegister = async (e) => {
+    e.preventDefault();
+
+    if (
+      candidateData.firstName.trim() === "" ||
+      candidateData.lastName.trim() === "" ||
+      candidateData.email.trim() === "" ||
+      candidateData.phone.trim() === "" ||
+      candidateData.password.trim() === "" ||
+      candidateData.confirmPassword.trim() === ""
+    ) {
+      alert("Please fill all candidate fields.");
       return;
     }
 
-    if (role === "company" && formData.nipt.trim() === "") { // Kontrollon NIPT për kompani
-      alert("NIPT is required for company registration");
+    if (candidateData.password !== candidateData.confirmPassword) {
+      alert("Passwords do not match.");
       return;
     }
 
-    const registeredUser = { // Krijon user fake për momentin
-      role: role,
-      fullName: role === "candidate" ? formData.fullName : "",
-      companyName: role === "company" ? formData.companyName : "",
-      nipt: role === "company" ? formData.nipt : "",
-      email: formData.email,
-      phone: formData.phone,
-    };
+    try {
+      setLoading(true);
 
-    localStorage.setItem("jobvalleyRegisteredUser", JSON.stringify(registeredUser)); // Ruan user-in
+      const response = await fetch(`${API_URL}/register/candidate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(candidateData),
+      });
 
-    alert(`Registered successfully as ${role}`); // Mesazh suksesi
-    navigate("/login"); // Dërgon te login
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        alert(result.message || "Candidate registration failed.");
+        setLoading(false);
+        return;
+      }
+
+      setLoading(false);
+      alert("Candidate registered successfully.");
+      navigate("/login");
+    } catch (error) {
+      setLoading(false);
+      alert("Backend is not running.");
+    }
+  };
+
+  const handleCompanyRegister = async (e) => {
+    e.preventDefault();
+
+    if (
+      companyData.companyName.trim() === "" ||
+      companyData.nipt.trim() === "" ||
+      companyData.email.trim() === "" ||
+      companyData.phone.trim() === "" ||
+      companyData.password.trim() === "" ||
+      companyData.confirmPassword.trim() === ""
+    ) {
+      alert("Please fill all company fields.");
+      return;
+    }
+
+    if (companyData.password !== companyData.confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await fetch(`${API_URL}/register/company`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(companyData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        alert(result.message || "Company registration failed.");
+        setLoading(false);
+        return;
+      }
+
+      setLoading(false);
+      alert("Company registered successfully.");
+      navigate("/login");
+    } catch (error) {
+      setLoading(false);
+      alert("Backend is not running.");
+    }
   };
 
   return (
-    <main className="auth-page">
-
-      <section className="auth-card">
-
-        <div className="auth-left">
-          <span className="auth-label">Create Account</span>
-
-          <h1>Join JobValley and start your journey</h1>
-
-          <p>
-            Register as a candidate to apply for jobs or as a company to publish opportunities.
-          </p>
-
-          <div className="auth-info-box">
-            <h3>Register roles</h3>
-
-            {role === "candidate" && (
-              <p>Candidate registration requires full name, email, phone and password.</p>
-            )}
-
-            {role === "company" && (
-              <p>Company registration requires company name, business NIPT, email, phone and password.</p>
-            )}
-          </div>
+    <main className="auth-mongo-page">
+      <section className="auth-mongo-left">
+        <div className="auth-mongo-brand">
+          <span className="auth-mongo-logo-icon">✓</span>
+          <h2>JobValley</h2>
         </div>
 
-        <div className="auth-right">
+        <div className="auth-mongo-box auth-register-mongo-box">
+          <h1>Create your account</h1>
 
-          <h2>Create account</h2>
+          <p className="auth-mongo-signup">
+            Already have an account? <Link to="/login">Log In</Link>
+          </p>
 
-          <div className="role-tabs two-tabs">
-
+          <div className="auth-register-role-tabs">
             <button
               type="button"
-              className={role === "candidate" ? "role-tab active" : "role-tab"}
-              onClick={() => setRole("candidate")}
+              className={activeRole === "candidate" ? "active-register-role" : ""}
+              onClick={() => setActiveRole("candidate")}
             >
               Candidate
             </button>
 
             <button
               type="button"
-              className={role === "company" ? "role-tab active" : "role-tab"}
-              onClick={() => setRole("company")}
+              className={activeRole === "company" ? "active-register-role" : ""}
+              onClick={() => setActiveRole("company")}
             >
               Company
             </button>
-
           </div>
 
-          <form onSubmit={handleSubmit} className="auth-form">
-
-            {role === "candidate" && (
-              <div className="form-group">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  name="fullName"
-                  placeholder="Enter your full name"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            )}
-
-            {role === "company" && (
-              <>
-                <div className="form-group">
-                  <label>Company Name</label>
+          {activeRole === "candidate" && (
+            <form className="auth-mongo-form" onSubmit={handleCandidateRegister}>
+              <div className="auth-register-row">
+                <div className="auth-mongo-group">
+                  <label>First Name</label>
                   <input
                     type="text"
-                    name="companyName"
-                    placeholder="Enter company name"
-                    value={formData.companyName}
-                    onChange={handleChange}
-                    required
+                    name="firstName"
+                    value={candidateData.firstName}
+                    onChange={handleCandidateChange}
+                    placeholder="Enter first name"
                   />
                 </div>
 
-                <div className="form-group">
-                  <label>Business NIPT</label>
+                <div className="auth-mongo-group">
+                  <label>Last Name</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={candidateData.lastName}
+                    onChange={handleCandidateChange}
+                    placeholder="Enter last name"
+                  />
+                </div>
+              </div>
+
+              <div className="auth-mongo-group">
+                <label>Email Address</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={candidateData.email}
+                  onChange={handleCandidateChange}
+                  placeholder="candidate@email.com"
+                />
+              </div>
+
+              <div className="auth-mongo-group">
+                <label>Phone Number</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={candidateData.phone}
+                  onChange={handleCandidateChange}
+                  placeholder="+355 69 123 4567"
+                />
+              </div>
+
+              <div className="auth-register-row">
+                <div className="auth-mongo-group">
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={candidateData.password}
+                    onChange={handleCandidateChange}
+                    placeholder="Enter password"
+                  />
+                </div>
+
+                <div className="auth-mongo-group">
+                  <label>Confirm Password</label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={candidateData.confirmPassword}
+                    onChange={handleCandidateChange}
+                    placeholder="Confirm password"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="auth-mongo-next-btn"
+                disabled={loading}
+              >
+                {loading ? "Creating account..." : "Sign Up as Candidate"}
+              </button>
+            </form>
+          )}
+
+          {activeRole === "company" && (
+            <form className="auth-mongo-form" onSubmit={handleCompanyRegister}>
+              <div className="auth-mongo-group">
+                <label>Company Name</label>
+                <input
+                  type="text"
+                  name="companyName"
+                  value={companyData.companyName}
+                  onChange={handleCompanyChange}
+                  placeholder="Enter company name"
+                />
+              </div>
+
+              <div className="auth-register-row">
+                <div className="auth-mongo-group">
+                  <label>NIPT</label>
                   <input
                     type="text"
                     name="nipt"
-                    placeholder="Enter business NIPT"
-                    value={formData.nipt}
-                    onChange={handleChange}
-                    required
+                    value={companyData.nipt}
+                    onChange={handleCompanyChange}
+                    placeholder="L12345678A"
                   />
                 </div>
-              </>
-            )}
 
-            <div className="form-group">
-              <label>Email Address</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
+                <div className="auth-mongo-group">
+                  <label>Phone Number</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    value={companyData.phone}
+                    onChange={handleCompanyChange}
+                    placeholder="+355 69 123 4567"
+                  />
+                </div>
+              </div>
 
-            <div className="form-group">
-              <label>Phone Number</label>
-              <input
-                type="text"
-                name="phone"
-                placeholder="Enter phone number"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="auth-mongo-group">
+                <label>Company Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={companyData.email}
+                  onChange={handleCompanyChange}
+                  placeholder="company@email.com"
+                />
+              </div>
 
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Create password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="auth-register-row">
+                <div className="auth-mongo-group">
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={companyData.password}
+                    onChange={handleCompanyChange}
+                    placeholder="Enter password"
+                  />
+                </div>
 
-            <div className="form-group">
-              <label>Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-            </div>
+                <div className="auth-mongo-group">
+                  <label>Confirm Password</label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={companyData.confirmPassword}
+                    onChange={handleCompanyChange}
+                    placeholder="Confirm password"
+                  />
+                </div>
+              </div>
 
-            <button type="submit" className="auth-submit-btn">
-              {role === "candidate" && "Register as Candidate"}
-              {role === "company" && "Register as Company"}
-            </button>
-
-          </form>
-
-          <p className="auth-switch">
-            Already have an account?{" "}
-            <button onClick={() => navigate("/login")}>
-              Login here
-            </button>
-          </p>
-
+              <button
+                type="submit"
+                className="auth-mongo-next-btn"
+                disabled={loading}
+              >
+                {loading ? "Creating account..." : "Sign Up as Company"}
+              </button>
+            </form>
+          )}
         </div>
-
       </section>
 
+      <section className="auth-mongo-right">
+        <div className="auth-mongo-right-content">
+          <h2>Start your journey with JobValley</h2>
+
+          <p>
+            Create an account as a candidate to apply for jobs, or register your
+            company to publish job opportunities and manage applications.
+          </p>
+
+          <p className="auth-mongo-extra">
+            Every profile is an opportunity. Every position deserves the right
+            talent.
+          </p>
+
+          <Link to="/login">Already registered? Log in →</Link>
+        </div>
+
+        <div className="auth-mongo-shape auth-mongo-shape-one"></div>
+        <div className="auth-mongo-shape auth-mongo-shape-two"></div>
+        <div className="auth-mongo-star">✦</div>
+      </section>
     </main>
   );
 }
