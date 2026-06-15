@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Contact.css";
+import { Alert } from "react-bootstrap";
+import axios from "axios";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ function Contact() {
   });
 
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -18,31 +21,41 @@ function Contact() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      formData.fullName.trim() === "" ||
-      formData.email.trim() === "" ||
-      formData.subject.trim() === "" ||
-      formData.message.trim() === ""
-    ) {
-      alert("Please fill in all fields.");
-      return;
+    try {
+      if (
+        formData.fullName.trim() === "" ||
+        formData.email.trim() === "" ||
+        formData.subject.trim() === "" ||
+        formData.message.trim() === ""
+      ) {
+        setErrorMessage("Ju lutemi plotësoni të gjitha fushat.");
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
+        return;
+      }
+      await axios.post("http://localhost:5000/api/contact", formData);
+
+      setSuccessMessage("Mesazhi u dërgua me sukses.");
+
+      setFormData({
+        fullName: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || "Dështoi të dërgohet mesazhi.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
     }
-
-    setSuccessMessage("Your message has been sent successfully.");
-
-    setFormData({
-      fullName: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
-
-    setTimeout(() => {
-      setSuccessMessage("");
-    }, 3000);
   };
 
   return (
@@ -98,10 +111,8 @@ function Contact() {
         <div className="jv-contact-right">
           <form className="jv-contact-form" onSubmit={handleSubmit}>
             <h2>Send Us a Message</h2>
-
-            {successMessage && (
-              <div className="jv-contact-success">{successMessage}</div>
-            )}
+            {successMessage && <Alert variant="success">{successMessage}</Alert>}
+            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
             <div className="jv-contact-group">
               <label>Full Name</label>

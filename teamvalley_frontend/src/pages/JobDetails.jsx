@@ -1,13 +1,18 @@
-import React from "react"; // Importon React
-import { Link, useNavigate, useParams } from "react-router-dom"; // Importon routing
-import "../styles/JobDetails.css"; // Importon CSS-in
-import { jobsData } from "../data/jobsData"; // Importon jobs data
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import "../styles/JobDetails.css";
+import { jobsData } from "../data/jobsData";
+import axios from "axios";
+import { Alert } from "react-bootstrap";
 
 function JobDetails() {
-  const { id } = useParams(); // Merr id nga URL
-  const navigate = useNavigate(); // Përdoret për redirect
+  const { id } = useParams();
+  //const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const job = jobsData.find((item) => item.id === Number(id)); // Gjen punën sipas id
+  const job = jobsData.find((item) => item.id === Number(id));
 
   if (!job) {
     return (
@@ -22,68 +27,57 @@ function JobDetails() {
   }
 
   const similarJobs = jobsData.filter(
-    (item) => item.category === job.category && item.id !== job.id
+    (item) => item.category === job.category && item.id !== job.id,
   );
 
-  const handleApply = () => {
-    const user = JSON.parse(localStorage.getItem("jobvalleyUser"));
+  // Funksioni per te aplikuar per nje pune
+  const handleApply = async () => {
+    try {
+      await axios.post("http://localhost:5000/api/candidate/applications", {
+        jobId: job.id,
+        jobTitle: job.title,
+        company: job.company,
+        location: job.location,
+      });
 
-    if (!user || !user.isLoggedIn) {
-      alert("Please login as candidate before applying.");
-      navigate("/login");
-      return;
+      setSuccessMessage("Aplikimi u dërgua me sukses.");
+
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
+    } catch (error) {
+      setErrorMessage(
+        error.response?.data?.message || "Gabim gjatë aplikimit për punë.",
+      );
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
     }
-
-    if (user.role !== "candidate") {
-      alert("Only candidates can apply for jobs.");
-      return;
-    }
-
-    const oldApplications =
-      JSON.parse(localStorage.getItem("jobvalleyApplications")) || [];
-
-    const alreadyApplied = oldApplications.some(
-      (application) => application.jobId === job.id
-    );
-
-    if (alreadyApplied) {
-      alert("You have already applied for this job.");
-      return;
-    }
-
-    const newApplication = {
-      jobId: job.id,
-      jobTitle: job.title,
-      company: job.company,
-      candidate: user.fullName || `${user.firstName} ${user.lastName}`,
-      appliedAt: new Date().toLocaleString(),
-      status: "Pending",
-    };
-
-    localStorage.setItem(
-      "jobvalleyApplications",
-      JSON.stringify([...oldApplications, newApplication])
-    );
-
-    alert("Application submitted successfully.");
   };
 
-  const handleSaveJob = () => {
-    const savedJobs = JSON.parse(localStorage.getItem("jobvalleySavedJobs")) || [];
+  // Funksioni per te ruajtur nje pune
+  const handleSaveJob = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("jobvalleyUser"));
 
-    const alreadySaved = savedJobs.some((savedJob) => savedJob.id === job.id);
+      await axios.post("http://localhost:5000/api/candidate/saved-jobs", {
+        jobId: job.id,
+        jobTitle: job.title,
+        company: job.company,
+        location: job.location,
+        candidateEmail: user.email,
+      });
+      setSuccessMessage("Puna u ruajt me sukses.");
 
-    if (alreadySaved) {
-      alert("This job is already saved.");
-      return;
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || "Gabim gjatë ruajtjes së punës.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
     }
-
-    localStorage.setItem(
-      "jobvalleySavedJobs",
-      JSON.stringify([...savedJobs, job])
-    );
-
-    alert("Job saved successfully.");
   };
 
   return (
@@ -122,7 +116,6 @@ function JobDetails() {
 
           <div className="details-card">
             <h2>Responsibilities</h2>
-
             <ul>
               {job.responsibilities.map((item) => (
                 <li key={item}>{item}</li>
@@ -132,7 +125,6 @@ function JobDetails() {
 
           <div className="details-card">
             <h2>Requirements</h2>
-
             <ul>
               {job.requirements.map((item) => (
                 <li key={item}>{item}</li>
@@ -142,7 +134,6 @@ function JobDetails() {
 
           <div className="details-card">
             <h2>Benefits</h2>
-
             <ul>
               {job.benefits.map((item) => (
                 <li key={item}>{item}</li>
@@ -152,15 +143,25 @@ function JobDetails() {
         </div>
 
         <aside className="job-details-sidebar">
+          {successMessage && <Alert variant="success">{successMessage}</Alert>}
+          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
           <div className="apply-card">
             <h3>{job.salary}</h3>
             <p>Estimated salary range</p>
 
-            <button type="button" className="apply-main-btn" onClick={handleApply}>
+            <button
+              type="button"
+              className="apply-main-btn"
+              onClick={handleApply}
+            >
               Apply Now
             </button>
 
-            <button type="button" className="save-main-btn" onClick={handleSaveJob}>
+            <button
+              type="button"
+              className="save-main-btn"
+              onClick={handleSaveJob}
+            >
               Save Job
             </button>
           </div>
@@ -216,7 +217,8 @@ function JobDetails() {
             </div>
 
             <p>
-              This company is looking for motivated candidates through JobValley.
+              This company is looking for motivated candidates through
+              JobValley.
             </p>
           </div>
 

@@ -16,26 +16,46 @@ function NavbarComponent() {
 
       <ul className="jv-navbar-links">
         <li>
-          <NavLink to="/" className={({ isActive }) => isActive ? "jv-active-link" : ""}>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
+          >
             Home
           </NavLink>
         </li>
 
         <li>
-          <NavLink to="/about" className={({ isActive }) => isActive ? "jv-active-link" : ""}>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
+          >
             About
           </NavLink>
         </li>
 
         <li>
-          <NavLink to="/jobs" className={({ isActive }) => isActive ? "jv-active-link" : ""}>
+          <NavLink
+            to="/jobs"
+            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
+          >
             Find a Job
           </NavLink>
         </li>
 
         <li>
-          <NavLink to="/contact" className={({ isActive }) => isActive ? "jv-active-link" : ""}>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
+          >
             Contact
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/candidate/dashboard"
+            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
+          >
+            DashboardCandidate
           </NavLink>
         </li>
       </ul>

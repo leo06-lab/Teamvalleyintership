@@ -1,43 +1,44 @@
-const express = require("express"); // Importon Express
-const mongoose = require("mongoose"); // Importon Mongoose
-const cors = require("cors"); // Importon CORS
-const dotenv = require("dotenv"); // Importon dotenv
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const path = require("path");
 
-dotenv.config(); // Aktivizon .env
 
-const app = express(); // Krijon aplikacionin Express
+const contactRoutes = require("./routes/contactRoutes");
+const candidateRoutes = require("./routes/candidateRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
+const jobRoutes = require("./routes/jobRoutes");
+const authRoutes = require("./routes/authRoutes");
 
-// Middleware
-app.use(express.json()); // Lejon JSON nga frontend
+dotenv.config();
+const app = express();
+app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Frontend URL
-    credentials: true, // Lejon cookies/token nëse na duhen më vonë
+    origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 
-// Lidhja me MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB connected successfully");
-  })
-  .catch((error) => {
-    console.log("MongoDB connection error:", error.message);
-  });
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch((err) => console.log("MongoDB connection error:", err.message));
 
-// Test route
 app.get("/", (req, res) => {
   res.send("JobValley Backend is running");
 });
 
-// Routes
-app.use("/api/auth", require("./routes/authRoutes")); // Auth routes
+app.use("/api/auth", authRoutes);
+app.use("/api/candidate", candidateRoutes);
+app.use("/api/candidate", applicationRoutes);
+app.use("/api/candidate", jobRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Port
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
