@@ -5,7 +5,23 @@ import { useInlineMessage } from "../hooks/useInlineMessage";
 const REVIEWS_API_URL = "http://localhost:5000/api/reviews";
 
 function PlatformReviews() {
-  const loggedUser = JSON.parse(localStorage.getItem("jobvalleyUser"));
+  const getLoggedUser = () => {
+    try {
+      return JSON.parse(localStorage.getItem("jobvalleyUser"));
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const loggedUser = getLoggedUser();
+  const userRole = loggedUser?.role || "guest";
+
+  const isAdmin = userRole === "admin";
+  const isCompanyOrCandidate = userRole === "company" || userRole === "candidate";
+
+  const showRatingBox = !isCompanyOrCandidate;
+  const showReviewForm = !isAdmin;
+
   const { message, showMessage } = useInlineMessage();
 
   const [loading, setLoading] = useState(false);
@@ -29,7 +45,7 @@ function PlatformReviews() {
       loggedUser?.companyName ||
       `${loggedUser?.firstName || ""} ${loggedUser?.lastName || ""}`.trim() ||
       "",
-    role: loggedUser?.role || "guest",
+    role: userRole === "admin" ? "guest" : userRole,
     rating: 5,
     comment: "",
   });
@@ -76,6 +92,11 @@ function PlatformReviews() {
   const handleSubmitReview = async (e) => {
     e.preventDefault();
 
+    if (isAdmin) {
+      showMessage("Admin cannot submit platform reviews.", "warning");
+      return;
+    }
+
     if (formData.name.trim() === "" || formData.comment.trim() === "") {
       showMessage("Please fill your name and review comment.", "warning");
       return;
@@ -91,7 +112,7 @@ function PlatformReviews() {
         },
         body: JSON.stringify({
           name: formData.name,
-          role: formData.role,
+          role: formData.role || "guest",
           rating: formData.rating,
           comment: formData.comment,
         }),
@@ -121,105 +142,136 @@ function PlatformReviews() {
   };
 
   const renderStars = (rating) => {
-    const roundedRating = Math.round(rating);
+    const roundedRating = Math.round(Number(rating) || 0);
 
     return Array.from({ length: 5 }).map((_, index) => (
       <span key={index}>{index < roundedRating ? "★" : "☆"}</span>
     ));
   };
 
+  const getSectionModeClass = () => {
+    if (isAdmin) {
+      return "review-mode-admin";
+    }
+
+    if (isCompanyOrCandidate) {
+      return "review-mode-user";
+    }
+
+    return "review-mode-guest";
+  };
+
   return (
-    <section className="review-banner platform-review-section fade-up">
-      <div className="review-rating-box">
-        <div className="review-stars">
-          {renderStars(reviewData.averageRating)}
+    <section
+      className={`review-banner platform-review-section fade-up ${getSectionModeClass()}`}
+    >
+      {showRatingBox && (
+        <div className="review-rating-box platform-rating-card">
+          <span className="platform-rating-label">Platform Rating</span>
+
+          <div className="review-stars">
+            {renderStars(reviewData.averageRating)}
+          </div>
+
+          <h2>
+            {loading
+              ? "..."
+              : reviewData.averageRating > 0
+              ? `${reviewData.averageRating}/5`
+              : "0/5"}
+          </h2>
+
+          <p>{reviewData.totalReviews} real platform reviews</p>
         </div>
+      )}
 
-        <h2>
-          {loading
-            ? "..."
-            : reviewData.averageRating > 0
-            ? `${reviewData.averageRating}/5`
-            : "0/5"}
-        </h2>
+      {showReviewForm && (
+        <div className="review-content platform-review-form-card">
+          <span>STAR RATE REVIEW</span>
 
-        <p>{reviewData.totalReviews} real platform reviews</p>
-      </div>
+          <h2>Rate your experience with JobValley</h2>
 
-      <div className="review-content">
-        <span>STAR RATE REVIEW</span>
-        <h2>Rate your experience with JobValley</h2>
-        <p>
-          Reviews are saved in MongoDB and the average rating is calculated from
-          real user feedback.
-        </p>
+          <p>
+            Reviews are saved in MongoDB and the average rating is calculated
+            from real user feedback.
+          </p>
 
-        <InlineMessage message={message} />
+          <InlineMessage message={message} />
 
-        <form className="platform-review-form" onSubmit={handleSubmitReview}>
-          <div className="platform-rating-buttons">
-            {[1, 2, 3, 4, 5].map((ratingValue) => (
-              <button
-                key={ratingValue}
-                type="button"
-                className={
-                  formData.rating >= ratingValue ? "active-rating-star" : ""
-                }
-                onClick={() => handleRatingClick(ratingValue)}
-              >
-                ★
-              </button>
-            ))}
-          </div>
+          <form className="platform-review-form" onSubmit={handleSubmitReview}>
+            <div className="platform-rating-buttons">
+              {[1, 2, 3, 4, 5].map((ratingValue) => (
+                <button
+                  key={ratingValue}
+                  type="button"
+                  className={
+                    formData.rating >= ratingValue ? "active-rating-star" : ""
+                  }
+                  onClick={() => handleRatingClick(ratingValue)}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
 
-          <div className="platform-review-grid">
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
+            <div className="platform-review-grid">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your name"
+              />
+
+              <select name="role" value={formData.role} onChange={handleChange}>
+                <option value="guest">Guest</option>
+                <option value="candidate">Candidate</option>
+                <option value="company">Company</option>
+              </select>
+            </div>
+
+            <textarea
+              name="comment"
+              value={formData.comment}
               onChange={handleChange}
-              placeholder="Your name"
-            />
+              placeholder="Write your review about the platform..."
+            ></textarea>
 
-            <select name="role" value={formData.role} onChange={handleChange}>
-              <option value="guest">Guest</option>
-              <option value="candidate">Candidate</option>
-              <option value="company">Company</option>
-            </select>
-          </div>
-
-          <textarea
-            name="comment"
-            value={formData.comment}
-            onChange={handleChange}
-            placeholder="Write your review about the platform..."
-          ></textarea>
-
-          <button type="submit" disabled={submitting}>
-            {submitting ? "Submitting..." : "Submit Review"}
-          </button>
-        </form>
-      </div>
+            <button type="submit" disabled={submitting}>
+              {submitting ? "Submitting..." : "Submit Review"}
+            </button>
+          </form>
+        </div>
+      )}
 
       <div className="review-small-stats platform-review-list">
         <h3>Latest Reviews</h3>
 
-        {reviewData.reviews.length === 0 ? (
+        {loading ? (
+          <div className="platform-empty-review">
+            <strong>Loading reviews...</strong>
+            <span>Please wait</span>
+          </div>
+        ) : reviewData.reviews.length === 0 ? (
           <div className="platform-empty-review">
             <strong>No reviews yet</strong>
             <span>Be the first to rate JobValley</span>
           </div>
         ) : (
-          reviewData.reviews.slice(0, 3).map((review) => (
+          reviewData.reviews.slice(0, 4).map((review) => (
             <div className="platform-review-item" key={review._id}>
               <div className="platform-review-item-top">
-                <strong>{review.name}</strong>
-                <span>{review.rating}/5 ★</span>
+                <div>
+                  <strong>{review.name}</strong>
+                  <small>{review.role}</small>
+                </div>
+
+                <div className="platform-review-stars-small">
+                  {renderStars(review.rating)}
+                </div>
               </div>
 
               <p>{review.comment}</p>
-
-              <small>{review.role}</small>
             </div>
           ))
         )}

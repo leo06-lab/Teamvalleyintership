@@ -1,6 +1,6 @@
 import React from "react"; // Importon React
 import "../styles/About.css"; // Importon CSS-in e About page
-import homePageImage from "../assets/images/homepage.png"; // Përdorim foton ekzistuese nga assets
+import homePageImage from "../assets/images/aboutjobvalley.png"; // Përdorim foton ekzistuese nga assets
 
 function About() { // Krijon komponentin About
   return ( // Kthen pamjen në browser

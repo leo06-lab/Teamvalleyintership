@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Home.css";
-import homePageImage from "../assets/images/homepage.png";
+import homeValleyImage from "../assets/images/homevalley.png";
+import homeJobValleyImage from "../assets/images/homejobvalley.png";
 import { getImageUrl } from "../utils/getImageUrl";
 import InlineMessage from "../components/InlineMessage";
 import { useInlineMessage } from "../hooks/useInlineMessage";
@@ -250,11 +251,11 @@ function Home() {
           <div className="shape shape-two"></div>
 
           <div className="image-card image-card-main">
-            <img src={homePageImage} alt="JobValley team" />
+            <img src={homeValleyImage} alt="JobValley team" />
           </div>
 
           <div className="image-card image-card-small">
-            <img src={homePageImage} alt="Job interview" />
+            <img src={homeJobValleyImage} alt="Job interview" />
           </div>
 
           <div className="dots dots-one"></div>
