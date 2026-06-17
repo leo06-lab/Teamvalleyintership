@@ -1,86 +1,266 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const generateToken = require("../utils/generateToken");
 
-// Regjistrimi i perdorusit
-const register = async (req, res) => {
+const buildAuthResponse = (user) => ({
+  id: user._id,
+  role: user.role,
+  firstName: user.firstName,
+  lastName: user.lastName,
+  companyName: user.companyName,
+  nipt: user.nipt,
+  email: user.email,
+  phone: user.phone,
+  token: generateToken(user._id),
+});
+
+const registerCandidate = async (req, res) => {
   try {
-    // Merr te dhenat nga request body
-    const { fullName, email, phoneNumber, password, confirmPassword } =
-      req.body;
-
-    if (password !== confirmPassword) {
-      return res
-        .status(400)
-        .json({ message: "Password dhe confirm password nuk perputhen" });
-    }
-
-    // Kontrollojme nese perdoruesi me kete email ekziston
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: "Perdoruesi me kete email ekziston" });
-    }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // krijon perdoruesin e ri me te dhenat e marra dhe password e hashuar
-    const user = new User({
+    const {
+      firstName,
+      lastName,
       fullName,
       email,
+      phone,
       phoneNumber,
-      password: hashedPassword,
-    });
+      password,
+      confirmPassword,
+    } = req.body;
 
-    // ruan perdoruesin ne database
-    await user.save();
+    const resolvedFirstName = (firstName || fullName || "").split(" ")[0].trim();
+    const resolvedLastName =
+      lastName || (fullName || "").split(" ").slice(1).join(" ").trim();
+    const resolvedPhone = phone || phoneNumber || "";
+
+    if (!resolvedFirstName || !resolvedLastName || !email || !resolvedPhone || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "First name, last name, email, phone and password are required.",
+      });
+    }
+
+    if (confirmPassword && password !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Passwords do not match.",
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must be at least 6 characters.",
+      });
+    }
+
+    const existingUser = await User.findOne({ email: email.toLowerCase() });
+
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "This email is already registered.",
+      });
+    }
+
+    const user = await User.create({
+      role: "candidate",
+      firstName: resolvedFirstName,
+      lastName: resolvedLastName,
+      email: email.toLowerCase(),
+      phone: resolvedPhone,
+      password,
+    });
 
     res.status(201).json({
       success: true,
-      message: "Perdoruesi u regjistrua me sukses",
-      user,
+      message: "Candidate registered successfully.",
+      data: buildAuthResponse(user),
     });
   } catch (error) {
-    res.status(500).json({ message: "Gabim ne server" });
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
-// Login i perdoruesit
-
-const login = async (req, res) => {
+const registerCompany = async (req, res) => {
   try {
-    // Merr te dhenat nga request body
-    const { email, password } = req.body;
+    const {
+      companyName,
+      nipt,
+      email,
+      phone,
+      password,
+      confirmPassword,
+    } = req.body;
 
-    // Kontrollojme nese perdoruesi me kete email ekziston
-    const user = await User.findOne({ email });
+    if (!companyName || !nipt || !email || !phone || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Company name, NIPT, email, phone and password are required.",
+      });
+    }
+
+    if (confirmPassword && password !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "Passwords do not match.",
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must be at least 6 characters.",
+      });
+    }
+
+    const existingEmail = await User.findOne({ email: email.toLowerCase() });
+
+    if (existingEmail) {
+      return res.status(400).json({
+        success: false,
+        message: "This email is already registered.",
+      });
+    }
+
+    const existingNipt = await User.findOne({ nipt: nipt.toUpperCase() });
+
+    if (existingNipt) {
+      return res.status(400).json({
+        success: false,
+        message: "This NIPT is already registered.",
+      });
+    }
+
+    const user = await User.create({
+      role: "company",
+      companyName,
+      nipt: nipt.toUpperCase(),
+      email: email.toLowerCase(),
+      phone,
+      password,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Company registered successfully.",
+      data: buildAuthResponse(user),
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: "Email or NIPT already exists.",
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const checkEmail = async (req, res) => {
+  try {
+    const email = req.body.email || req.params.email || req.query.email;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        exists: false,
+        message: "Email is required.",
+      });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() }).select("-password");
 
     if (!user) {
-      return res.status(400).json({ message: "Email eshte invalid" });
+      return res.status(404).json({
+        success: false,
+        exists: false,
+        message: "No account found with this email.",
+      });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: "Password eshte invalid" });
-    }
-
-    // Nëse është valid, gjeneron një JWT token me jwt.sign
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" },
-    );
-
-    res.status(200).json({ success: true, token, user });
+    res.status(200).json({
+      success: true,
+      exists: true,
+      message: "Account found.",
+      data: {
+        id: user._id,
+        role: user.role,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        companyName: user.companyName,
+        nipt: user.nipt,
+        phone: user.phone,
+      },
+    });
   } catch (error) {
-    res.status(500).json({ message: "Gabim ne server" });
+    res.status(500).json({
+      success: false,
+      exists: false,
+      message: error.message,
+    });
   }
 };
 
-// Eksporto controllerat
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required.",
+      });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user || !(await user.matchPassword(password))) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Login successful.",
+      data: buildAuthResponse(user),
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getMe = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      data: req.user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
-    register,
-    login,
-}
+  registerCandidate,
+  registerCompany,
+  checkEmail,
+  loginUser,
+  getMe,
+  register: registerCandidate,
+  login: loginUser,
+};

@@ -1,75 +1,107 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 
 function NavbarComponent() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [loggedUser, setLoggedUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const userFromStorage = JSON.parse(localStorage.getItem("jobvalleyUser"));
+    setLoggedUser(userFromStorage);
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("jobvalleyToken");
+    localStorage.removeItem("jobvalleyUser");
+    setLoggedUser(null);
+    setMenuOpen(false);
+    navigate("/login");
+  };
+
+  const getDashboardPath = () => {
+    if (loggedUser?.role === "admin") {
+      return "/admin-dashboard";
+    }
+
+    if (loggedUser?.role === "company") {
+      return "/company-dashboard";
+    }
+
+    if (loggedUser?.role === "candidate") {
+      return "/candidate/dashboard";
+    }
+
+    return "/";
+  };
+
   return (
-    <nav className="jv-navbar">
-      <NavLink to="/" className="jv-navbar-logo">
-        <span className="jv-logo-symbol">
-          <span className="jv-logo-check-small"></span>
-          <span className="jv-logo-check-big"></span>
-        </span>
+    <header className="navbar-wrapper">
+      <nav className="navbar-container">
+        <Link to="/" className="navbar-logo">
+          <span>JV</span>
+          <strong>Job Valley</strong>
+        </Link>
 
-        <span className="jv-logo-name">JobValley</span>
-      </NavLink>
-
-      <ul className="jv-navbar-links">
-        <li>
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
-          >
+        <div className={menuOpen ? "navbar-links show-menu" : "navbar-links"}>
+          <NavLink to="/" className="navbar-link">
             Home
           </NavLink>
-        </li>
-
-        <li>
-          <NavLink
-            to="/about"
-            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
-          >
+          <NavLink to="/about" className="navbar-link">
             About
           </NavLink>
-        </li>
-
-        <li>
-          <NavLink
-            to="/jobs"
-            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
-          >
+          <NavLink to="/jobs" className="navbar-link">
             Find a Job
           </NavLink>
-        </li>
-
-        <li>
-          <NavLink
-            to="/contact"
-            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
-          >
+          <NavLink to="/contact" className="navbar-link">
             Contact
           </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/candidate/dashboard"
-            className={({ isActive }) => (isActive ? "jv-active-link" : "")}
-          >
-            DashboardCandidate
-          </NavLink>
-        </li>
-      </ul>
+        </div>
 
-      <div className="jv-navbar-actions">
-        <NavLink to="/register" className="jv-register-link">
-          Register
-        </NavLink>
+        <div className="navbar-actions">
+          {loggedUser ? (
+            <>
+              <button
+                type="button"
+                className="navbar-dashboard-btn"
+                onClick={() => navigate(getDashboardPath())}
+              >
+                Dashboard
+              </button>
+              <button
+                type="button"
+                className="navbar-logout-btn"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="navbar-start-btn"
+              onClick={() => navigate("/login")}
+            >
+              Get Started
+            </button>
+          )}
+        </div>
 
-        <NavLink to="/login" className="jv-signin-btn">
-          Sign in
-        </NavLink>
-      </div>
-    </nav>
+        <button
+          type="button"
+          className="navbar-toggle"
+          onClick={() => setMenuOpen((current) => !current)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </header>
   );
 }
 

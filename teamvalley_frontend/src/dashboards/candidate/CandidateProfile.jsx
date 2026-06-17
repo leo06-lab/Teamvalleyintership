@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Container, Card, Form, Button, Row, Col, Badge, Alert, Spinner } from "react-bootstrap";
-import axios from "axios";
+import api from "../../api/axios";
 
 function CandidateProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,7 +29,7 @@ function CandidateProfile() {
         setLoading(true);
         setError("");
 
-        const response = await axios.get("http://localhost:5000/api/candidate/profile");
+        const response = await api.get("/candidate/profile");
         const data = response.data;
 
         setFormData({
@@ -88,7 +88,7 @@ function CandidateProfile() {
       setError("");
       setSuccess("");
 
-      await axios.put("http://localhost:5000/api/candidate/profile", {
+      await api.put("/candidate/profile", {
         ...formData,
         skills: formData.skills,
       });

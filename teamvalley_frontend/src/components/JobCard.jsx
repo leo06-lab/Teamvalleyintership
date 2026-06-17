@@ -1,66 +1,56 @@
-import React from "react"; // Importon React
-import { Link } from "react-router-dom"; // Importon Link për navigim
+import React from "react";
+import { Link } from "react-router-dom";
+import { getImageUrl } from "../utils/getImageUrl";
 
-function JobCard({ job }) { // Merr një job si prop
+function JobCard({ job }) {
+  const companyName = job.company || "Company";
+  const companyInitial = companyName.charAt(0).toUpperCase();
+  const companyLogoUrl = getImageUrl(job.companyLogo);
 
-  const handleSaveJob = () => { // Funksioni për save job
-    const savedJobs = JSON.parse(localStorage.getItem("jobvalleySavedJobs")) || []; // Merr jobs të ruajtura
-
-    const alreadySaved = savedJobs.some((savedJob) => savedJob.id === job.id); // Kontrollon nëse është ruajtur
-
-    if (alreadySaved) { // Nëse është ruajtur më parë
-      alert("This job is already saved."); // Mesazh
-      return; // Ndalon funksionin
-    }
-
-    localStorage.setItem("jobvalleySavedJobs", JSON.stringify([...savedJobs, job])); // Ruan job-in
-    alert("Job saved successfully."); // Mesazh suksesi
-  };
-
-  return ( // Kthen kartën e punës
-    <article className="job-list-card"> {/* Karta kryesore */}
-
-      <div className={`job-company-logo ${job.color}`}> {/* Logo e kompanisë */}
-        {job.company.charAt(0)}
+  return (
+    <div className="job-list-card">
+      <div className={`job-company-logo ${job.color || "blue"}`}>
+        {companyLogoUrl ? (
+          <img src={companyLogoUrl} alt={`${companyName} logo`} />
+        ) : (
+          <span>{companyInitial}</span>
+        )}
       </div>
 
-      <div className="job-list-info"> {/* Informacioni kryesor */}
-
-        <div className="job-title-row"> {/* Rreshti titull + pagë */}
+      <div className="job-list-info">
+        <div className="job-title-row">
           <div>
-            <h3>{job.title}</h3> {/* Titulli i punës */}
-            <p>{job.company} • {job.location}</p> {/* Kompania dhe lokacioni */}
+            <h3>{job.title}</h3>
+            <p>
+              {companyName} • {job.location}
+            </p>
           </div>
 
-          <strong>{job.salary}</strong> {/* Paga */}
+          <strong>{job.salary}</strong>
         </div>
 
-        <div className="job-details-row"> {/* Detaje të shkurtra */}
+        <div className="job-details-row">
           <span>{job.type}</span>
           <span>{job.category}</span>
           <span>{job.posted}</span>
         </div>
 
-        <div className="job-tags-row"> {/* Tags */}
-          {job.tags.map((tag) => (
-            <span key={tag}>{tag}</span>
+        <div className="job-tags-row">
+          {job.tags?.map((tag, index) => (
+            <span key={index}>{tag}</span>
           ))}
         </div>
-
       </div>
 
-      <div className="job-actions"> {/* Butonat */}
-        <button type="button" className="save-job-btn" onClick={handleSaveJob}>
+      <div className="job-actions">
+        <button type="button" className="save-job-btn">
           ♡
         </button>
 
-        <Link to={`/jobs/${job.id}`}>
-          View Details
-        </Link>
+        <Link to={`/jobs/${job.id}`}>View Details</Link>
       </div>
-
-    </article>
+    </div>
   );
 }
 
-export default JobCard; // Eksporton JobCard
+export default JobCard;

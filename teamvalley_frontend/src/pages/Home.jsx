@@ -1,140 +1,198 @@
-import React, { useState } from "react"; // Importon React dhe useState
-import "../styles/Home.css"; // Importon CSS-in e Home
-import homePageImage from "../assets/images/homepage.png"; // Importon foton kryesore
+import React, { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/Home.css";
+import homePageImage from "../assets/images/homepage.png";
+import { getImageUrl } from "../utils/getImageUrl";
+import InlineMessage from "../components/InlineMessage";
+import { useInlineMessage } from "../hooks/useInlineMessage";
+import PlatformReviews from "../components/PlatformReviews";
 
-function Home() { // Krijon komponentin Home
-  const [activeCategory, setActiveCategory] = useState("All"); // Mban kategorinë aktive
-  const [searchText, setSearchText] = useState(""); // Mban tekstin e kërkimit
-  const [locationText, setLocationText] = useState(""); // Mban lokacionin e kërkimit
+const JOBS_API_URL = "http://localhost:5000/api/jobs";
 
-  const categories = [ // Lista dinamike e kategorive
-    "Retail & Product",
-    "Content Writer",
-    "Human Resource",
-    "Market Research",
-    "Software",
-    "Finance",
-    "Management",
-    "Marketing & Sales",
-  ];
+const fallbackCategories = [
+  "Retail & Product",
+  "Content Writer",
+  "Human Resource",
+  "Market Research",
+  "Software",
+  "Finance",
+  "Management",
+  "Marketing & Sales",
+];
 
-  const jobs = [ // Lista dinamike e punëve
-    {
-      company: "Ashford",
-      title: "Lead Quality Control QA",
-      category: "Management",
-      location: "Remote",
-      type: "Full Time",
-      price: "$500",
-      color: "red",
-    },
-    {
-      company: "Percepta",
-      title: "React Native Web Developer",
-      category: "Software",
-      location: "Hybrid",
-      type: "Part Time",
-      price: "$800",
-      color: "blue",
-    },
-    {
-      company: "Tesla",
-      title: "Senior System Engineer",
-      category: "Software",
-      location: "Tirana",
-      type: "Full Time",
-      price: "$500",
-      color: "yellow",
-    },
-    {
-      company: "Bing Search",
-      title: "Full Stack Engineer",
-      category: "Software",
-      location: "Remote",
-      type: "Full Time",
-      price: "$800",
-      color: "purple",
-    },
-    {
-      company: "Exela Movers",
-      title: "UI/UX Designer Fulltime",
-      category: "Market Research",
-      location: "Hybrid",
-      type: "Full Time",
-      price: "$500",
-      color: "green",
-    },
-    {
-      company: "Amazon",
-      title: "Frontend Developer",
-      category: "Software",
-      location: "Remote",
-      type: "Full Time",
-      price: "$800",
-      color: "cyan",
-    },
-    {
-      company: "Aceable, Inc.",
-      title: "Java Software Engineer",
-      category: "Software",
-      location: "Tirana",
-      type: "Part Time",
-      price: "$500",
-      color: "orange",
-    },
-    {
-      company: "Baseball Saving",
-      title: "Marketing Specialist",
-      category: "Marketing & Sales",
-      location: "On-site",
-      type: "Full Time",
-      price: "$800",
-      color: "teal",
-    },
-  ];
+const cardColors = [
+  "red",
+  "blue",
+  "yellow",
+  "purple",
+  "green",
+  "cyan",
+  "orange",
+  "teal",
+];
 
- const filteredJobs = jobs.filter((job) => { // Filtro punët në mënyrë dinamike
-  const matchesCategory = activeCategory === "All" || job.category === activeCategory; // Kontrollon kategorinë
+const isJobFromLastFiveDays = (job) => {
+  if (!job.createdAt) {
+    return false;
+  }
 
-  const matchesSearch =
-    job.title.toLowerCase().includes(searchText.toLowerCase()) ||
-    job.company.toLowerCase().includes(searchText.toLowerCase()) ||
-    job.category.toLowerCase().includes(searchText.toLowerCase()); // Kontrollon tekstin e kërkimit
+  const jobDate = new Date(job.createdAt);
+  const today = new Date();
 
-  const matchesLocation =
-    locationText === "" ||
-    job.location.toLowerCase().includes(locationText.toLowerCase()); // Kontrollon lokacionin
+  if (Number.isNaN(jobDate.getTime())) {
+    return false;
+  }
 
-  return matchesCategory && matchesSearch && matchesLocation; // Kthen vetëm punët që përputhen
-});
+  const fiveDaysInMs = 5 * 24 * 60 * 60 * 1000;
+  const difference = today.getTime() - jobDate.getTime();
 
-  const handleSearch = () => { // Funksion për butonin search
-    const jobsSection = document.querySelector(".jobs-section"); // Merr seksionin e jobs
-    if (jobsSection) { // Kontrollon nëse ekziston
-      jobsSection.scrollIntoView({ behavior: "smooth" }); // Bën scroll smooth te jobs
+  return difference <= fiveDaysInMs;
+};
+
+const normalizeText = (value) => {
+  return String(value || "").trim().toLowerCase();
+};
+
+function Home() {
+  const navigate = useNavigate();
+  const { message, showMessage } = useInlineMessage();
+
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [searchText, setSearchText] = useState("");
+  const [locationText, setLocationText] = useState("");
+
+  const [categories, setCategories] = useState(fallbackCategories);
+  const [categoryCounts, setCategoryCounts] = useState({});
+  const [allJobs, setAllJobs] = useState([]);
+  const [jobsOfTheDay, setJobsOfTheDay] = useState([]);
+  const [loadingJobs, setLoadingJobs] = useState(false);
+
+  const fetchHomeJobs = useCallback(async () => {
+    try {
+      setLoadingJobs(true);
+
+      const response = await fetch(`${JOBS_API_URL}?page=1&limit=500`);
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        showMessage(result.message || "Could not load jobs.", "error");
+        setLoadingJobs(false);
+        return;
+      }
+
+      const jobsData = result.data || [];
+
+      setAllJobs(jobsData);
+
+      const realCategories = [
+        ...new Set(
+          jobsData
+            .map((job) => job.category)
+            .filter((category) => category && category.trim() !== "")
+        ),
+      ];
+
+      const counts = jobsData.reduce((acc, job) => {
+        if (job.category) {
+          acc[job.category] = (acc[job.category] || 0) + 1;
+        }
+
+        return acc;
+      }, {});
+
+      if (realCategories.length > 0) {
+        setCategories(realCategories);
+        setCategoryCounts(counts);
+      }
+
+      setLoadingJobs(false);
+    } catch (error) {
+      setLoadingJobs(false);
+      showMessage("Backend is not running. Please try again.", "error");
+    }
+  }, [showMessage]);
+
+  useEffect(() => {
+    fetchHomeJobs();
+  }, [fetchHomeJobs]);
+
+  useEffect(() => {
+    const recentJobs = allJobs.filter((job) => {
+      const isRecent = isJobFromLastFiveDays(job);
+
+      if (activeCategory === "All") {
+        return isRecent;
+      }
+
+      return (
+        isRecent &&
+        normalizeText(job.category) === normalizeText(activeCategory)
+      );
+    });
+
+    setJobsOfTheDay(recentJobs);
+  }, [allJobs, activeCategory]);
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+
+    if (searchText.trim() !== "") {
+      params.append("search", searchText.trim());
+    }
+
+    if (locationText.trim() !== "") {
+      params.append("location", locationText.trim());
+    }
+
+    if (activeCategory !== "All") {
+      params.append("category", activeCategory);
+    }
+
+    const queryString = params.toString();
+
+    navigate(queryString ? `/jobs?${queryString}` : "/jobs");
+  };
+
+  const handleBrowseCategory = (category) => {
+    if (category === "All") {
+      navigate("/jobs");
+      return;
+    }
+
+    navigate(`/jobs?category=${encodeURIComponent(category)}`);
+  };
+
+  const handleRecentCategory = (category) => {
+    setActiveCategory(category);
+
+    const jobsSection = document.querySelector(".jobs-section");
+
+    if (jobsSection) {
+      jobsSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  return ( // Kthen pamjen
-    <main className="home-page"> {/* Faqja Home */}
+  const handleResetRecentJobs = () => {
+    setActiveCategory("All");
+  };
 
-      <section className="hero"> {/* Hero section */}
-
-        <div className="hero-left fade-up"> {/* Ana e majtë me animacion */}
-
-          <h1> {/* Titulli kryesor */}
+  return (
+    <main className="home-page">
+      <section className="hero">
+        <div className="hero-left fade-up">
+          <h1>
             The <span>Easiest Way</span>
             <br />
             to Get Your New Job
           </h1>
 
-          <p> {/* Përshkrimi */}
+          <p>
             Each month, thousands of job seekers use JobValley to discover new
             opportunities and connect with companies faster.
           </p>
 
-          <div className="hero-search"> {/* Search box */}
-            <div className="search-field"> {/* Field industry */}
+          <div className="hero-search">
+            <div className="search-field">
               <span>▦</span>
               <input
                 type="text"
@@ -144,7 +202,7 @@ function Home() { // Krijon komponentin Home
               />
             </div>
 
-            <div className="search-field"> {/* Field location */}
+            <div className="search-field">
               <span>⌖</span>
               <input
                 type="text"
@@ -154,7 +212,7 @@ function Home() { // Krijon komponentin Home
               />
             </div>
 
-            <div className="search-field"> {/* Field category */}
+            <div className="search-field">
               <span>⌗</span>
               <input
                 type="text"
@@ -164,185 +222,221 @@ function Home() { // Krijon komponentin Home
               />
             </div>
 
-            <button onClick={handleSearch}>Search</button> {/* Butoni search */}
+            <button type="button" onClick={handleSearch}>
+              Search
+            </button>
           </div>
 
-          <div className="popular-searches"> {/* Popular searches */}
+          <div className="popular-searches">
             <strong>Popular Searches:</strong>
-            {["Software", "Finance", "Human Resource", "Management"].map((item) => ( // Krijon linke dinamike
-              <button
-                key={item}
-                onClick={() => setActiveCategory(item)}
-                className="popular-btn"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
 
+            {["Software", "Finance", "Human Resource", "Management"].map(
+              (item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => handleBrowseCategory(item)}
+                  className="popular-btn"
+                >
+                  {item}
+                </button>
+              )
+            )}
+          </div>
         </div>
 
-        <div className="hero-right fade-in"> {/* Ana e djathtë */}
-          <div className="shape shape-one"></div> {/* Dekorim */}
-          <div className="shape shape-two"></div> {/* Dekorim */}
+        <div className="hero-right fade-in">
+          <div className="shape shape-one"></div>
+          <div className="shape shape-two"></div>
 
-          <div className="image-card image-card-main"> {/* Imazhi kryesor */}
+          <div className="image-card image-card-main">
             <img src={homePageImage} alt="JobValley team" />
           </div>
 
-          <div className="image-card image-card-small"> {/* Imazhi i dytë */}
+          <div className="image-card image-card-small">
             <img src={homePageImage} alt="Job interview" />
           </div>
 
-          <div className="dots dots-one"></div> {/* Dots */}
-          <div className="dots dots-two"></div> {/* Dots */}
+          <div className="dots dots-one"></div>
+          <div className="dots dots-two"></div>
         </div>
-
       </section>
 
-      <section className="categories-section"> {/* Seksioni i kategorive */}
-
-        <div className="section-heading fade-up"> {/* Titulli */}
+      <section className="categories-section">
+        <div className="section-heading fade-up">
           <h2>Browse by category</h2>
-          <p>Find the job that’s perfect for you. New opportunities are added every day.</p>
+          <p>
+            Find the job that’s perfect for you. New opportunities are added
+            every day.
+          </p>
         </div>
 
-        <div className="category-filter-row"> {/* Rreshti i filterave */}
+        <div className="category-filter-row">
           <button
-            className={activeCategory === "All" ? "filter-btn active" : "filter-btn"}
-            onClick={() => setActiveCategory("All")}
+            type="button"
+            className="filter-btn active"
+            onClick={() => handleBrowseCategory("All")}
           >
             All
           </button>
 
-          {categories.map((category) => ( // Krijon butonat e kategorive
+          {categories.map((category) => (
             <button
+              type="button"
               key={category}
-              className={activeCategory === category ? "filter-btn active" : "filter-btn"}
-              onClick={() => setActiveCategory(category)}
+              className="filter-btn"
+              onClick={() => handleBrowseCategory(category)}
             >
               {category}
             </button>
           ))}
         </div>
 
-        <div className="category-grid"> {/* Grid kategorish */}
-          {categories.map((category, index) => ( // Krijon kategori dinamike
+        <div className="category-grid">
+          {categories.map((category) => (
             <button
+              type="button"
               className="category-card"
               key={category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => handleBrowseCategory(category)}
             >
               <div className="category-icon">▰</div>
+
               <div>
                 <h3>{category}</h3>
-                <p>{index + 3} Jobs Available</p>
+                <p>{categoryCounts[category] || 0} Jobs Available</p>
               </div>
             </button>
           ))}
         </div>
 
-        <div className="slider-dots"> {/* Dots dekorative */}
+        <div className="slider-dots">
           <span></span>
           <span></span>
           <span className="active"></span>
         </div>
       </section>
 
-      <section className="hiring-banner fade-up"> {/* Banner hiring */}
-        <div className="hiring-left">
-          <span>WE ARE</span>
-          <h2>HIRING</h2>
-        </div>
-
-        <p>Let’s Work Together & Explore Opportunities</p>
-
-        <a href="/jobs">Apply Now</a>
-      </section>
-
-      <section className="jobs-section"> {/* Seksioni i jobs */}
-        <div className="section-heading fade-up"> {/* Titulli */}
+      <section className="jobs-section">
+        <div className="section-heading fade-up">
           <h2>Jobs of the day</h2>
-          <p>Search and connect with the right opportunities faster.</p>
+          <p>Only jobs published during the last 5 days are shown here.</p>
         </div>
 
-        <div className="job-tabs"> {/* Tabs dinamike */}
+        <div className="job-tabs">
           <button
+            type="button"
             className={activeCategory === "All" ? "active-tab" : ""}
-            onClick={() => setActiveCategory("All")}
+            onClick={() => handleRecentCategory("All")}
           >
             All Jobs
           </button>
 
-          {categories.map((category) => ( // Krijon tabs nga kategoritë
+          {categories.map((category) => (
             <button
+              type="button"
               key={category}
               className={activeCategory === category ? "active-tab" : ""}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => handleRecentCategory(category)}
             >
               {category}
             </button>
           ))}
         </div>
 
-        <div className="results-info"> {/* Numri i rezultateve */}
-          <span>{filteredJobs.length} jobs found</span>
+        <InlineMessage message={message} />
+
+        <div className="results-info">
+          <span>{jobsOfTheDay.length} recent jobs found</span>
+
           {activeCategory !== "All" && (
-            <button onClick={() => setActiveCategory("All")}>Clear filter</button>
+            <button type="button" onClick={handleResetRecentJobs}>
+              Clear filter
+            </button>
           )}
         </div>
 
-        <div className="jobs-grid"> {/* Grid i jobs */}
-          {filteredJobs.length > 0 ? ( // Kontrollon nëse ka jobs
-            filteredJobs.map((job, index) => ( // Krijon cards dinamike
-              <div className="job-card smooth-card" key={index}>
-                <div className={`job-logo ${job.color}`}>{job.company.charAt(0)}</div>
+        <div className="jobs-grid">
+          {loadingJobs ? (
+            <div className="no-results">
+              <h3>Loading jobs...</h3>
+              <p>Please wait while jobs are loading.</p>
+            </div>
+          ) : jobsOfTheDay.length > 0 ? (
+            jobsOfTheDay.map((job, index) => {
+              const companyName =
+                job.companyName || job.company?.companyName || "Company";
 
-                <h3>{job.company}</h3>
-                <h4>{job.title}</h4>
+              const companyLogo = getImageUrl(
+                job.company?.logo || job.companyLogo || job.logo || ""
+              );
 
-                <div className="job-meta">
-                  <span>{job.type}</span>
-                  <span>{job.location}</span>
+              const jobColor = cardColors[index % cardColors.length];
+
+              return (
+                <div className="job-card smooth-card" key={job._id}>
+                  <div
+                    className={
+                      companyLogo
+                        ? `job-logo ${jobColor} job-logo-image`
+                        : `job-logo ${jobColor}`
+                    }
+                  >
+                    {companyLogo ? (
+                      <img src={companyLogo} alt={`${companyName} logo`} />
+                    ) : (
+                      companyName.charAt(0).toUpperCase()
+                    )}
+                  </div>
+
+                  <h3>{companyName}</h3>
+                  <h4>{job.title}</h4>
+
+                  <div className="job-meta">
+                    <span>{job.type}</span>
+                    <span>{job.location}</span>
+                  </div>
+
+                  <p>
+                    {job.description
+                      ? job.description.length > 120
+                        ? `${job.description.slice(0, 120)}...`
+                        : job.description
+                      : "A modern opportunity for motivated candidates who want to grow their career with a professional team."}
+                  </p>
+
+                  <div className="job-tags">
+                    <span>{job.category}</span>
+                    <span>{job.type}</span>
+                    <span>{job.location}</span>
+                  </div>
+
+                  <div className="job-bottom">
+                    <strong>{job.salary || "Negotiable"}</strong>
+
+                    <Link to={`/jobs/${job._id}`}>Apply Now</Link>
+                  </div>
                 </div>
-
-                <p>
-                  A modern opportunity for motivated candidates who want to grow
-                  their career with a professional team.
-                </p>
-
-                <div className="job-tags">
-                  <span>{job.category}</span>
-                  <span>React</span>
-                  <span>Remote</span>
-                </div>
-
-                <div className="job-bottom">
-                  <strong>{job.price}<small>/Hour</small></strong>
-                  <a href="/jobs">Apply Now</a>
-                </div>
-              </div>
-            ))
+              );
+            })
           ) : (
-            <div className="no-results"> {/* Kur nuk ka rezultate */}
-              <h3>No jobs found</h3>
-              <p>Try another keyword, location or category.</p>
-              <button
-                onClick={() => {
-                  setSearchText("");
-                  setLocationText("");
-                  setActiveCategory("All");
-                }}
-              >
-                Reset Search
+            <div className="no-results">
+              <h3>No recent jobs found</h3>
+              <p>
+                No jobs were published in the last 5 days for this category.
+              </p>
+
+              <button type="button" onClick={handleResetRecentJobs}>
+                Reset Filter
               </button>
             </div>
           )}
         </div>
       </section>
 
+      <PlatformReviews />
     </main>
-  ); // Mbyll return
-} // Mbyll komponentin
+  );
+}
 
-export default Home; // Eksporton Home
+export default Home;

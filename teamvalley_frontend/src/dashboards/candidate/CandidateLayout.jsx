@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { Container, Row, Col, Nav } from "react-bootstrap";
 import "../../styles/CandidateDashboard.css";
 
 function CandidateLayout() {
+  
+  const candidateName = useMemo(() => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("jobvalleyUser") || "null");
+
+      const rawName =
+        storedUser?.firstName ||
+        storedUser?.name ||
+        storedUser?.fullName ||
+        storedUser?.username ||
+        storedUser?.companyName ||
+        "";
+
+      return rawName.trim().split(/\s+/)[0] || "Candidate";
+    } catch (error) {
+      return "Candidate";
+    }
+  }, []);
+
   return (
     <Container fluid className="candidate-shell">
       <Row className="candidate-row g-4 p-4 rounded-4 shadow-sm">
@@ -44,7 +63,7 @@ function CandidateLayout() {
         <Col md={9} lg={10} className="candidate-content">
           <div className="candidate-topbar rounded-4 border-0 shadow-sm custom-bg">
             <div>
-              <h4 className="mb-1">Welcome back, Eljon</h4>
+              <h4 className="mb-1">Welcome {candidateName}</h4>
               <p className="text-muted mb-0">
                 Manage your profile, applications, saved jobs and uploaded CV in one place.
               </p>

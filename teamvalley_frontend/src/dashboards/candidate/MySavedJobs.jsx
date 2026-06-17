@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Card, Row, Col, Badge, Spinner, Alert, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../api/axios";
 
 function MySavedJobs() {
   const [savedJobs, setSavedJobs] = useState([]);
@@ -15,11 +15,9 @@ function MySavedJobs() {
         setLoading(true);
         setError("");
 
-        const response = await axios.get(
-          "http://localhost:5000/api/candidate/saved-jobs"
-        );
+        const response = await api.get("/candidate/saved-jobs");
 
-        setSavedJobs(response.data || []);
+        setSavedJobs(response.data?.data || []);
       } catch (err) {
         setError(err.response?.data?.message || "Error loading saved jobs.");
       } finally {
@@ -45,8 +43,8 @@ function MySavedJobs() {
 
   const deleteSavedJob = async (id) => {
     try {
-        await axios.delete('http://localhost:5000/api/candidate/saved-jobs/'+ id);
-        setSavedJobs(savedJobs.filter((job) => job._id !== id));
+      await api.delete(`/candidate/saved-jobs/${id}`);
+      setSavedJobs((currentJobs) => currentJobs.filter((job) => job._id !== id));
     } catch (err) {
         setError(err.response?.data?.message || "Error deleting saved job.");
     }
@@ -79,7 +77,7 @@ function MySavedJobs() {
                         <div className="d-flex justify-content-between align-items-start mb-3">
                           <div>
                             <h5 className="mb-1">{job.jobTitle}</h5>
-                            <div className="text-muted small">{job.company}</div>
+                            <div className="text-muted small">{job.companyName}</div>
                           </div>
                           <Badge bg="light" text="dark">Saved</Badge>
                         </div>

@@ -1,16 +1,32 @@
 const express = require("express");
 const router = express.Router();
+const protect = require("../middleware/auth");
+const allowRoles = require("../middleware/role");
 
-// Importimi i controller
 const {
-  saveJob,
-  getMySavedJobs,
-  deleteSavedJob,
+  createJob,
+  getJobs,
+  getJobById,
+  getCompanyJobs,
+  updateJob,
+  deleteJob,
 } = require("../controllers/jobController");
 
-// Ruterat per menaxhimin e punëve të preferuara të kandidatit
-router.post("/saved-jobs", saveJob);
-router.get("/saved-jobs", getMySavedJobs);
-router.delete("/saved-jobs/:id", deleteSavedJob);
+router.get("/", getJobs);
+
+router.get(
+  "/company/my-jobs",
+  protect,
+  allowRoles("company"),
+  getCompanyJobs
+);
+
+router.post("/", protect, allowRoles("company"), createJob);
+
+router.get("/:id", getJobById);
+
+router.put("/:id", protect, allowRoles("company"), updateJob);
+
+router.delete("/:id", protect, allowRoles("company"), deleteJob);
 
 module.exports = router;

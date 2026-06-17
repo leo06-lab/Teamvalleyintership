@@ -3,17 +3,12 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
-
-
-const contactRoutes = require("./routes/contactRoutes");
-const candidateRoutes = require("./routes/candidateRoutes");
-const applicationRoutes = require("./routes/applicationRoutes");
-const jobRoutes = require("./routes/jobRoutes");
-const authRoutes = require("./routes/authRoutes");
-
 dotenv.config();
+
 const app = express();
-app.use(express.json());
+
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
@@ -22,23 +17,53 @@ app.use(
   })
 );
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.log("MongoDB connection error:", err.message));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
   res.send("JobValley Backend is running");
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/candidate", candidateRoutes);
-app.use("/api/candidate", applicationRoutes);
-app.use("/api/candidate", jobRoutes);
-app.use("/api/contact", contactRoutes);
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/candidate", require("./routes/candidateRoutes"));
+app.use("/api/contact", require("./routes/contactRoutes"));
+app.use("/api/company", require("./routes/companyRoutes"));
+app.use("/api/jobs", require("./routes/jobRoutes"));
+app.use("/api/applications", require("./routes/applicationRoutes"));
+app.use("/api/reviews", require("./routes/reviewRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
+
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found.",
+  });
+});
+
+
+app.use((error, req, res, next) => {
+  console.log("Server error:", error);
+
+  res.status(500).json({
+    success: false,
+    message: error.message || "Internal server error.",
+  });
+});
+
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const MONGO_URI = process.env.MONGO_URI || process.env.DB_URL;
+
+
+mongoose
+  .connect(MONGO_URI)
+  .then(() => {
+    console.log("MongoDB connected successfully");
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log("MongoDB connection error:", error.message);
+  });

@@ -959,3 +959,462 @@
     font-size: 13px;
   }
 }
+/* DYNAMIC JOBS OF THE DAY LOGO */
+
+.job-logo {
+  overflow: hidden;
+}
+
+.job-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.job-logo-image {
+  background: #ffffff !important;
+  border: 1px solid #edf1f8;
+}
+
+/* HOME LINKS SAME AS BUTTONS */
+
+.hiring-banner a,
+.job-bottom a {
+  text-decoration: none;
+}
+
+/* LOADING / EMPTY BOX WIDTH FIX */
+
+.jobs-grid .no-results {
+  grid-column: 1 / -1;
+}
+/* HOME CATEGORY BUTTONS FIX */
+
+.category-filter-row button,
+.category-card {
+  cursor: pointer;
+}
+
+.category-card {
+  border: 1px solid #e6ecfb;
+  background: #ffffff;
+  text-align: left;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  border-color: #3f6df6;
+  box-shadow: 0 14px 35px rgba(18, 33, 63, 0.08);
+}
+
+/* DYNAMIC JOB LOGO FIX */
+
+.job-logo {
+  overflow: hidden;
+}
+
+.job-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.job-logo-image {
+  background: #ffffff !important;
+  border: 1px solid #edf1f8;
+}
+
+.job-bottom a {
+  text-decoration: none;
+}
+
+/* EMPTY / LOADING RESULT FIX */
+
+.jobs-grid .no-results {
+  grid-column: 1 / -1;
+}
+
+/* REAL PLATFORM REVIEWS - COMPACT MODERN VERSION */
+
+.review-banner,
+.platform-review-section {
+  width: min(1080px, calc(100% - 40px));
+  margin: 45px auto 75px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+  border: 1px solid #e6ecfb;
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 22px 60px rgba(18, 33, 63, 0.08);
+  display: grid;
+  grid-template-columns: 180px 1fr 260px;
+  gap: 22px;
+  align-items: stretch;
+}
+
+/* LEFT RATING */
+
+.review-rating-box {
+  background: linear-gradient(160deg, #3f6df6 0%, #315eea 100%);
+  border-radius: 24px;
+  padding: 22px 16px;
+  min-height: 260px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-stars {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+
+.review-stars span {
+  color: #fbbf24;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.review-rating-box h2 {
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 900;
+  margin: 0 0 8px;
+}
+
+.review-rating-box p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+  margin: 0;
+}
+
+/* CENTER BOX */
+
+.review-content {
+  background: #ffffff;
+  border: 1px solid #edf1f8;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(18, 33, 63, 0.04);
+}
+
+.review-content > span {
+  display: inline-flex;
+  width: fit-content;
+  background: #eef5ff;
+  color: #315eea;
+  border: 1px solid #dce8ff;
+  border-radius: 999px;
+  padding: 7px 13px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.7px;
+  margin-bottom: 12px;
+}
+
+.review-content h2 {
+  color: #12213f;
+  font-size: 26px;
+  line-height: 1.25;
+  font-weight: 900;
+  margin: 0 0 8px;
+}
+
+.review-content p {
+  color: #6b7890;
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 700;
+  margin: 0;
+}
+
+.review-content .inline-message {
+  margin: 14px 0 2px;
+}
+
+/* FORM */
+
+.platform-review-form {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.platform-rating-buttons {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #f8fbff;
+  border: 1px solid #edf1f8;
+  border-radius: 16px;
+  padding: 10px 12px;
+}
+
+.platform-rating-buttons button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #cbd5e1;
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 7px 15px rgba(18, 33, 63, 0.06);
+  transition: 0.2s ease;
+}
+
+.platform-rating-buttons button:hover,
+.platform-rating-buttons button.active-rating-star {
+  color: #f59e0b;
+  background: #fff7ed;
+  transform: translateY(-2px);
+}
+
+.platform-review-grid {
+  display: grid;
+  grid-template-columns: 1fr 145px;
+  gap: 10px;
+}
+
+.platform-review-form input,
+.platform-review-form select,
+.platform-review-form textarea {
+  width: 100%;
+  border: 1px solid #d8e1f4;
+  border-radius: 13px;
+  padding: 12px 14px;
+  outline: none;
+  background: #ffffff;
+  color: #12213f;
+  font-size: 13px;
+  font-weight: 800;
+  transition: 0.2s ease;
+}
+
+.platform-review-form input,
+.platform-review-form select {
+  height: 46px;
+}
+
+.platform-review-form textarea {
+  min-height: 82px;
+  max-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.platform-review-form input::placeholder,
+.platform-review-form textarea::placeholder {
+  color: #9aa6bd;
+  font-weight: 700;
+}
+
+.platform-review-form input:focus,
+.platform-review-form select:focus,
+.platform-review-form textarea:focus {
+  border-color: #3f6df6;
+  box-shadow: 0 0 0 4px rgba(63, 109, 246, 0.11);
+}
+
+.platform-review-form button[type="submit"] {
+  width: fit-content;
+  min-width: 150px;
+  height: 46px;
+  border: none;
+  border-radius: 13px;
+  background: #3f6df6;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(63, 109, 246, 0.24);
+  transition: 0.2s ease;
+}
+
+.platform-review-form button[type="submit"]:hover:not(:disabled) {
+  background: #315eea;
+  transform: translateY(-2px);
+}
+
+.platform-review-form button[type="submit"]:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* RIGHT REVIEWS */
+
+.review-small-stats,
+.platform-review-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-content: start;
+}
+
+.platform-review-list h3 {
+  color: #12213f;
+  font-size: 18px;
+  font-weight: 900;
+  margin: 2px 0 4px;
+}
+
+.platform-review-item {
+  background: #ffffff;
+  border: 1px solid #edf1f8;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 24px rgba(18, 33, 63, 0.04);
+}
+
+.platform-review-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.platform-review-item-top strong {
+  color: #12213f;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.platform-review-item-top span {
+  background: #fff7ed;
+  color: #f59e0b;
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.platform-review-item p {
+  color: #5c6984;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.platform-review-item small {
+  display: inline-flex;
+  width: fit-content;
+  background: #eef5ff;
+  color: #315eea;
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.platform-empty-review {
+  background: #ffffff;
+  border: 1px dashed #cbd8f0;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.platform-empty-review strong {
+  display: block;
+  color: #12213f;
+  font-size: 14px;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.platform-empty-review span {
+  color: #7c879e;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1050px) {
+  .review-banner,
+  .platform-review-section {
+    grid-template-columns: 180px 1fr;
+  }
+
+  .platform-review-list {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .platform-review-list h3 {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 780px) {
+  .review-banner,
+  .platform-review-section {
+    width: calc(100% - 32px);
+    grid-template-columns: 1fr;
+    padding: 22px;
+    margin: 40px auto 65px;
+  }
+
+  .review-rating-box {
+    min-height: auto;
+    padding: 26px 18px;
+  }
+
+  .platform-review-list {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-review-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-rating-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .platform-review-form button[type="submit"] {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .review-banner,
+  .platform-review-section {
+    width: calc(100% - 24px);
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .review-content {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .review-content h2 {
+    font-size: 23px;
+  }
+
+  .review-rating-box h2 {
+    font-size: 36px;
+  }
+
+  .platform-rating-buttons button {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+}

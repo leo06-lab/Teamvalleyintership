@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
-import axios from "axios";
+import api from "../../api/axios";
 
 function UploadCV() {
   const [file, setFile] = useState(null);
@@ -38,7 +38,7 @@ function UploadCV() {
       const formData = new FormData();
       formData.append("cv", file);
 
-      await axios.post("http://localhost:5000/api/candidate/profile/cv", formData, {
+      await api.post("/candidate/profile/cv", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

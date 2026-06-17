@@ -1,98 +1,142 @@
 const mongoose = require("mongoose");
 
 const applicationSchema = new mongoose.Schema(
-{
-  jobId: {
-    type: Number,
-    required: true,
-  },
+  {
+    job: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job",
+      required: true,
+    },
 
-  jobTitle: {
-    type: String,
-    required: true,
-  },
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 
-  company: {
-    type: String,
-    required: true,
-  },
+    candidate: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 
-  location: {
-    type: String,
-    default: "",
-  },
+    candidateName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-  candidateName: {
-    type: String,
-    required: true,
-  },
+    candidateEmail: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+    },
+    candidateCVUrl: {
+      type: String,
+      trim: true,
+    },
 
-  candidateEmail: {
-    type: String,
-    required: true,
-  },
+    candidateCVFileName: {
+      type: String,
+      trim: true,
+    },
 
-  candidatePhone: {
-    type: String,
-    default: "",
-  },
-  
-  candidateAddress: {
-    type: String,
-    default: "",
-  },
+    candidatePhone: {
+      type: String,
+      trim: true,
+    },
 
-  candidateAbout: {
-    type: String,
-    default: "",
-  },
+    jobTitle: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-  candidateSkills: [{
-    type: String,
-  }],
+    companyName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-  candidateEducation: {
-    type: String,
-    default: "",
-  },
+    coverLetter: {
+      type: String,
+      trim: true,
+    },
 
-  candidateExperience: {
-    type: String,
-    default: "",
-  },
+    status: {
+      type: String,
+      enum: ["pending", "shortlisted", "interview", "rejected", "accepted"],
+      default: "pending",
+    },
 
-  candidateGithub: {
-    type: String,
-    default: "",
-  },
+    statusHistory: [
+      {
+        status: {
+          type: String,
+          enum: ["pending", "shortlisted", "interview", "rejected", "accepted"],
+          required: true,
+        },
 
-  candidateLinkedin: {
-    type: String,
-    default: "",
-  }, 
-  cvUrl: {
-    type: String,
-    default: "",
-  },
-  cvFileName: {
-    type: String,
-    default: "",
-  },
+        changedAt: {
+          type: Date,
+          default: Date.now,
+        },
 
-  status: {
-    type: String,
-    enum: [
-      "Pending",
-      "Interview",
-      "Accepted",
-      "Rejected",
+        changedBy: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+
+        note: {
+          type: String,
+          trim: true,
+        },
+      },
     ],
-    default: "Pending",
+
+    interviewDate: {
+      type: String,
+      trim: true,
+    },
+
+    interviewTime: {
+      type: String,
+      trim: true,
+    },
+
+    interviewMode: {
+      type: String,
+      enum: ["Online", "In Office", "Phone Call", ""],
+      default: "",
+    },
+
+    interviewLocation: {
+      type: String,
+      trim: true,
+    },
+
+    interviewNote: {
+      type: String,
+      trim: true,
+    },
+
+    companyNote: {
+      type: String,
+      trim: true,
+    },
+
+    candidateRating: {
+      type: Number,
+      min: 0,
+      max: 5,
+      default: 0,
+    },
   },
-},
-{
-  timestamps: true,
-}
+  {
+    timestamps: true,
+  }
 );
 
+applicationSchema.index({ job: 1, candidate: 1 }, { unique: true });
 module.exports = mongoose.model("Application", applicationSchema);

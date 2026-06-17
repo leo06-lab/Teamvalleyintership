@@ -1,12 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const { register, login } = require("../controllers/authController");
+const protect = require("../middleware/auth");
 
-router.use(express.json());
+const {
+  register,
+  login,
+  registerCandidate,
+  registerCompany,
+  checkEmail,
+  loginUser,
+  getMe,
+} = require("../controllers/authController");
 
-// post route per regjistrimin
-router.post("/register", register); 
-// post route per login
-router.post("/login", login);
+router.post("/register", register);
+
+router.post("/login", login); 
+
+router.post("/register/candidate", registerCandidate);
+
+router.post("/register/company", registerCompany);
+
+router.post("/check-email", checkEmail);
+
+router.post("/login", loginUser); 
+
+router.get("/me", protect, getMe);
 
 module.exports = router;

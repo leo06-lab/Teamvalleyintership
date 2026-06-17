@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Card,
@@ -11,11 +12,12 @@ import {
   Alert,
   Button,
 } from "react-bootstrap";
-import axios from "axios";
+import api from "../../api/axios";
 
 function MyApplications() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -26,10 +28,8 @@ function MyApplications() {
       setLoading(true);
       setError("");
 
-      const response = await axios.get(
-        "http://localhost:5000/api/candidate/applications",
-      );
-      setApplications(response.data);
+      const response = await api.get("/applications/my-applications");
+      setApplications(response.data?.data || []);
     } catch (err) {
       setError(
         err.response?.data?.message || "Gabim gjatë ngarkimit të aplikimeve.",
@@ -47,26 +47,32 @@ function MyApplications() {
   }, []);
 
   const getVariant = (status) => {
-    if (status === "Pending") return "warning";
-    if (status === "Interview") return "primary";
-    if (status === "Accepted") return "success";
-    if (status === "Rejected") return "danger";
+    if (status === "pending") return "warning";
+    if (status === "interview") return "primary";
+    if (status === "accepted") return "success";
+    if (status === "rejected") return "danger";
     return "secondary";
   };
 
-  const handleViewJob = (id) => {
-    // Redirekto ne faqen e detajeve te punes me id e aplikimit
-    window.location.href = `/jobs/${id}`;
-  }
+  const formatStatus = (status) => {
+    if (!status) {
+      return "Unknown";
+    }
 
-  // Funksioni per te anulluar nje aplikim te caktuar nga kandidati
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  };
+
+  const handleViewJob = (id) => {
+    navigate(`/jobs/${id}`);
+  };
+
   const handleDelete = async (id) => {
     try {
-      await axios.delete(
-        `http://localhost:5000/api/candidate/applications/${id}`,
-      );
+      await api.delete(`/applications/${id}`);
 
-      setApplications(applications.filter((app) => app._id !== id));
+      setApplications((currentApplications) =>
+        currentApplications.filter((app) => app._id !== id)
+      );
 
       setSuccess("Aplikimi u anullua me sukses.");
       setTimeout(() => {
@@ -85,14 +91,14 @@ function MyApplications() {
   const filteredApplications = useMemo(() => {
     return applications.filter((app) => {
       const jobTitle = app.jobTitle || "";
-      const company = app.company || "";
+      const company = app.companyName || app.company?.companyName || "";
 
       const matchesSearch =
         jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
         company.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesStatus =
-        statusFilter === "All" || app.status === statusFilter;
+        statusFilter === "all" || app.status === statusFilter;
 
       return matchesSearch && matchesStatus;
     });
@@ -140,11 +146,11 @@ function MyApplications() {
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >
-                <option value="All">All Statuses</option>
-                <option value="Pending">Pending</option>
-                <option value="Interview">Interview</option>
-                <option value="Accepted">Accepted</option>
-                <option value="Rejected">Rejected</option>
+                <option value="all">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="interview">Interview</option>
+                <option value="accepted">Accepted</option>
+                <option value="rejected">Rejected</option>
               </Form.Select>
             </Col>
           </Row>
@@ -165,18 +171,18 @@ function MyApplications() {
                 filteredApplications.map((app) => (
                   <tr key={app._id}>
                     <td className="fw-semibold">{app.jobTitle}</td>
-                    <td>{app.company}</td>
-                    <td>{app.location}</td>
+                    <td>{app.companyName || app.company?.companyName || "-"}</td>
+                    <td>{app.job?.location || "-"}</td>
                     <td>{new Date(app.createdAt).toLocaleDateString()}</td>
                     <td>
-                      <Badge bg={getVariant(app.status)}>{app.status}</Badge>
+                      <Badge bg={getVariant(app.status)}>{formatStatus(app.status)}</Badge>
                     </td>
                     <td>
                       <Button
                         size="sm"
                         variant="primary"
                         className="me-2"
-                        onClick={() => handleViewJob(app.jobId)}
+                        onClick={() => handleViewJob(app.job?._id || app.job)}
                       >
                         View Job
                       </Button>

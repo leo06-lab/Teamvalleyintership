@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Button, Row, Col, ProgressBar, Badge, ListGroup, Spinner } from "react-bootstrap";
-import axios from "axios";
+import api from "../../api/axios";
 import "../../styles/CandidateDashboard.css";
 
 function CandidateDashboard() {
@@ -17,15 +17,14 @@ function CandidateDashboard() {
         setLoading(true);
 
         const [profileRes, applicationsRes, savedJobsRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/candidate/profile"),
-          axios.get("http://localhost:5000/api/candidate/applications"),
-          axios.get("http://localhost:5000/api/candidate/saved-jobs"),
-
+          api.get("/candidate/profile"),
+          api.get("/applications/my-applications"),
+          api.get("/candidate/saved-jobs"),
         ]);
 
         setProfile(profileRes.data);
-        setApplications(applicationsRes.data);
-        setSavedJobs(savedJobsRes.data);
+        setApplications(applicationsRes.data?.data || []);
+        setSavedJobs(savedJobsRes.data?.data || []);
       } catch (error) {
         console.error("Error loading dashboard:", error);
       } finally {
@@ -59,12 +58,21 @@ function CandidateDashboard() {
   }, [profile]);
 
   const getStatusVariant = (status) => {
-    if (status === "Pending") return "warning";
-    if (status === "Interview") return "primary";
-    if (status === "Accepted") return "success";
-    if (status === "Rejected") return "danger";
+    if (status === "pending") return "warning";
+    if (status === "interview") return "primary";
+    if (status === "accepted") return "success";
+    if (status === "rejected") return "danger";
     return "secondary";
   };
+
+  const formatStatus = (status) => {
+    if (!status) return "Unknown";
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  };
+
+  const interviewCount = applications.filter(
+    (application) => application.status?.toLowerCase() === "interview"
+  ).length;
 
   if (loading) {
     return (
@@ -108,9 +116,7 @@ function CandidateDashboard() {
         <Col md={6} xl={3}>
           <Card className="stat-card rounded-4 shadow-sm border-0">
             <div className="stat-label">Interviews</div>
-            <div className="stat-value">
-              {applications.filter((a) => a.status === "Interview").length}
-            </div>
+            <div className="stat-value">{interviewCount}</div>
             <div className="stat-note">Current interview stage</div>
           </Card>
         </Col>
@@ -156,10 +162,10 @@ function CandidateDashboard() {
                       <div>
                         <div className="fw-semibold">{app.jobTitle}</div>
                         <div className="text-muted small">
-                          {app.company} • {new Date(app.createdAt).toLocaleDateString()}
+                          {(app.companyName || app.company?.companyName || "Company Account")} • {new Date(app.createdAt).toLocaleDateString()}
                         </div>
                       </div>
-                      <Badge bg={getStatusVariant(app.status)}>{app.status}</Badge>
+                      <Badge bg={getStatusVariant(app.status)}>{formatStatus(app.status)}</Badge>
                     </ListGroup.Item>
                   ))
                 ) : (
