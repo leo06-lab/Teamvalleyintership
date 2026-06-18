@@ -30,9 +30,20 @@ body {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #ffffff;
   color: #12213f;
+}
+
+th {
+  text-align: match-parent;
+}
+
+.form-check-input {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 /* APP WRAPPER */

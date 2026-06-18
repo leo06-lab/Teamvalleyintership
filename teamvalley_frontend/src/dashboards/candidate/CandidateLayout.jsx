@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { Container, Row, Col, Nav } from "react-bootstrap";
+import Logo from "../../assets/images/websiteLogo.png";
 import "../../styles/CandidateDashboard.css";
 
 function CandidateLayout() {
@@ -29,10 +30,7 @@ function CandidateLayout() {
         <Col md={3} lg={2} className="candidate-sidebar rounded-4 border-0 shadow-sm">
           <div className="sidebar-top">
             <div className="sidebar-brand px-2">
-              <div className="brand-badge">JV</div>
-              <div>
-                <h3 className="mb-0">JobValley</h3>
-              </div>
+              <img src={Logo} alt="Job Valley Logo" width="200" height="200" />
             </div>
 
             <Nav className="flex-column sidebar-nav px-2">

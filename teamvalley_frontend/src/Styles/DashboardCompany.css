@@ -2457,3 +2457,53 @@
     width: 100%;
   }
 }
+
+
+/*  MOBILE RESPONSIVE */
+
+@media (max-width: 768px) {
+
+
+  /* 2 karta në një rresht */
+  .company-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .company-stat-card {
+    min-width: 0;
+    padding: 16px;
+  }
+
+  .company-stat-card h2 {
+    font-size: 24px;
+  }
+
+  .company-stat-card p {
+    font-size: 13px;
+  }
+
+  .company-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .company-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .company-stat-card {
+    padding: 14px;
+  }
+
+  .company-stat-card h2 {
+    font-size: 20px;
+  }
+
+  .company-stat-card p {
+    font-size: 12px;
+  }
+}

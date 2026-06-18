@@ -6,6 +6,7 @@
   top: 0;
   z-index: 1000;
 }
+
 .navbar-container {
   width: min(1180px, calc(100% - 40px));
   height: 78px;
@@ -14,6 +15,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 26px;
+  position: relative;
 }
 
 .navbar-logo {
@@ -44,6 +46,14 @@
   font-weight: 900;
   letter-spacing: -0.6px;
   white-space: nowrap;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex: 1;
 }
 
 .navbar-links {
@@ -135,7 +145,6 @@
 }
 
 /* TABLET */
-
 @media (max-width: 1050px) {
   .navbar-container {
     width: min(100% - 32px, 1180px);
@@ -158,35 +167,50 @@
 }
 
 /* MOBILE */
-
 @media (max-width: 850px) {
   .navbar-container {
     height: 72px;
-    position: relative;
   }
 
   .navbar-toggle {
     display: flex;
+    z-index: 1100;
+  }
+
+  .navbar-menu {
+    position: absolute;
+    top: 82px;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    background: #eef5ff;
+    border: 1px solid #dce8ff;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 22px 55px rgba(18, 33, 63, 0.12);
+    z-index: 1000;
+  }
+
+  .navbar-menu.show-menu {
+    display: flex;
   }
 
   .navbar-links {
-  position: absolute;
-  top: 82px;
-  left: 0;
-  right: 0;
-  background: #eef5ff;
-  border: 1px solid #dce8ff;
-  border-radius: 20px;
-  padding: 18px;
-  box-shadow: 0 22px 55px rgba(18, 33, 63, 0.12);
-  display: none;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-  .navbar-links.show-menu {
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .navbar-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 12px;
   }
 
   .navbar-link {
@@ -197,19 +221,14 @@
 
   .navbar-link:hover,
   .navbar-link.active {
-    background: #eef5ff;
-  }
-
-  .navbar-actions {
-    margin-left: auto;
+    background: #e6efff;
   }
 
   .navbar-dashboard-btn,
   .navbar-logout-btn,
   .navbar-start-btn {
-    height: 40px;
-    padding: 0 13px;
-    font-size: 13px;
+    width: 100%;
+    height: 42px;
   }
 }
 
@@ -230,11 +249,7 @@
     font-size: 19px;
   }
 
-  .navbar-actions {
-    display: none;
-  }
-
-  .navbar-links {
+  .navbar-menu {
     top: 78px;
   }
 }

@@ -8,6 +8,7 @@ import "../../styles/DashboardCompany.css";
 import { getImageUrl } from "../../utils/getImageUrl";
 import InlineMessage from "../../components/InlineMessage";
 import { useInlineMessage } from "../../hooks/useInlineMessage";
+import Logo from "../../assets/images/websiteLogo.png";
 
 const COMPANY_DASHBOARD_API_URL = "http://localhost:5000/api/company/dashboard";
 
@@ -102,8 +103,7 @@ function CompanyDashboard() {
     <main className="company-dashboard-layout">
       <aside className="company-sidebar">
         <div className="company-sidebar-logo">
-          <span></span>
-          <h2>JobValley</h2>
+          <img src={Logo} alt="Job Valley Logo" width="200" height="200" />
         </div>
 
         <nav className="company-sidebar-menu">

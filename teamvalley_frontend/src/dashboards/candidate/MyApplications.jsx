@@ -181,7 +181,7 @@ function MyApplications() {
                       <Button
                         size="sm"
                         variant="primary"
-                        className="me-2"
+                        className="me-2 mb-2 mb-md-0"
                         onClick={() => handleViewJob(app.job?._id || app.job)}
                       >
                         View Job

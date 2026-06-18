@@ -2,9 +2,9 @@ import React from "react"; // Importon React
 import ReactDOM from "react-dom/client"; // Importon ReactDOM
 import { BrowserRouter } from "react-router-dom"; // Importon BrowserRouter për navigim
 import App from "./App"; // Importon App
-import "./styles/App.css"; // Importon CSS-in kryesor
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "./styles/App.css"; // Importon CSS-in kryesor
 
 const root = ReactDOM.createRoot(document.getElementById("root")); // Merr div-in root nga index.html
 

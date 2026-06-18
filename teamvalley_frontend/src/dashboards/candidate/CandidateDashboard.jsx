@@ -105,7 +105,7 @@ function CandidateDashboard() {
       </Card>
 
       <Row className="g-3 mx-3">
-        <Col md={6} xl={3}>
+        <Col xs={6} lg={3}>
           <Card className="stat-card rounded-4 shadow-sm border-0">
             <div className="stat-label">Applications</div>
             <div className="stat-value">{applications.length}</div>
@@ -113,7 +113,7 @@ function CandidateDashboard() {
           </Card>
         </Col>
 
-        <Col md={6} xl={3}>
+        <Col  xs={6} lg={3}>
           <Card className="stat-card rounded-4 shadow-sm border-0">
             <div className="stat-label">Interviews</div>
             <div className="stat-value">{interviewCount}</div>
@@ -121,7 +121,7 @@ function CandidateDashboard() {
           </Card>
         </Col>
 
-        <Col md={6} xl={3}>
+        <Col xs={6} lg={3}>
           <Card className="stat-card rounded-4 shadow-sm border-0">
             <div className="stat-label">Saved Jobs</div>
             <div className="stat-value">{savedJobs.length}</div>
@@ -129,7 +129,7 @@ function CandidateDashboard() {
           </Card>
         </Col>
 
-        <Col md={6} xl={3}>
+        <Col xs={6} lg={3}>
           <Card className="stat-card rounded-4 shadow-sm border-0">
             <div className="stat-label">Profile Completion</div>
             <div className="stat-value">{profileCompletion}%</div>
@@ -141,7 +141,7 @@ function CandidateDashboard() {
       </Row>
 
       <Row className="g-4 mx-3">
-        <Col lg={7}>
+        <Col xs={12} lg={7}>
           <Card className="panel-card rounded-4 shadow-sm border-0">
             <Card.Body>
               <div className="section-head">
@@ -176,7 +176,7 @@ function CandidateDashboard() {
           </Card>
         </Col>
 
-        <Col lg={5}>
+        <Col xs={12} lg={5}>
           <Card className="panel-card rounded-4 shadow-sm border-0 ">
             <Card.Body>
               <div className="section-head">

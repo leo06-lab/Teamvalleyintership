@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useInlineMessage } from "../hooks/useInlineMessage";
 import "../styles/Auth.css";
+import InlineMessage from "../components/InlineMessage";
 
 function Register() {
   const navigate = useNavigate();
@@ -8,6 +10,7 @@ function Register() {
 
   const [activeRole, setActiveRole] = useState("candidate");
   const [loading, setLoading] = useState(false);
+  const { message, showMessage } = useInlineMessage();
 
   const [candidateData, setCandidateData] = useState({
     firstName: "",
@@ -52,12 +55,12 @@ function Register() {
       candidateData.password.trim() === "" ||
       candidateData.confirmPassword.trim() === ""
     ) {
-      alert("Please fill all candidate fields.");
+      showMessage("Please fill all candidate fields.", "error");
       return;
     }
 
     if (candidateData.password !== candidateData.confirmPassword) {
-      alert("Passwords do not match.");
+      showMessage("Passwords do not match.", "error");
       return;
     }
 
@@ -75,17 +78,17 @@ function Register() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        alert(result.message || "Candidate registration failed.");
+        showMessage(result.message || "Candidate registration failed.", "error");
         setLoading(false);
         return;
       }
 
       setLoading(false);
-      alert("Candidate registered successfully.");
+      showMessage("Candidate registered successfully.", "success");
       navigate("/login");
     } catch (error) {
       setLoading(false);
-      alert("Backend is not running.");
+      showMessage("Backend is not running.", "error");
     }
   };
 
@@ -100,12 +103,12 @@ function Register() {
       companyData.password.trim() === "" ||
       companyData.confirmPassword.trim() === ""
     ) {
-      alert("Please fill all company fields.");
+      showMessage("Please fill all company fields.", "error");
       return;
     }
 
     if (companyData.password !== companyData.confirmPassword) {
-      alert("Passwords do not match.");
+      showMessage("Passwords do not match.", "error");
       return;
     }
 
@@ -123,17 +126,17 @@ function Register() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        alert(result.message || "Company registration failed.");
+        showMessage(result.message || "Company registration failed.", "error");
         setLoading(false);
         return;
       }
 
       setLoading(false);
-      alert("Company registered successfully.");
+      showMessage("Company registered successfully.", "success");
       navigate("/login");
     } catch (error) {
       setLoading(false);
-      alert("Backend is not running.");
+      showMessage("Backend is not running.", "error");
     }
   };
 
@@ -144,6 +147,7 @@ function Register() {
           <span className="auth-mongo-logo-icon">✓</span>
           <h2>JobValley</h2>
         </div>
+        <InlineMessage message={message} />
 
         <div className="auth-mongo-box auth-register-mongo-box">
           <h1>Create your account</h1>

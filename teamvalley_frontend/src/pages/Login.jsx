@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useInlineMessage } from "../hooks/useInlineMessage";
 import "../styles/Auth.css";
+import InlineMessage from "../components/InlineMessage";
 
 function Login() {
   const navigate = useNavigate();
   const API_URL = "http://localhost:5000/api/auth";
+  const { message, showMessage } = useInlineMessage();
 
   const [step, setStep] = useState("email");
   const [email, setEmail] = useState("");
@@ -16,7 +19,7 @@ function Login() {
     e.preventDefault();
 
     if (email.trim() === "") {
-      alert("Please enter your email address.");
+      showMessage("Please enter your email address.", "error");
       return;
     }
 
@@ -34,7 +37,7 @@ function Login() {
       const result = await response.json();
 
       if (!response.ok || !result.exists) {
-        alert(result.message || "No account found with this email.");
+        showMessage(result.message || "No account found with this email.", "error");
         setLoading(false);
         return;
       }
@@ -44,7 +47,7 @@ function Login() {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      alert("Backend is not running.");
+      showMessage("Backend is not running.", "error");
     }
   };
 
@@ -52,7 +55,7 @@ function Login() {
     e.preventDefault();
 
     if (password.trim() === "") {
-      alert("Please enter your password.");
+      showMessage("Please enter your password.", "error");
       return;
     }
 
@@ -73,7 +76,7 @@ function Login() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        alert(result.message || "Invalid email or password.");
+        showMessage(result.message || "Invalid email or password.", "error");
         setLoading(false);
         return;
       }
@@ -101,7 +104,7 @@ function Login() {
       navigate("/");
     } catch (error) {
       setLoading(false);
-      alert("Backend is not running.");
+      showMessage("Backend is not running.", "error");
     }
   };
 
@@ -112,6 +115,8 @@ function Login() {
           <span className="auth-mongo-logo-icon">✓</span>
           <h2>JobValley</h2>
         </div>
+
+        <InlineMessage message={message} />
 
         <div className="auth-mongo-box">
           <h1>Log in to your account</h1>
