@@ -485,3 +485,150 @@
     height: 32px;
   }
 }
+/* LOGIN / REGISTER OPEN ANIMATION */
+
+.auth-page-animation {
+  animation: authPageOpen 0.85s ease both;
+}
+
+.auth-page-animation .auth-mongo-left {
+  animation: authLeftOpen 0.9s ease both;
+}
+
+.auth-page-animation .auth-mongo-right {
+  animation: authRightOpen 0.9s ease both;
+}
+
+.auth-page-animation .auth-mongo-box {
+  animation: authBoxOpen 0.95s ease both;
+}
+
+.auth-page-animation .auth-mongo-brand {
+  animation: authBrandOpen 0.8s ease both;
+}
+
+.auth-page-animation .auth-mongo-form {
+  animation: authFormOpen 0.8s ease both;
+}
+
+.auth-page-animation .auth-mongo-shape-one {
+  animation: authShapeFloatOne 0.9s ease both;
+}
+
+.auth-page-animation .auth-mongo-shape-two {
+  animation: authShapeFloatTwo 0.9s ease both;
+}
+
+.auth-page-animation .auth-mongo-star {
+  animation: authStarOpen 0.9s ease both;
+}
+
+@keyframes authPageOpen {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes authLeftOpen {
+  from {
+    opacity: 0;
+    transform: translateX(-34px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes authRightOpen {
+  from {
+    opacity: 0;
+    transform: translateX(34px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes authBoxOpen {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes authBrandOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes authFormOpen {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes authShapeFloatOne {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes authShapeFloatTwo {
+  from {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes authStarOpen {
+  from {
+    opacity: 0;
+    transform: rotate(-20deg) scale(0.6);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}

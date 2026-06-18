@@ -199,3 +199,26 @@ select {
     transform: translateY(0);
   }
 }
+/* PAGE OPEN ANIMATION - ALL PAGES EXCEPT DASHBOARDS */
+
+.page-route-animation {
+  animation: pageOpenAnimation 0.55s ease both;
+}
+
+.page-no-animation {
+  animation: none;
+}
+
+@keyframes pageOpenAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}

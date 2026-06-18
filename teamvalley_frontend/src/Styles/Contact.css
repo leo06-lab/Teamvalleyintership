@@ -291,3 +291,125 @@
     padding: 18px;
   }
 }
+/* CONTACT PAGE OPEN ANIMATION */
+
+.contact-page {
+  animation: contactPageOpen 0.75s ease both;
+}
+
+.contact-page .contact-hero,
+.contact-page .contact-card,
+.contact-page .contact-form,
+.contact-page .contact-info,
+.contact-page section {
+  animation: contactContentFade 0.8s ease both;
+}
+
+@keyframes contactPageOpen {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes contactContentFade {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* CONTACT PAGE OPEN ANIMATION */
+
+.jv-contact-page-animation {
+  animation: jvContactPageOpen 0.8s ease both;
+}
+
+.jv-contact-page-animation .jv-contact-left {
+  animation: jvContactLeftOpen 0.9s ease both;
+}
+
+.jv-contact-page-animation .jv-contact-right {
+  animation: jvContactRightOpen 0.9s ease both;
+}
+
+.jv-contact-page-animation .jv-contact-info-item {
+  animation: jvContactItemOpen 0.75s ease both;
+}
+
+.jv-contact-page-animation .jv-contact-info-item:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.jv-contact-page-animation .jv-contact-info-item:nth-child(3) {
+  animation-delay: 0.14s;
+}
+
+.jv-contact-page-animation .jv-contact-info-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.jv-contact-page-animation .jv-contact-info-item:nth-child(5) {
+  animation-delay: 0.26s;
+}
+
+@keyframes jvContactPageOpen {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes jvContactLeftOpen {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes jvContactRightOpen {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes jvContactItemOpen {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
