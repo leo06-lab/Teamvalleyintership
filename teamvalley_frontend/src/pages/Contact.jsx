@@ -32,11 +32,14 @@ function Contact() {
         formData.message.trim() === ""
       ) {
         setErrorMessage("Ju lutemi plotësoni të gjitha fushat.");
+
         setTimeout(() => {
           setErrorMessage("");
         }, 3000);
+
         return;
       }
+
       await axios.post("http://localhost:5000/api/contact", formData);
 
       setSuccessMessage("Mesazhi u dërgua me sukses.");
@@ -47,11 +50,15 @@ function Contact() {
         subject: "",
         message: "",
       });
+
       setTimeout(() => {
         setSuccessMessage("");
       }, 3000);
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Dështoi të dërgohet mesazhi.");
+      setErrorMessage(
+        error.response?.data?.message || "Dështoi të dërgohet mesazhi."
+      );
+
       setTimeout(() => {
         setErrorMessage("");
       }, 3000);
@@ -59,7 +66,7 @@ function Contact() {
   };
 
   return (
-    <main className="jv-contact-page">
+    <main className="jv-contact-page jv-contact-page-animation">
       <section className="jv-contact-hero">
         <div className="jv-contact-left">
           <span className="jv-contact-label">Contact Us</span>
@@ -111,6 +118,7 @@ function Contact() {
         <div className="jv-contact-right">
           <form className="jv-contact-form" onSubmit={handleSubmit}>
             <h2>Send Us a Message</h2>
+
             {successMessage && <Alert variant="success">{successMessage}</Alert>}
             {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 

@@ -109,7 +109,7 @@ function Login() {
   };
 
   return (
-    <main className="auth-mongo-page">
+    <main className="auth-mongo-page auth-page-animation">
       <section className="auth-mongo-left">
         <div className="auth-mongo-brand">
           <span className="auth-mongo-logo-icon">✓</span>

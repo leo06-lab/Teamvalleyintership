@@ -1723,3 +1723,57 @@
     padding: 7px 11px;
   }
 }
+/* FIND JOBS PAGE OPEN ANIMATION */
+
+.jobs-page {
+  animation: jobsPageOpen 0.75s ease both;
+}
+
+.jobs-page .jobs-hero,
+.jobs-page .jobs-filter-box,
+.jobs-page .job-card,
+.jobs-page .jobs-grid {
+  animation: jobsContentFade 0.8s ease both;
+}
+
+.jobs-page .job-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.jobs-page .job-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.jobs-page .job-card:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.jobs-page .job-card:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+@keyframes jobsPageOpen {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes jobsContentFade {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

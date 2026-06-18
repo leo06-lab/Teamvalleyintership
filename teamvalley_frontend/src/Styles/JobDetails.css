@@ -449,3 +449,61 @@
     text-align: left;
   }
 }
+/* JOB DETAILS PAGE OPEN ANIMATION */
+
+.job-details-modern-page {
+  animation: jobDetailsPageOpen 0.75s ease both;
+}
+
+.job-details-modern-hero,
+.job-details-modern-container,
+.modern-detail-card,
+.modern-sidebar-card {
+  animation: jobDetailsContentFade 0.8s ease both;
+}
+
+.modern-detail-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.modern-detail-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.modern-detail-card:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.modern-sidebar-card:nth-child(1) {
+  animation-delay: 0.08s;
+}
+
+.modern-sidebar-card:nth-child(2) {
+  animation-delay: 0.13s;
+}
+
+@keyframes jobDetailsPageOpen {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes jobDetailsContentFade {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
