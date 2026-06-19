@@ -41,7 +41,7 @@
 }
 
 .jobs-hero p {
-  color: #12213f;
+  color: #3f6df6;
   font-size: 18px;
   line-height: 1.7;
   max-width: 760px;
@@ -1776,4 +1776,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+.jobs-hero span,
+.jobs-hero-label,
+.find-job-label,
+.jobs-label {
+  color: #3f6df6 !important;
 }

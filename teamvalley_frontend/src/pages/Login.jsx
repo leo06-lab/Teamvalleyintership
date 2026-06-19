@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useInlineMessage } from "../hooks/useInlineMessage";
 import "../styles/Auth.css";
 import InlineMessage from "../components/InlineMessage";
-
+import websiteLogo from "../assets/images/websiteLogo.png";
 function Login() {
   const navigate = useNavigate();
   const API_URL = "http://localhost:5000/api/auth";
@@ -111,10 +111,9 @@ function Login() {
   return (
     <main className="auth-mongo-page auth-page-animation">
       <section className="auth-mongo-left">
-        <div className="auth-mongo-brand">
-          <span className="auth-mongo-logo-icon">✓</span>
-          <h2>JobValley</h2>
-        </div>
+       <div className="auth-clean-logo">
+  <img src={websiteLogo} alt="JobValley" />
+</div>
 
         <InlineMessage message={message} />
 

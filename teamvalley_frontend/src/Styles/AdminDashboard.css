@@ -1220,3 +1220,497 @@
     border-radius: 20px;
   }
 }
+/* ADMIN RESPONSIVE FINAL FIX - ONLY ADMIN DASHBOARD */
+
+.admin-company-dashboard.company-dashboard-layout {
+  overflow-x: hidden;
+}
+
+/* Kur ekrani eshte i vogel, kartat te dalin 2 nga 2 */
+
+@media (max-width: 700px) {
+  .admin-company-dashboard .company-stats-grid,
+  .admin-company-dashboard .company-job-stats-grid,
+  .admin-company-dashboard .company-bottom-grid,
+  .admin-company-dashboard .admin-reviews-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card,
+  .admin-company-dashboard .company-dashboard-card,
+  .admin-company-dashboard .admin-review-card {
+    min-height: 145px !important;
+    padding: 20px 16px !important;
+    border-radius: 22px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card h3,
+  .admin-company-dashboard .company-dashboard-card h3,
+  .admin-company-dashboard .admin-review-card h3 {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+  }
+
+  .admin-company-dashboard .company-stat-card h2,
+  .admin-company-dashboard .company-dashboard-card h2,
+  .admin-company-dashboard .admin-review-card h2 {
+    font-size: 32px !important;
+    line-height: 1 !important;
+  }
+
+  .admin-company-dashboard .company-stat-card p,
+  .admin-company-dashboard .company-dashboard-card p,
+  .admin-company-dashboard .admin-review-card p {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+}
+
+/* Edhe ne 320px t'i mbaje 2 nga 2, jo tek e tek */
+
+@media (max-width: 380px) {
+  .admin-company-dashboard .company-stats-grid,
+  .admin-company-dashboard .company-job-stats-grid,
+  .admin-company-dashboard .company-bottom-grid,
+  .admin-company-dashboard .admin-reviews-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card,
+  .admin-company-dashboard .company-dashboard-card,
+  .admin-company-dashboard .admin-review-card {
+    min-height: 132px !important;
+    padding: 16px 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card h3,
+  .admin-company-dashboard .company-dashboard-card h3,
+  .admin-company-dashboard .admin-review-card h3 {
+    font-size: 13px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card h2,
+  .admin-company-dashboard .company-dashboard-card h2,
+  .admin-company-dashboard .admin-review-card h2 {
+    font-size: 28px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card span,
+  .admin-company-dashboard .company-dashboard-card span {
+    font-size: 11px !important;
+    padding: 7px 10px !important;
+  }
+}
+
+/* ADMIN TABLE RESPONSIVE FIX */
+
+.admin-company-dashboard .admin-page-card {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.admin-company-dashboard .admin-table-wrap {
+  width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  border-radius: 18px !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-company-dashboard .admin-table {
+  width: 100% !important;
+  min-width: 780px !important;
+  border-collapse: collapse !important;
+  table-layout: auto !important;
+}
+
+.admin-company-dashboard .admin-table th,
+.admin-company-dashboard .admin-table td {
+  white-space: nowrap !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  padding: 15px 16px !important;
+  font-size: 13px !important;
+}
+
+.admin-company-dashboard .admin-table th {
+  font-weight: 900 !important;
+  color: #12213f !important;
+  background: #f8fbff !important;
+}
+
+.admin-company-dashboard .admin-table td {
+  color: #5c6984 !important;
+  font-weight: 750 !important;
+  border-top: 1px solid #edf1f8 !important;
+}
+
+.admin-company-dashboard .admin-table td:last-child,
+.admin-company-dashboard .admin-table th:last-child {
+  text-align: right !important;
+}
+
+.admin-company-dashboard .admin-table button,
+.admin-company-dashboard .admin-action-btn {
+  white-space: nowrap !important;
+}
+
+/* Ne mobile tabela mos prishet, thjesht te levize horizontalisht */
+
+@media (max-width: 700px) {
+  .admin-company-dashboard .admin-page-card {
+    padding: 20px 14px !important;
+    border-radius: 22px !important;
+  }
+
+  .admin-company-dashboard .admin-table-wrap {
+    margin-top: 14px !important;
+  }
+
+  .admin-company-dashboard .admin-table {
+    min-width: 760px !important;
+  }
+
+  .admin-company-dashboard .admin-table th,
+  .admin-company-dashboard .admin-table td {
+    padding: 13px 14px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Sidebar ne mobile mos ta prishe layout-in */
+
+@media (max-width: 700px) {
+  .admin-company-dashboard .company-sidebar {
+    width: 100% !important;
+    padding: 22px !important;
+    border-radius: 24px !important;
+  }
+
+  .admin-company-dashboard .company-sidebar-menu {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .admin-company-dashboard .company-sidebar-menu button {
+    width: 100% !important;
+    min-height: 52px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    padding: 0 10px !important;
+  }
+}
+/* ADMIN MOBILE CENTER FIX */
+
+@media (max-width: 700px) {
+  .admin-company-dashboard.company-dashboard-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 18px 12px 45px !important;
+    overflow-x: hidden !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    align-items: center !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-home {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    justify-items: center !important;
+    gap: 18px !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-topbar {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 22px !important;
+  }
+
+  /* Kartat e vogla 2 nga 2 */
+
+  .admin-company-dashboard .company-stats-grid,
+  .admin-company-dashboard .company-job-stats-grid,
+  .admin-company-dashboard .admin-reviews-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card,
+  .admin-company-dashboard .admin-review-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 138px !important;
+    padding: 18px 14px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Kartat e medha poshte te jene te qenderzuara dhe mos dalin jashte */
+
+  .admin-company-dashboard .company-dashboard-grid,
+  .admin-company-dashboard .company-bottom-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    justify-items: center !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    border-radius: 22px !important;
+    padding: 22px 16px !important;
+  }
+
+  /* Grafiku Applications by Status mos te dale jashte */
+
+  .admin-company-dashboard .company-chart-bars,
+  .admin-company-dashboard .admin-chart-bars,
+  .admin-company-dashboard .status-chart,
+  .admin-company-dashboard .applications-status-chart {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-card * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Sidebar qender */
+
+  .admin-company-dashboard .company-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .admin-company-dashboard .company-sidebar-menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Per ekrane shume te vogla 320px */
+
+@media (max-width: 380px) {
+  .admin-company-dashboard.company-dashboard-layout {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .admin-company-dashboard .company-stats-grid,
+  .admin-company-dashboard .company-job-stats-grid,
+  .admin-company-dashboard .admin-reviews-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card,
+  .admin-company-dashboard .admin-review-card {
+    min-height: 125px !important;
+    padding: 15px 11px !important;
+  }
+
+  .admin-company-dashboard .company-stat-card h3,
+  .admin-company-dashboard .admin-review-card h3 {
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+  }
+
+  .admin-company-dashboard .company-stat-card h2,
+  .admin-company-dashboard .admin-review-card h2 {
+    font-size: 27px !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-card {
+    padding: 20px 13px !important;
+  }
+}
+/* ADMIN LAPTOP GRID FIX - DO NOT TOUCH COMPANY DASHBOARD */
+
+.admin-company-dashboard,
+.admin-company-dashboard * {
+  box-sizing: border-box;
+}
+
+.admin-company-dashboard .company-dashboard-main,
+.admin-company-dashboard .company-dashboard-home,
+.admin-company-dashboard .company-dashboard-grid {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* Desktop normal */
+.admin-company-dashboard .company-dashboard-grid {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.6fr) minmax(240px, 0.7fr) minmax(240px, 0.7fr) !important;
+  gap: 24px !important;
+  align-items: stretch !important;
+}
+
+.admin-company-dashboard .company-dashboard-grid > * {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Laptop / tablet: mos i le 3 kolona se dalin jashte */
+@media (max-width: 1350px) {
+  .admin-company-dashboard .company-dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-grid > *:first-child {
+    grid-column: 1 / -1 !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Mobile: kartat e medha nje nga nje, te qendruara */
+@media (max-width: 760px) {
+  .admin-company-dashboard.company-dashboard-layout {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    overflow-x: hidden !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    justify-items: center !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-grid > * {
+    grid-column: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .admin-company-dashboard .company-dashboard-card {
+    border-radius: 22px !important;
+    padding: 20px 14px !important;
+  }
+}
+
+/* Fix per Applications by Status qe mos te prese tekstin Rejected */
+.admin-company-dashboard .company-dashboard-card {
+  min-width: 0 !important;
+}
+
+.admin-company-dashboard .company-dashboard-card h2,
+.admin-company-dashboard .company-dashboard-card h3 {
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+.admin-company-dashboard .company-dashboard-card p,
+.admin-company-dashboard .company-dashboard-card span,
+.admin-company-dashboard .company-dashboard-card strong {
+  max-width: 100% !important;
+}
+
+/* Chart bars brenda kartes */
+.admin-company-dashboard .company-chart-bars,
+.admin-company-dashboard .admin-chart-bars,
+.admin-company-dashboard .status-chart,
+.admin-company-dashboard .applications-status-chart {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Nese labels te chart-it dalin jashte, zvogeloji pak */
+@media (max-width: 1350px) {
+  .admin-company-dashboard .company-chart-bars span,
+  .admin-company-dashboard .admin-chart-bars span,
+  .admin-company-dashboard .status-chart span,
+  .admin-company-dashboard .applications-status-chart span {
+    font-size: 11px !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+}
+/* ADMIN SIDEBAR MOBILE MENU VERTICAL FIX */
+
+@media (max-width: 700px) {
+  .admin-company-dashboard .company-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 24px 22px !important;
+    border-radius: 26px !important;
+  }
+
+  .admin-company-dashboard .company-sidebar-menu {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .admin-company-dashboard .company-sidebar-menu button {
+    width: 100% !important;
+    min-height: 54px !important;
+    height: 54px !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding: 0 22px !important;
+    border-radius: 16px !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+  }
+
+  .admin-company-dashboard .company-sidebar-menu button.active,
+  .admin-company-dashboard .company-sidebar-menu button.company-active-tab {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .admin-company-dashboard .company-sidebar {
+    padding: 22px 18px !important;
+  }
+
+  .admin-company-dashboard .company-sidebar-menu {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .admin-company-dashboard .company-sidebar-menu button {
+    height: 50px !important;
+    min-height: 50px !important;
+    font-size: 14px !important;
+    padding: 0 18px !important;
+  }
+}
