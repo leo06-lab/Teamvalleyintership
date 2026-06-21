@@ -21,7 +21,7 @@ function NavbarComponent() {
     localStorage.removeItem("jobvalleyUser");
     setLoggedUser(null);
     setMenuOpen(false);
-    navigate("/login");
+    window.location.replace("/login");
   };
 
   const getDashboardPath = () => {

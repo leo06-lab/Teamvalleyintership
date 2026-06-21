@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/AdminDashboard.css";
 import InlineMessage from "../../components/InlineMessage";
 import { useInlineMessage } from "../../hooks/useInlineMessage";
@@ -7,6 +8,7 @@ import { getImageUrl } from "../../utils/getImageUrl";
 const ADMIN_API_URL = "http://localhost:5000/api/admin";
 
 function AdminDashboard() {
+  const navigate = useNavigate();
   const token = localStorage.getItem("jobvalleyToken");
   const loggedUser = JSON.parse(localStorage.getItem("jobvalleyUser"));
 
@@ -39,6 +41,7 @@ function AdminDashboard() {
     acceptedApplications: 0,
     rejectedApplications: 0,
     totalReviews: 0,
+    totalContactMessages: 0,
     averageRating: 0,
   });
 
@@ -51,6 +54,7 @@ function AdminDashboard() {
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [contactMessages, setContactMessages] = useState([]);
 
   const [userSearch, setUserSearch] = useState("");
   const [userRoleFilter, setUserRoleFilter] = useState("all");
@@ -77,7 +81,21 @@ function AdminDashboard() {
     return `${Math.max((value / maxApplicationStatus) * 100, 8)}%`;
   };
 
+  const handleAuthFailure = useCallback(
+    (message = "Session expired. Please log in again.") => {
+      localStorage.removeItem("jobvalleyToken");
+      localStorage.removeItem("jobvalleyUser");
+      showMessage(message, "error");
+      navigate("/login");
+    },
+    [navigate, showMessage]
+  );
+
   const getAuthHeaders = useCallback(() => {
+    if (!token) {
+      return null;
+    }
+
     return {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -86,13 +104,26 @@ function AdminDashboard() {
 
   const fetchDashboard = useCallback(async () => {
     try {
+      const headers = getAuthHeaders();
+
+      if (!headers) {
+        handleAuthFailure();
+        return;
+      }
+
       setLoading(true);
 
       const response = await fetch(`${ADMIN_API_URL}/dashboard`, {
-        headers: getAuthHeaders(),
+        headers,
       });
 
       const result = await response.json();
+
+      if (response.status === 401 || response.status === 403) {
+        handleAuthFailure(result.message);
+        setLoading(false);
+        return;
+      }
 
       if (!response.ok || !result.success) {
         showMessage(
@@ -114,10 +145,17 @@ function AdminDashboard() {
       setLoading(false);
       showMessage("Backend is not running. Please try again.", "error");
     }
-  }, [getAuthHeaders, showMessage]);
+  }, [getAuthHeaders, handleAuthFailure, showMessage]);
 
   const fetchUsers = useCallback(async () => {
     try {
+      const headers = getAuthHeaders();
+
+      if (!headers) {
+        handleAuthFailure();
+        return;
+      }
+
       const params = new URLSearchParams();
 
       if (userRoleFilter !== "all") {
@@ -129,10 +167,15 @@ function AdminDashboard() {
       }
 
       const response = await fetch(`${ADMIN_API_URL}/users?${params}`, {
-        headers: getAuthHeaders(),
+        headers,
       });
 
       const result = await response.json();
+
+      if (response.status === 401 || response.status === 403) {
+        handleAuthFailure(result.message);
+        return;
+      }
 
       if (!response.ok || !result.success) {
         showMessage(result.message || "Could not load users.", "error");
@@ -143,10 +186,17 @@ function AdminDashboard() {
     } catch (error) {
       showMessage("Backend is not running. Please try again.", "error");
     }
-  }, [getAuthHeaders, userRoleFilter, userSearch, showMessage]);
+  }, [getAuthHeaders, handleAuthFailure, userRoleFilter, userSearch, showMessage]);
 
   const fetchJobs = useCallback(async () => {
     try {
+      const headers = getAuthHeaders();
+
+      if (!headers) {
+        handleAuthFailure();
+        return;
+      }
+
       const params = new URLSearchParams();
 
       if (jobStatusFilter !== "all") {
@@ -158,10 +208,15 @@ function AdminDashboard() {
       }
 
       const response = await fetch(`${ADMIN_API_URL}/jobs?${params}`, {
-        headers: getAuthHeaders(),
+        headers,
       });
 
       const result = await response.json();
+
+      if (response.status === 401 || response.status === 403) {
+        handleAuthFailure(result.message);
+        return;
+      }
 
       if (!response.ok || !result.success) {
         showMessage(result.message || "Could not load jobs.", "error");
@@ -172,10 +227,17 @@ function AdminDashboard() {
     } catch (error) {
       showMessage("Backend is not running. Please try again.", "error");
     }
-  }, [getAuthHeaders, jobStatusFilter, jobSearch, showMessage]);
+  }, [getAuthHeaders, handleAuthFailure, jobStatusFilter, jobSearch, showMessage]);
 
   const fetchApplications = useCallback(async () => {
     try {
+      const headers = getAuthHeaders();
+
+      if (!headers) {
+        handleAuthFailure();
+        return;
+      }
+
       const params = new URLSearchParams();
 
       if (applicationStatusFilter !== "all") {
@@ -187,10 +249,15 @@ function AdminDashboard() {
       }
 
       const response = await fetch(`${ADMIN_API_URL}/applications?${params}`, {
-        headers: getAuthHeaders(),
+        headers,
       });
 
       const result = await response.json();
+
+      if (response.status === 401 || response.status === 403) {
+        handleAuthFailure(result.message);
+        return;
+      }
 
       if (!response.ok || !result.success) {
         showMessage(result.message || "Could not load applications.", "error");
@@ -203,6 +270,7 @@ function AdminDashboard() {
     }
   }, [
     getAuthHeaders,
+    handleAuthFailure,
     applicationStatusFilter,
     applicationSearch,
     showMessage,
@@ -210,11 +278,23 @@ function AdminDashboard() {
 
   const fetchReviews = useCallback(async () => {
     try {
+      const headers = getAuthHeaders();
+
+      if (!headers) {
+        handleAuthFailure();
+        return;
+      }
+
       const response = await fetch(`${ADMIN_API_URL}/reviews`, {
-        headers: getAuthHeaders(),
+        headers,
       });
 
       const result = await response.json();
+
+      if (response.status === 401 || response.status === 403) {
+        handleAuthFailure(result.message);
+        return;
+      }
 
       if (!response.ok || !result.success) {
         showMessage(result.message || "Could not load reviews.", "error");
@@ -225,11 +305,47 @@ function AdminDashboard() {
     } catch (error) {
       showMessage("Backend is not running. Please try again.", "error");
     }
-  }, [getAuthHeaders, showMessage]);
+  }, [getAuthHeaders, handleAuthFailure, showMessage]);
+
+  const fetchContactMessages = useCallback(async () => {
+    try {
+      const headers = getAuthHeaders();
+
+      if (!headers) {
+        handleAuthFailure();
+        return;
+      }
+
+      const response = await fetch(`${ADMIN_API_URL}/contact-messages`, {
+        headers,
+      });
+
+      const result = await response.json();
+
+      if (response.status === 401 || response.status === 403) {
+        handleAuthFailure(result.message);
+        return;
+      }
+
+      if (!response.ok || !result.success) {
+        showMessage(result.message || "Could not load contact messages.", "error");
+        return;
+      }
+
+      setContactMessages(result.data || []);
+    } catch (error) {
+      showMessage("Backend is not running. Please try again.", "error");
+    }
+  }, [getAuthHeaders, handleAuthFailure, showMessage]);
 
   useEffect(() => {
+    if (!token) {
+      handleAuthFailure();
+      return;
+    }
+
     fetchDashboard();
-  }, [fetchDashboard]);
+  }, [fetchDashboard, handleAuthFailure, token]);
 
   useEffect(() => {
     if (activePage === "users") {
@@ -247,7 +363,18 @@ function AdminDashboard() {
     if (activePage === "reviews") {
       fetchReviews();
     }
-  }, [activePage, fetchUsers, fetchJobs, fetchApplications, fetchReviews]);
+
+    if (activePage === "contact-messages") {
+      fetchContactMessages();
+    }
+  }, [
+    activePage,
+    fetchUsers,
+    fetchJobs,
+    fetchApplications,
+    fetchReviews,
+    fetchContactMessages,
+  ]);
 
   const renderDate = (date) => {
     if (!date) {
@@ -308,6 +435,11 @@ function AdminDashboard() {
         successMessage = "Review deleted successfully.";
       }
 
+      if (deleteModal.type === "contact-message") {
+        endpoint = `${ADMIN_API_URL}/contact-messages/${deleteModal.id}`;
+        successMessage = "Contact message deleted successfully.";
+      }
+
       const response = await fetch(endpoint, {
         method: "DELETE",
         headers: getAuthHeaders(),
@@ -347,6 +479,10 @@ function AdminDashboard() {
 
       if (deleteModal.type === "review") {
         fetchReviews();
+      }
+
+      if (deleteModal.type === "contact-message") {
+        fetchContactMessages();
       }
 
       fetchDashboard();
@@ -410,6 +546,27 @@ function AdminDashboard() {
     } catch (error) {
       showMessage("Backend is not running. Please try again.", "error");
     }
+  };
+
+  const handleDeleteContactMessage = (contactMessage) => {
+    openDeleteModal(
+      "contact-message",
+      contactMessage._id,
+      "Delete Contact Message",
+      `Are you sure you want to delete the message from ${contactMessage.fullName}?`
+    );
+  };
+
+  const renderMessagePreview = (message) => {
+    if (!message) {
+      return "No message";
+    }
+
+    if (message.length <= 90) {
+      return message;
+    }
+
+    return `${message.slice(0, 90)}...`;
   };
 
   return (
@@ -493,6 +650,16 @@ function AdminDashboard() {
           >
             Reviews
           </button>
+
+          <button
+            type="button"
+            className={
+              activePage === "contact-messages" ? "active-company-menu" : ""
+            }
+            onClick={() => setActivePage("contact-messages")}
+          >
+            Contact Messages
+          </button>
         </nav>
       </aside>
 
@@ -505,6 +672,7 @@ function AdminDashboard() {
               {activePage === "jobs" && "Manage Jobs"}
               {activePage === "applications" && "Applications"}
               {activePage === "reviews" && "Reviews"}
+              {activePage === "contact-messages" && "Contact Messages"}
             </h1>
 
             <p>Welcome back, {adminName}</p>
@@ -556,6 +724,12 @@ function AdminDashboard() {
                 <p>Reviews</p>
                 <h2>{stats.totalReviews}</h2>
                 <span>{stats.averageRating}/5 rating</span>
+              </div>
+
+              <div className="company-stat-card">
+                <p>Contact Messages</p>
+                <h2>{stats.totalContactMessages}</h2>
+                <span>Inbox messages</span>
               </div>
             </section>
 
@@ -738,6 +912,36 @@ function AdminDashboard() {
                   </div>
                 )}
               </div>
+              
+              <div className="company-dashboard-card recent-applications-card">
+                <div className="company-card-header">
+                  <h2>Recent Applications</h2>
+                  <span>{recentApplications.length}</span>
+                </div>
+
+                {recentApplications.length === 0 ? (
+                  <div className="company-empty-small">
+                    <p>No applications yet.</p>
+                  </div>
+                ) : (
+                  <div className="recent-applications-list">
+                    {recentApplications.map((application) => (
+                      <div className="recent-application-item" key={application._id}>
+                        <div>
+                          <h3>{application.jobTitle}</h3>
+                          <p>
+                            {application.candidateName} • {application.companyName}
+                          </p>
+                        </div>
+
+                        <span className={`mini-status ${application.status}`}>
+                          {application.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               <div className="company-dashboard-card recent-applications-card">
                 <div className="company-card-header">
@@ -759,6 +963,34 @@ function AdminDashboard() {
                         </div>
 
                         <span className={`mini-status ${job.status}`}>
+
+                    <div className="company-dashboard-card">
+                      <div className="company-card-header">
+                        <h2>Recent Reviews</h2>
+                        <span>{recentReviews.length}</span>
+                      </div>
+
+                      {recentReviews.length === 0 ? (
+                        <div className="company-empty-small">
+                          <p>No reviews yet.</p>
+                        </div>
+                      ) : (
+                        <div className="recent-applications-list">
+                          {recentReviews.map((review) => (
+                            <div className="recent-application-item" key={review._id}>
+                              <div>
+                                <h3>{review.name}</h3>
+                                <p>{review.comment}</p>
+                              </div>
+
+                              <span className="mini-status accepted">
+                                {review.rating}/5
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                           {job.status}
                         </span>
                       </div>
@@ -789,6 +1021,11 @@ function AdminDashboard() {
 
                   <p>
                     <span>{stats.totalReviews}</span> Moderate reviews
+                  </p>
+
+                  <p>
+                    <span>{stats.totalContactMessages}</span> Review inbox
+                    messages
                   </p>
                 </div>
               </div>
@@ -1163,6 +1400,70 @@ function AdminDashboard() {
                   <h3>No reviews found.</h3>
                 </div>
               )}
+            </div>
+          </section>
+        )}
+
+        {activePage === "contact-messages" && (
+          <section className="company-dashboard-card admin-page-card">
+            <div className="company-card-header">
+              <div>
+                <h2>Contact Messages</h2>
+                <p>Manage messages sent from the public contact form.</p>
+              </div>
+
+              <span>{contactMessages.length} messages</span>
+            </div>
+
+            <div className="admin-table-wrap">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Sent</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {contactMessages.map((contactMessage) => (
+                    <tr key={contactMessage._id}>
+                      <td>
+                        <strong>{contactMessage.fullName}</strong>
+                      </td>
+
+                      <td>{contactMessage.email}</td>
+
+                      <td>{contactMessage.subject}</td>
+
+                      <td className="admin-message-cell">
+                        {renderMessagePreview(contactMessage.message)}
+                      </td>
+
+                      <td>{renderDate(contactMessage.createdAt)}</td>
+
+                      <td>
+                        <button
+                          type="button"
+                          className="admin-danger-btn"
+                          onClick={() => handleDeleteContactMessage(contactMessage)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+
+                  {contactMessages.length === 0 && (
+                    <tr>
+                      <td colSpan="6">No contact messages found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </section>
         )}

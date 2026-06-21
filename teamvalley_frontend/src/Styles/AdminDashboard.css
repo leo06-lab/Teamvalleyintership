@@ -634,6 +634,15 @@
   font-weight: 700;
 }
 
+.admin-company-dashboard .admin-message-cell {
+  max-width: 360px;
+  color: #5c6984;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
 .admin-company-dashboard .admin-company-cell {
   display: flex;
   align-items: center;

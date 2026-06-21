@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# TeamValley Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+TeamValley eshte nje platforme rekrutimi me dy pjese kryesore: backend API dhe frontend web. Projekti eshte ndertuar per te lidhur kandidatet me kompanite, duke ofruar menaxhim te vendeve te punes, aplikimeve dhe roleve te perdoruesve ne nje sistem te vetem.
 
-## Available Scripts
+## Qellimi i projektit
 
-In the project directory, you can run:
+- Kandidatet te kerkojne pune dhe te aplikojne online
+- Kompanite te publikojne vende pune dhe te menaxhojne aplikimet
+- Admini te mbikeqyre platformen, perdoruesit dhe permbajtjen
 
-### `npm start`
+## Rolet ne sistem
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Candidate: sheh punet, aplikon, ruan punet e preferuara, menaxhon profilin
+- Company: krijon dhe menaxhon shpallje pune, sheh aplikimet e marra
+- Admin: menaxhon perdorues, kompani, pune, aplikime dhe review
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Arkitektura
 
-### `npm test`
+- Frontend: React, React Router, Axios, Bootstrap
+- Backend: Node.js, Express, Mongoose, JWT
+- Database: MongoDB
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Komunikimi behet me REST API. Frontend dergon kerkesat te backend dhe backend lexon/shkruan te dhenat ne MongoDB.
 
-### `npm run build`
+## Struktura e pergjithshme e repo-s
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- teamvalley_backend: serveri, route, controller, model dhe middleware
+- teamvalley_frontend: aplikacioni React me faqe publike dhe dashboard sipas roleve
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Funksionalitete kryesore
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Regjistrim dhe login me role
+- Autentikim me token
+- Lista e vendeve te punes dhe faqja e detajeve
+- Aplikim per pune nga kandidatet
+- Menaxhim pune dhe aplikimesh nga kompanite
+- Panel administrimi per kontroll te platformes
+- Kontakt dhe review
 
-### `npm run eject`
+## Setup lokal i plote
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 1 Nis backend
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Shko te folderi teamvalley_backend dhe instalo varesite:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+npm install
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Krijo nje file .env me te pakten keto vlera:
 
-## Learn More
+MONGO_URI=vendos_lidhjen_mongo
+# ose DB_URL=vendos_lidhjen_mongo
+JWT_SECRET=vendos_nje_secret
+PORT=5000
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Nis serverin:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+npm run dev
 
-### Code Splitting
+Ose per start normal:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+npm start
 
-### Analyzing the Bundle Size
+Opsionale, per krijimin e admin-it fillestar:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+npm run seed:admin
 
-### Making a Progressive Web App
+Backend duhet te jete aktiv ne adresen http://localhost:5000.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 2 Nis frontend
 
-### Advanced Configuration
+Shko te folderi teamvalley_frontend dhe instalo varesite:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+npm install
 
-### Deployment
+Nis aplikacionin:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+npm start
 
-### `npm run build` fails to minify
+Frontend hapet ne adresen http://localhost:3000.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Konfigurimi i API ne frontend
+
+Frontend perdor endpoint bazik:
+
+http://localhost:5000/api
+
+Ky konfigurim menaxhohet ne src/api/axios.js.
+
+## Autentikimi ne frontend
+
+- Token ruhet ne localStorage me celesin jobvalleyToken
+- Axios interceptor e shton automatikisht token ne Authorization header
+
+## Komanda te rendesishme
+
+Backend:
+
+- npm run dev
+- npm start
+- npm run seed:admin
+
+Frontend:
+
+- npm start
+- npm run build
+- npm test
+
+## Build per production
+
+Per frontend:
+
+npm run build
+
+Build krijohet te folderi build.
+
+## Shenime te rendesishme
+
+- Nese backend nuk eshte aktiv, funksionet me API ne frontend nuk punojne
+- Sigurohu qe MONGO_URI ne backend eshte i sakte
+- CORS aktualisht eshte i konfiguruar per frontend ne localhost:3000

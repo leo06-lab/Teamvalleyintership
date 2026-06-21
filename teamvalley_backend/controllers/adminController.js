@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Job = require("../models/Job");
 const Application = require("../models/Application");
 const Review = require("../models/Review");
+const ContactMessage = require("../models/ContactMessages");
 
 const getAdminDashboard = async (req, res) => {
   try {
@@ -20,10 +21,12 @@ const getAdminDashboard = async (req, res) => {
       acceptedApplications,
       rejectedApplications,
       totalReviews,
+      totalContactMessages,
       recentUsers,
       recentJobs,
       recentApplications,
       recentReviews,
+      recentContactMessages,
       allReviews,
     ] = await Promise.all([
       User.countDocuments(),
@@ -43,6 +46,7 @@ const getAdminDashboard = async (req, res) => {
       Application.countDocuments({ status: "rejected" }),
 
       Review.countDocuments(),
+  ContactMessage.countDocuments(),
 
       User.find()
         .select("-password")
@@ -62,6 +66,8 @@ const getAdminDashboard = async (req, res) => {
         .limit(5),
 
       Review.find().sort({ createdAt: -1 }).limit(5),
+
+  ContactMessage.find().sort({ createdAt: -1 }).limit(5),
 
       Review.find(),
     ]);
@@ -93,12 +99,14 @@ const getAdminDashboard = async (req, res) => {
           acceptedApplications,
           rejectedApplications,
           totalReviews,
+          totalContactMessages,
           averageRating,
         },
         recentUsers,
         recentJobs,
         recentApplications,
         recentReviews,
+        recentContactMessages,
       },
     });
   } catch (error) {
@@ -406,6 +414,52 @@ const getAdminReviews = async (req, res) => {
   }
 };
 
+const getAdminContactMessages = async (req, res) => {
+  try {
+    const messages = await ContactMessage.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      total: messages.length,
+      data: messages,
+    });
+  } catch (error) {
+    console.log("Get admin contact messages error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message || "Could not load contact messages.",
+    });
+  }
+};
+
+const deleteAdminContactMessage = async (req, res) => {
+  try {
+    const message = await ContactMessage.findById(req.params.id);
+
+    if (!message) {
+      return res.status(404).json({
+        success: false,
+        message: "Contact message not found.",
+      });
+    }
+
+    await ContactMessage.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Contact message deleted successfully.",
+    });
+  } catch (error) {
+    console.log("Delete admin contact message error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message || "Could not delete contact message.",
+    });
+  }
+};
+
 const deleteAdminReview = async (req, res) => {
   try {
     const review = await Review.findById(req.params.id);
@@ -443,5 +497,7 @@ module.exports = {
   getAdminApplications,
   updateAdminApplicationStatus,
   getAdminReviews,
+  getAdminContactMessages,
+  deleteAdminContactMessage,
   deleteAdminReview,
 };

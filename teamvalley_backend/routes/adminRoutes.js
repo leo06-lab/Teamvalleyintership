@@ -14,6 +14,8 @@ const {
   getAdminApplications,
   updateAdminApplicationStatus,
   getAdminReviews,
+  getAdminContactMessages,
+  deleteAdminContactMessage,
   deleteAdminReview,
 } = require("../controllers/adminController");
 
@@ -45,6 +47,18 @@ router.put(
 );
 
 router.get("/reviews", protect, allowRoles("admin"), getAdminReviews);
+router.get(
+  "/contact-messages",
+  protect,
+  allowRoles("admin"),
+  getAdminContactMessages
+);
+router.delete(
+  "/contact-messages/:id",
+  protect,
+  allowRoles("admin"),
+  deleteAdminContactMessage
+);
 router.delete("/reviews/:id", protect, allowRoles("admin"), deleteAdminReview);
 
 module.exports = router;
